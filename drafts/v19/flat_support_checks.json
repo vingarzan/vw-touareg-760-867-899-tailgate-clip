@@ -1,0 +1,14 @@
+{
+  "revision": "v19-draft",
+  "variant": "flat_support",
+  "watertight": true,
+  "winding_consistent": true,
+  "positive_volume": true,
+  "dimensions_mm": [
+    34.29999923706055,
+    27.600000381469727,
+    27.599924087524414
+  ],
+  "final_edge_treatment_applied": false,
+  "physical_fit_verified": false
+}
