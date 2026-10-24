@@ -1,5 +1,12 @@
 # Design history
 
+## v10 — measured base-to-inside hook distance — 2026-10-24
+
+- Added owner photo 20 and the 7.7 mm perpendicular distance from the peg/fin mounting face to the nearest inside hook curve (7.8 mm in v09).
+- Retained the 20 mm outer drop and 9.7 mm bore; these measurements derive a 2.6 mm hook wall, replacing the estimated 2.5 mm.
+- Updated the complete clip, hook gauge and dimensioned section; the reinforced peg geometry is unchanged.
+- Added exported STL measurements at three width stations for the new clearance. Physical fit remains unverified.
+
 ## v09 — flush hook supports and reinforced peg roots — 2026-10-24
 
 - Removed the separate lateral support webs. Hook shell, solid backing and

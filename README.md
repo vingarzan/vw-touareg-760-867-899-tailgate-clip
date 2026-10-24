@@ -2,7 +2,7 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v09 prototype with flush/tangent hook backing and reinforced peg roots. This revision has not been printed or fit-tested.**
+**Status: v10 prototype with the measured 7.7 mm base-to-inside hook distance, flush backing and reinforced peg roots. This revision has not been printed or fit-tested.**
 
 ![Model preview](previews/clip.png)
 
@@ -61,7 +61,7 @@ python3 -m venv .venv
 ```
 
 [`model/parameters.json`](model/parameters.json) separates measured dimensions
-from estimates. v09 retains the separately measured left and right fins and
+from estimates. v10 retains the separately measured left and right fins and
 places their nearest vertical edges **9 mm beyond the hook-facing edge of the
 peg root along the length of the base**. This is an approximate physical
 measurement implemented as 9.0 mm in the model.
@@ -70,6 +70,8 @@ The back of the hook now joins the mounting base through a **solid full-width
 web**, filling the triangular gap left in v05. The original rear slope is kept;
 only the hook cavity and entry remain open. This is a geometry change requested
 by the owner, rather than a reproduction of the OEM material-saving recess.
+
+The new caliper photo measures **7.7 mm from the peg/fin mounting face to the nearest inside hook curve**, perpendicular to that face. This was 7.8 mm in v09. Preserving the 20 mm outside drop and 9.7 mm bore gives a derived hook wall of **2.6 mm** (20 − 7.7 − 9.7), replacing the estimated 2.5 mm. This is not the distance to the lower free lip.
 
 The separate lateral support webs have been removed. The hook, back link and
 neck now stay within the **26.3 mm base width**, with no support projecting
@@ -105,6 +107,7 @@ the original before printing the whole part.
 | Body width at first measurement position | 26.3 | `reference/measurements/02.jpg` |
 | Earlier caliper span; not used as total height | 19.8 | `reference/measurements/03.jpg`; superseded height interpretation |
 | Hook inside diameter | 9.7 | Owner correction explicitly confirmed as diameter; supersedes the initial 9.4 mm reading in photo 08 |
+| Mounting face to nearest inside hook curve | 7.7 | `reference/measurements/20.jpg`; perpendicular to mounting face |
 | Hook mouth, narrower entrance | about 8–8.2; model 8.1 | `reference/measurements/09.jpg` and owner clarification |
 | Mounting face down to farthest outside hook edge, perpendicular | 20 | Owner measurement and explicit direction clarification |
 | Internal tooth local height / inward projection | 1.4 / 1.4 | Owner corrected the earlier 2.4 mm values and specified placement opposite the opening |
@@ -142,9 +145,9 @@ It projects 1.4 mm radially inward from the nominal inner wall and measures
 1.4 mm along the local tangent of the bore. Its centreline is diametrically
 opposite the mouth centreline, as specified by the owner, and it runs across
 the part width. The section preview shows the shared diameter as a dotted line.
-Its small edge radii remain estimates. The hook's
-approximately 2.5 mm shell thickness is also estimated; the measured 2.5–2.6 mm
-wall value belongs to the mounting base.
+Its small edge radii remain estimates. The hook's 2.6 mm radial shell thickness
+is derived from the 20 mm outside drop, 7.7 mm nearest-inside distance and
+9.7 mm bore. The mounting base independently uses 2.55 mm thickness.
 
 The peg centre remains an estimate at X=5.4 mm from the rounded end. Its root
 ends at X=9.1 mm; the fins start at X=18.1 mm. The flat platform extends to
@@ -178,11 +181,12 @@ all prior revisions. Do not squash or overwrite the design history.
 
 ## Photographs
 
-- `reference/measurements/`: nineteen owner-provided JPEG references, in received
+- `reference/measurements/`: twenty owner-provided JPEG references, in received
   order, published with the owner's explicit permission. Camera metadata was
   removed before inclusion. Photos 13 and 14 show the same measurement view;
   photos 15–18 show the latch wall and its reinforcement in close-up; photo 19
-  shows the hook's open side profile and projecting internal rib.
+  shows the hook's open side profile and projecting internal rib; photo 20
+  records the 7.7 mm base-to-nearest-inside measurement used in v10.
 - `reference/listing/source.txt`: the public product listing and original photo
   links, for provenance only. The seller's photographs are **not redistributed**
   in this repository, including in its published Git history.

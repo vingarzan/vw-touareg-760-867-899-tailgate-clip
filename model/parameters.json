@@ -1,5 +1,5 @@
 {
-  "revision": "v09",
+  "revision": "v10",
   "units": "mm",
   "measured": {
     "length": 34.4,
@@ -25,7 +25,8 @@
     "earlier_caliper_span": 19.8,
     "hook_drop_from_mounting_surface": 20.0,
     "hook_internal_rib_height": 1.4,
-    "hook_internal_rib_projection": 1.4
+    "hook_internal_rib_projection": 1.4,
+    "hook_base_to_nearest_inside": 7.7
   },
   "estimated": {
     "rear_corner_radius": 7.3,
@@ -44,7 +45,6 @@
     "frame_end_from_fin_start": 12.2,
     "latch_wall_thickness_x": 1.2,
     "latch_wall_foot_from_fin_start": 7.9,
-    "hook_shell_wall": 2.5,
     "hook_opening_direction_degrees": 30.0,
     "coupon_handle_length": 7.0,
     "coupon_handle_height": 8.0,
@@ -71,7 +71,6 @@
     "Hook bottom Z = base_wall - 20 mm. With the 7.6 mm fin above the mounting face, total height is 27.6 mm.",
     "The new side photo shows the mouth facing diagonally outward, rather than upward into the mounting plate. The 30 degree opening direction above +X is a photo estimate.",
     "A round cavity and a straight 8.1 mm-wide entry path are subtracted from the entire body after joining plate, frame, neck and hook. The rib is added afterward. This prevents host geometry from closing the mouth.",
-    "The approximately 2.5 mm hook shell wall is estimated; only the mounting base wall was directly measured at 2.5-2.6 mm.",
     "The owner corrected the internal tooth to 1.4 x 1.4 mm. It is centred diametrically opposite the opening and runs across the full width along the cylinder axis.",
     "The tooth projects 1.4 mm radially inward and measures 1.4 mm across the local tangent of the bore; its centreline is exactly opposite the mouth centreline. Only small edge radii remain estimated.",
     "The owner requested a solid back link from hook to mounting base. A full-width solid web fills the former gap between the inclined rear skin and upper hook/neck. The circular cavity and entry corridor are still cut afterward, so the hook opening and tooth remain clear.",
@@ -80,7 +79,8 @@
     "The owner requested flush lateral hook supports: separate outer side webs are removed. The hook/back link and neck are limited to the 26.3 mm base width; the independently measured 27.6 mm front crossbar is retained.",
     "The solid back link now joins the hook outer circle on a tangent from the mounting base, avoiding the stepped mid-profile and protruding lower support corners.",
     "The owner reported peg legs breaking and requested inside root support. A conical inner collar reduces the cavity radius to 0.9 mm at its floor, tapering to the existing 2.1 mm radius over 1.1 mm; these reinforcement dimensions are design choices.",
-    "The 1 mm-wide peg slots now have 0.5 mm-radius lower ends centred at Z=3.9 mm (lowest cut at Z=3.4), replacing the sharp rectangular slot roots. Outer peg dimensions are retained; insertion force and fatigue require a new physical trial."
+    "The 1 mm-wide peg slots now have 0.5 mm-radius lower ends centred at Z=3.9 mm (lowest cut at Z=3.4), replacing the sharp rectangular slot roots. Outer peg dimensions are retained; insertion force and fatigue require a new physical trial.",
+    "Owner photo 20 shows 7.7 mm perpendicular from the peg/fin mounting face to the nearest inside hook curve. With the existing 20 mm outside drop and 9.7 mm bore, the derived radial hook wall is 20 - 7.7 - 9.7 = 2.6 mm, replacing the estimated 2.5 mm. This reduces the v09 nearest-inside distance by 0.1 mm; it is not a 7.7 mm measurement to the free lip or deepest inside curve."
   ],
   "construction": {
     "solid_hook_back_link": true,

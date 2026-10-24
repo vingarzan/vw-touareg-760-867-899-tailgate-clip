@@ -89,7 +89,7 @@ def back_link_tangent(cx,cz,ro):
 
 def hook_profile():
     ri = M['hook_cavity']/2
-    ro = ri + E['hook_shell_wall']
+    ro = M['hook_drop_from_mounting_surface'] - M['hook_base_to_nearest_inside'] - ri
     direction = E['hook_opening_direction_degrees']
     half_opening = math.degrees(math.asin(M['hook_mouth']/(2*ri)))
     start, end = direction+half_opening, direction-half_opening+360
@@ -392,6 +392,8 @@ def main():
         'hook_cavity_design_diameter_mm':2*ri,
         'hook_mouth_design_chord_mm':2*ri*math.sin(math.radians(a)),
         'hook_drop_from_mounting_surface_mm':M['hook_drop_from_mounting_surface'],
+        'hook_base_to_nearest_inside_mm':M['hook_base_to_nearest_inside'],
+        'derived_hook_shell_wall_mm':ro-ri,
         'hook_internal_rib_height_mm':M['hook_internal_rib_height'],
         'hook_internal_rib_projection_mm':M['hook_internal_rib_projection'],
         'peg_base_design_diameter_mm':M['peg_base_diameter'],

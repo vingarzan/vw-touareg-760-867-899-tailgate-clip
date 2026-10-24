@@ -21,7 +21,7 @@ def render_section(stl_path, parameters, out_path):
         points.extend(a.tolist()+[a[0].tolist()])
         codes.extend([PlotPath.MOVETO]+[PlotPath.LINETO]*(len(a)-1)+[PlotPath.CLOSEPOLY])
     mm=parameters['measured'];ee=parameters['estimated']
-    ri=mm['hook_cavity']/2;ro=ri+ee['hook_shell_wall']
+    ri=mm['hook_cavity']/2;ro=mm['hook_drop_from_mounting_surface']-mm['hook_base_to_nearest_inside']-ri
     direction=math.radians(ee['hook_opening_direction_degrees'])
     half=math.asin(mm['hook_mouth']/(2*ri))
     cx=mm['length']-ro*math.cos(direction-half)
@@ -56,7 +56,14 @@ def render_section(stl_path, parameters, out_path):
     ax.text(dx+.4,(bottom+zface)/2,'20 mm from mounting face',rotation=90,ha='left',va='center',fontsize=11)
     ax.hlines(zface,cx-ro-3.0,dx,colors='#555',linestyles=':',lw=1)
     ax.text(cx-ro-2.8,zface+.35,'Flat mounting face',fontsize=10,color='#555')
-    ax.annotate('Solid link to base',xy=(23.0,-3.6),xytext=(19.0,-1.1),
+    gap_x=cx-5.5
+    ax.annotate('',xy=(gap_x,cz+ri),xytext=(gap_x,zface),
+                arrowprops={'arrowstyle':'<->','color':'#2d7050','lw':1.5})
+    ax.hlines(cz+ri,gap_x-.5,cx,colors='#2d7050',linestyles=':',lw=.8)
+    ax.text(gap_x-.35,(zface+cz+ri)/2,'7.7 mm to nearest inside',rotation=90,
+            va='center',ha='right',fontsize=10,color='#2d7050',
+            bbox={'facecolor':'white','edgecolor':'none','alpha':.85,'pad':2})
+    ax.annotate('Solid link to base',xy=(25.0,-3.6),xytext=(23.0,-1.1),
                 fontsize=11,color='#234a63',
                 arrowprops={'arrowstyle':'->','color':'#234a63'})
     ax.scatter([cx],[cz],s=12,color='#555')

@@ -35,7 +35,7 @@ def axis_crossings(mesh,y,origin,direction):
 def check_export(path, parameters):
     m=trimesh.load_mesh(path,process=True)
     measured=parameters['measured']; estimated=parameters['estimated']
-    ro=measured['hook_cavity']/2+estimated['hook_shell_wall']
+    ro=measured['hook_drop_from_mounting_surface']-measured['hook_base_to_nearest_inside']-measured['hook_cavity']/2
     direction=math.radians(estimated['hook_opening_direction_degrees'])
     ri=measured['hook_cavity']/2
     half=math.asin(measured['hook_mouth']/(2*ri))
@@ -49,6 +49,14 @@ def check_export(path, parameters):
     fin_start=estimated['peg_center_from_rear']+measured['peg_base_diameter']/2+measured['peg_to_fin_edge_gap_along_length']
     result['hook_drop_from_mounting_surface_mm']=float(measured['base_wall']-m.bounds[0,2])
     assert abs(result['hook_drop_from_mounting_surface_mm']-measured['hook_drop_from_mounting_surface'])<.003
+    nearest_checks=[]
+    for y in [-8.,0.,8.]:
+        vertical=axis_crossings(m,y,center,[0,1])
+        nearest_inside_z=cz+float(vertical[vertical>0].min())
+        gap=measured['base_wall']-nearest_inside_z
+        assert abs(gap-measured['hook_base_to_nearest_inside'])<.003,('incorrect base-to-inside distance',y,gap)
+        nearest_checks.append({'y_mm':y,'mounting_face_to_nearest_inside_mm':gap})
+    result['hook_base_to_nearest_inside_sections']=nearest_checks
     lip_station=math.sqrt(ri*ri-(measured['hook_mouth']/2)**2)
     for y in [-8.0,0.0,8.0]:
         for name,origin,axis,want in [
