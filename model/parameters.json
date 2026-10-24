@@ -1,5 +1,5 @@
 {
-  "revision": "v04",
+  "revision": "v05",
   "units": "mm",
   "measured": {
     "length": 34.4,
@@ -24,8 +24,8 @@
     "peg_to_fin_edge_gap_along_length": 9.0,
     "earlier_caliper_span": 19.8,
     "hook_drop_from_mounting_surface": 20.0,
-    "hook_internal_rib_height": 2.4,
-    "hook_internal_rib_projection": 2.4
+    "hook_internal_rib_height": 1.4,
+    "hook_internal_rib_projection": 1.4
   },
   "estimated": {
     "rear_corner_radius": 7.3,
@@ -62,8 +62,9 @@
     "The owner clarified the hook drop: 20 mm perpendicular from the peg/fin mounting face (Z=base_wall) to the lowest outside hook edge. The earlier 19.8 mm span is kept as reference evidence and is no longer treated as total part height.",
     "Hook bottom Z = base_wall - 20 mm. With the 7.6 mm fin above the mounting face, total height is 27.6 mm.",
     "The new side photo shows the mouth facing diagonally outward, rather than upward into the mounting plate. The 30 degree opening direction above +X is a photo estimate.",
-    "The owner confirmed that the 2.4 x 2.4 mm feature is a projecting rib, not a recess. It runs along Y across the inner rear wall; its vertical centre is aligned with the cylinder axis.",
     "A round cavity and a straight 8.1 mm-wide entry path are subtracted from the entire body after joining plate, frame, neck and hook. The rib is added afterward. This prevents host geometry from closing the mouth.",
-    "The approximately 2.5 mm hook shell wall is estimated; only the mounting base wall was directly measured at 2.5-2.6 mm."
+    "The approximately 2.5 mm hook shell wall is estimated; only the mounting base wall was directly measured at 2.5-2.6 mm.",
+    "The owner corrected the internal tooth to 1.4 x 1.4 mm. It is centred diametrically opposite the opening and runs across the full width along the cylinder axis.",
+    "The tooth projects 1.4 mm radially inward and measures 1.4 mm across the local tangent of the bore; its centreline is exactly opposite the mouth centreline. Only small edge radii remain estimated."
   ]
 }

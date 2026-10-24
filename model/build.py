@@ -212,12 +212,17 @@ def build():
                -M['frame_width']/2,M['frame_width']/2,0.02,2.5)
     host=(rounded_base()+lower+rail+neck)-channel-hook_entry_void(cx,cz,ri)
     body=host+hook
-    # The owner's "notch" is a tooth projecting INTO the bore, 2.4 mm tall
-    # and 2.4 mm deep at the middle of the rear wall. Embed its root 0.3 mm.
-    rear=cx-ri
-    rib=box(rear-0.3,rear+M['hook_internal_rib_projection'],
-            -M['frame_width']/2,M['frame_width']/2,
-            cz-M['hook_internal_rib_height']/2,cz+M['hook_internal_rib_height']/2)
+    # The corrected 1.4 x 1.4 mm tooth is diametrically opposite the mouth.
+    # U points through the opening; the tooth is centred on the negative U
+    # axis. Its local height runs along V. Embed the root 0.3 mm into the wall.
+    angle=math.radians(E['hook_opening_direction_degrees'])
+    u=np.array([math.cos(angle),math.sin(angle)])
+    v=np.array([-math.sin(angle),math.cos(angle)])
+    h=M['hook_internal_rib_height']/2
+    profile=[np.array([cx,cz])+u*a+v*b for a,b in [
+        (-ri-.3,-h),(-ri+M['hook_internal_rib_projection'],-h),
+        (-ri+M['hook_internal_rib_projection'],h),(-ri-.3,h)]]
+    rib=xz(profile,M['frame_width'])
     body=(body+rib)^envelope
     parts = [body,peg(),guides(),spring_latch()]
     clip = mf.Manifold.batch_boolean(parts,mf.OpType.Add).simplify(0.0001)

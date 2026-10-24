@@ -66,18 +66,22 @@ def check_export(path, parameters):
             blocked=ts[ts>lip_station+.003]
             assert len(blocked)==0,('blocked hook entrance',y,float(v),blocked)
     result['unobstructed_entry_rays_checked']=3*17
-    # The rib is a solid tooth. Check its projection and vertical thickness
-    # at both sides and the middle of the cylinder extrusion.
+    # Check the radial projection and tangential height at both sides and
+    # the centre. The tooth must lie on the diameter opposite the mouth.
     rib_results=[]
     for y in [-13.5,0,13.5]:
-        xs=section_crossings(m,y,cz)
-        tip=float(xs[xs<cx].max())
-        projection=tip-(cx-ri)
+        ts=axis_crossings(m,y,center,outward)
+        tip=float(ts[ts<0].max())
+        projection=tip+ri
         assert abs(projection-measured['hook_internal_rib_projection'])<.003
-        zs=axis_crossings(m,y,[cx-ri+measured['hook_internal_rib_projection']/2,cz],[0,1])
+        station=center+outward*(-ri+measured['hook_internal_rib_projection']/2)
+        zs=axis_crossings(m,y,station,across)
         height=float(zs[zs>0].min()-zs[zs<0].max())
         assert abs(height-measured['hook_internal_rib_height'])<.003
-        rib_results.append({'y_mm':y,'height_mm':height,'projection_mm':projection})
+        offset=float((zs[zs>0].min()+zs[zs<0].max())/2)
+        assert abs(offset)<.003,('tooth not opposite mouth',y,offset)
+        rib_results.append({'y_mm':y,'height_mm':height,'projection_mm':projection,
+                            'tangential_center_offset_mm':offset})
     result['internal_rib_sections']=rib_results
     for side,sign in [('right',-1),('left',1)]:
         y=sign*(measured['guide_outside_width']/2-measured['fin_thickness']/2)

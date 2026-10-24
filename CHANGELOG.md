@@ -1,5 +1,18 @@
 # Design history
 
+## v05 — corrected tooth size and placement — 2026-10-24
+
+- Owner corrected the tooth dimensions from 2.4 × 2.4 mm to 1.4 × 1.4 mm.
+- Centred the transverse tooth diametrically opposite the hook opening,
+  with 1.4 mm inward radial projection and 1.4 mm local tangential height.
+- Added exported-STL section checks at both sides and the middle to verify
+  its size and zero tangential offset from the opposite-mouth diameter.
+- Updated the hook fit-test slice and dimensioned section preview. The shared
+  tooth/mouth diameter is drawn as a dotted line to make the placement clear.
+- Retained the reopened 8.1 mm mouth, 20 mm drop from the mounting face, flat
+  mounting platform, 9 mm peg-to-fin gap and continuous latch wall.
+- All four STLs pass geometry validation; printing and physical fit remain untested.
+
 ## v04 — reopen the hook, add internal rib, correct height datum — 2026-10-24
 
 - Added owner side photo 19 and used it to correct the mouth direction:

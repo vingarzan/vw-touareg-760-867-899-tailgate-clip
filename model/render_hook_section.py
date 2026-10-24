@@ -26,20 +26,24 @@ def render_section(stl_path, parameters, out_path):
     half=math.asin(mm['hook_mouth']/(2*ri))
     cx=mm['length']-ro*math.cos(direction-half)
     bottom=float(m.bounds[0,2]);cz=bottom+ro
-    root=cx-ri;tip=root+mm['hook_internal_rib_projection']
+    u=np.array([math.cos(direction),math.sin(direction)])
+    v=np.array([-math.sin(direction),math.cos(direction)])
+    def point(a,b):return np.array([cx,cz])+u*a+v*b
+    root=-ri;tip=root+mm['hook_internal_rib_projection']
     fig,ax=plt.subplots(figsize=(8,8),facecolor='white')
     ax.add_patch(PathPatch(PlotPath(points,codes),facecolor='#b9d1df',edgecolor='#234a63',lw=1.5))
     # Highlight the actual tooth's exposed edges.
     h=mm['hook_internal_rib_height']/2
-    ax.plot([root,tip,tip,root],[cz-h,cz-h,cz+h,cz+h],color='#bf5e23',lw=2)
-    ax.annotate('',xy=(root,cz+2.1),xytext=(tip,cz+2.1),
+    edge=np.array([point(root,-h),point(tip,-h),point(tip,h),point(root,h)])
+    ax.plot(edge[:,0],edge[:,1],color='#bf5e23',lw=2)
+    ax.annotate('',xy=point(root,h+1.0),xytext=point(tip,h+1.0),
                 arrowprops={'arrowstyle':'<->','color':'#bf5e23'})
-    ax.text((root+tip)/2,cz+2.4,'2.4 mm projection',ha='center',fontsize=10,color='#a14c1a')
-    ax.annotate('',xy=(tip+.65,cz-h),xytext=(tip+.65,cz+h),
+    ax.text(*point((root+tip)/2,h+1.4),'1.4 mm',ha='center',rotation=math.degrees(direction),fontsize=10,color='#a14c1a')
+    ax.annotate('',xy=point(tip+.55,-h),xytext=point(tip+.55,h),
                 arrowprops={'arrowstyle':'<->','color':'#bf5e23'})
-    ax.text(tip+1.0,cz,'2.4 mm',va='center',rotation=90,fontsize=10,color='#a14c1a')
-    u=np.array([math.cos(direction),math.sin(direction)])
-    v=np.array([-math.sin(direction),math.cos(direction)])
+    ax.text(*point(tip+1.0,0),'1.4 mm',va='center',rotation=math.degrees(direction)-90,fontsize=10,color='#a14c1a')
+    diameter=np.array([point(root-.3,0),point(ri+.8,0)])
+    ax.plot(diameter[:,0],diameter[:,1],color='#888',lw=.7,ls=':')
     lip=np.array([cx,cz])+u*math.sqrt(ri*ri-(mm['hook_mouth']/2)**2)
     p=lip+v*mm['hook_mouth']/2;q=lip-v*mm['hook_mouth']/2
     ax.annotate('',xy=p,xytext=q,arrowprops={'arrowstyle':'<->','color':'#a14c1a','lw':1.5})
@@ -55,6 +59,6 @@ def render_section(stl_path, parameters, out_path):
     ax.scatter([cx],[cz],s=12,color='#555')
     ax.set_xlim(cx-ro-3.5,dx+2);ax.set_ylim(bottom-1.5,zface+1.5)
     ax.set_aspect('equal');ax.grid(alpha=.15);ax.set_xlabel('X · mm');ax.set_ylabel('Z · mm')
-    ax.set_title(f"{parameters['revision']} · actual STL centre section\nOpen hook and continuous internal rib",fontsize=15,pad=16)
+    ax.set_title(f"{parameters['revision']} · actual STL centre section\n1.4 × 1.4 mm tooth opposite the opening",fontsize=15,pad=16)
     fig.text(.5,.02,'Geometry preview only · physical fit remains untested',ha='center',fontsize=10,color='#555')
     fig.tight_layout(rect=(0,.035,1,1));fig.savefig(out_path,dpi=170);plt.close(fig)

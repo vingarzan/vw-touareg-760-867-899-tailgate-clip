@@ -2,7 +2,7 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v04 reconstructed prototype with the corrected open hook, 20 mm hook drop and 2.4 × 2.4 mm internal rib. No printed fit or retention test has been performed.**
+**Status: v05 reconstructed prototype with the corrected open hook, 20 mm hook drop and 1.4 × 1.4 mm internal tooth. No printed fit or retention test has been performed.**
 
 ![Model preview](previews/clip.png)
 
@@ -32,7 +32,7 @@ peg diameters and height, both fins, the 9 mm longitudinal edge gap, lip width
 and latch width to 0.003 mm of the
 design values. That is a digital geometry tolerance, not a physical measurement
 or printing accuracy claim.
-The checks also measure the 20 mm hook drop and the 2.4 × 2.4 mm projecting rib
+The checks also measure the 20 mm hook drop and the 1.4 × 1.4 mm projecting tooth
 at both ends and the centre. Fifty-one rays through the exported STL's entry
 path check that the mouth is not blocked by the platform, frame or neck.
 These are geometry checks, not evidence of printed fit or service life.
@@ -47,7 +47,7 @@ python3 -m venv .venv
 ```
 
 [`model/parameters.json`](model/parameters.json) separates measured dimensions
-from estimates. v04 retains the separately measured left and right fins and
+from estimates. v05 retains the separately measured left and right fins and
 places their nearest vertical edges **9 mm beyond the hook-facing edge of the
 peg root along the length of the base**. This is an approximate physical
 measurement implemented as 9.0 mm in the model.
@@ -72,7 +72,7 @@ the original before printing the whole part.
 | Hook cavity, wider interior | 9.4 | `reference/measurements/08.jpg`; interpretation confirmed by owner |
 | Hook mouth, narrower entrance | about 8–8.2; model 8.1 | `reference/measurements/09.jpg` and owner clarification |
 | Mounting face down to farthest outside hook edge, perpendicular | 20 | Owner measurement and explicit direction clarification |
-| Internal rib height / inward projection | 2.4 / 2.4 | Owner measurement; confirmed to project into the bore |
+| Internal tooth local height / inward projection | 1.4 / 1.4 | Owner corrected the earlier 2.4 mm values and specified placement opposite the opening |
 | Narrow hook lip width | 17.3 | `reference/measurements/10.jpg`; read from jaw placement |
 | Maximum frame width | 27.6 | `reference/measurements/11.jpg` |
 | Outside guide width | 26.0 | `reference/measurements/12.jpg` and owner clarification |
@@ -103,9 +103,11 @@ hook supplies the mating surface. The upper fixed arm stays attached to the
 mounting platform, while the entry remains open.
 
 The internal feature is a solid transverse **rib**, not a recessed groove.
-It projects 2.4 mm inward from the nominal inner back wall and is 2.4 mm tall,
-centred vertically on the cylinder axis and continuous across the part width.
-Its precise angular position and edge radii are photo estimates. The hook's
+It projects 1.4 mm radially inward from the nominal inner wall and measures
+1.4 mm along the local tangent of the bore. Its centreline is diametrically
+opposite the mouth centreline, as specified by the owner, and it runs across
+the part width. The section preview shows the shared diameter as a dotted line.
+Its small edge radii remain estimates. The hook's
 approximately 2.5 mm shell thickness is also estimated; the measured 2.5–2.6 mm
 wall value belongs to the mounting base.
 
