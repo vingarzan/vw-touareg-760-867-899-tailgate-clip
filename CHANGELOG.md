@@ -1,5 +1,28 @@
 # Design history
 
+## v03 — continuous latch wall and corrected spacing — 2026-10-24
+
+- Replaced the latch's open-strut construction with a full 15 mm-wide wall
+  connected to the base, with three solid curved gussets on the peg side.
+- Applied the owner's approximate 9 mm longitudinal clear gap from the peg
+  root edge to the nearest vertical edges of both fins. The owner explicitly
+  confirmed edge-to-edge along the length, rather than a lateral or diagonal gap.
+- Fin rear edges moved from X=9.5 to X=18.1 mm; the peg centre remains at X=5.4.
+  The latch and frame move forward with the fins. Overall length stays 34.4 mm.
+- Extended the continuous flat mounting platform to X=29.6 mm to support these
+  features. The owner authorized a flat surface beneath peg and fins rather
+  than reproducing material-saving recesses.
+- Kept the frame foot above Z=0 so it cannot block the measured hook-mouth span.
+  The extended platform now forms a flat roof over part of the hook channel.
+- Updated the hook fit test to be an actual 5 mm slice of the complete hook,
+  including the roof, rather than a bare circular U profile.
+- Added four owner-authorized close-up photographs (15–18).
+- Extended exported-STL checks to measure the 9 mm gap at both fin roots and
+  confirm a continuous latch wall between reinforcement ribs at twelve sections.
+- All four exported STLs pass mesh validation. Physical printing and vehicle
+  fit remain unverified; wall thickness and the unmeasured absolute stations
+  remain documented estimates.
+
 ## v02 — measured asymmetric fins — 2026-10-24
 
 - Right fin: base 9.9, top 5.5, height 7.6 mm above the inner base surface.

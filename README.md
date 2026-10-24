@@ -2,7 +2,7 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v02 reconstructed prototype with measured, asymmetric fins. No printed fit or retention test has been performed.**
+**Status: v03 reconstructed prototype with a continuous latch wall, flat mounting platform and corrected peg-to-fin spacing. No printed fit or retention test has been performed.**
 
 ![Model preview](previews/clip.png)
 
@@ -12,7 +12,7 @@ All files use millimetres. Import at 100% scale.
 
 - [`stl/760867899_clip.stl`](stl/760867899_clip.stl): complete clip in design coordinates.
 - [`stl/760867899_clip_on_side.stl`](stl/760867899_clip_on_side.stl): the same clip rotated onto one side, with its lowest surface at Z=0. Inspect supports before printing.
-- [`stl/760867899_hook_fit_test.stl`](stl/760867899_hook_fit_test.stl): a 5 mm-wide sample of the hook channel. Its flat end is on the bed; print this first to check the cavity and mouth. It does not test the peg, full-width hook stiffness, or complete assembly retention.
+- [`stl/760867899_hook_fit_test.stl`](stl/760867899_hook_fit_test.stl): a 5 mm-wide section cut directly from the finished hook, including its platform roof. Its flat end is on the bed; print this first to check the cavity and mouth. It does not test the peg, full-width hook stiffness, or complete assembly retention.
 - [`stl/760867899_peg_fit_test.stl`](stl/760867899_peg_fit_test.stl): the measured split peg on a 14 × 14 mm flat base. This is a small trial of the peg geometry, not a substitute for testing the complete clip.
 
 The complete part has undercuts and a horizontal peg in the side orientation.
@@ -26,7 +26,8 @@ The exported STLs were reloaded and checked for a single connected solid,
 watertightness, consistent winding, positive volume and no degenerate triangles.
 See [`validation/geometry_checks.json`](validation/geometry_checks.json).
 Cross-sections of the exported clip also independently verify the hook openings,
-peg diameters and height, both fins, lip width and latch width to 0.003 mm of the
+peg diameters and height, both fins, the 9 mm longitudinal edge gap, lip width
+and latch width to 0.003 mm of the
 design values. That is a digital geometry tolerance, not a physical measurement
 or printing accuracy claim.
 These are geometry checks, not evidence of printed fit or service life.
@@ -41,7 +42,15 @@ python3 -m venv .venv
 ```
 
 [`model/parameters.json`](model/parameters.json) separates measured dimensions
-from estimates. v02 incorporates the separately measured left and right fins.
+from estimates. v03 retains the separately measured left and right fins and
+places their nearest vertical edges **9 mm beyond the hook-facing edge of the
+peg root along the length of the base**. This is an approximate physical
+measurement implemented as 9.0 mm in the model.
+
+The opposite 15 mm-wide latch now joins the base through a continuous wall,
+reinforced by three solid gussets on the peg side. Its wall thickness and lean
+are photo estimates. The mounting surface beneath peg and fins is flat and
+continuous, as requested by the owner; material-saving recesses are omitted.
 
 Looking from the **rounded peg end toward the hook**, with the peg pointing up,
 the **right fin is the taller fin** (negative Y). Both fins have a vertical edge
@@ -69,16 +78,25 @@ the original before printing the whole part.
 | Left fin: base / top length | 9.5 / 6.9 | Owner measurement |
 | Left fin: height above inner surface | 3.7 | Owner measurement |
 | Both fin walls | 1.6 | Owner measurement |
+| Peg root to nearest fin edges, along base length | about 9 | Owner measurement; edge-to-edge direction explicitly confirmed |
 
 The peg position, hollow centre and slits, latch positions, flexure thicknesses,
 and small radii are photo estimates. Photographs do not provide a calibrated 3D scan.
 
 The right fin reaches Z=10.15 mm above the outside base. With the 19.8 mm overall
 height, the reconstructed hook reaches Z=-9.65 mm. This placement assumes the
-overall height spans the tallest fin and the bottom of the hook. The circular
-hook interior, its taper in width, and the unseen shoulder profile remain
-reconstruction assumptions. The guide and peg locations should be checked
-against a printed sample; these positions have not been directly measured.
+overall height spans the tallest fin and the bottom of the hook. The curved
+hook profile, its taper in width, and the unseen shoulder profile remain
+reconstruction assumptions. The platform roof overlaps the upper part of the
+initial circular hook profile; the 9.4 mm cavity and 8.1 mm mouth are verified
+as horizontal spans below that roof. The revised hook coupon includes this roof.
+
+The peg centre remains an estimate at X=5.4 mm from the rounded end. Its root
+ends at X=9.1 mm; the fins start at X=18.1 mm. The flat platform extends to
+X=29.6 mm to support the fins and latch, while overall length stays 34.4 mm.
+Only the relative peg-to-fin station has now been measured. The latch station,
+its approximately 1.2 mm-thick support wall and the front frame position remain
+photo estimates and should be compared with the original before printing.
 
 ## First print
 
@@ -102,9 +120,10 @@ all prior revisions. Do not squash or overwrite the design history.
 
 ## Photographs
 
-- `reference/measurements/`: fourteen owner-provided JPEG references, in received
+- `reference/measurements/`: eighteen owner-provided JPEG references, in received
   order, published with the owner's explicit permission. Camera metadata was
-  removed before inclusion. Photos 13 and 14 show the same measurement view.
+  removed before inclusion. Photos 13 and 14 show the same measurement view;
+  photos 15–18 show the latch wall and its reinforcement in close-up.
 - `reference/listing/source.txt`: the public product listing and original photo
   links, for provenance only. The seller's photographs are **not redistributed**
   in this repository, including in its published Git history.

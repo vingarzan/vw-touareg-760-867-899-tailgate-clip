@@ -55,7 +55,8 @@ def arc(cx, cy, radius, a0, a1, count=80):
 
 
 def rounded_base():
-    w, r, end = M['body_width']/2, E['rear_corner_radius'], E['base_length']
+    w, r = M['body_width']/2, E['rear_corner_radius']
+    end = fin_start_x() + E['base_front_from_fin_start']
     # Large radii only at the rear peg end; small corners on the frame end.
     points = arc(r, -w+r, r, 180, 270, 40)
     points += [[end-0.7, -w]]
@@ -87,8 +88,10 @@ def hook_envelope():
     # Front free lip narrows to the measured 17.3 mm. Side shoulders support
     # the wider 27.6 mm frame; the precise taper is estimated from photographs.
     w, lip = M['frame_width']/2, M['hook_lip_width']/2
-    plan = [[-2,-w], [21.5,-w], [31.2,-lip], [36,-lip],
-            [36,lip], [31.2,lip], [21.5,w], [-2,w]]
+    shoulder = fin_start_x() + E['frame_end_from_fin_start'] - 0.2
+    taper_end = M['length']-1.2
+    plan = [[-2,-w], [shoulder,-w], [taper_end,-lip], [36,-lip],
+            [36,lip], [taper_end,lip], [shoulder,w], [-2,w]]
     return section(plan).extrude(40).translate([0,0,-20])
 
 
@@ -112,29 +115,38 @@ def peg():
     return p - inner - slots
 
 
+def fin_start_x():
+    return E['peg_center_from_rear'] + M['peg_base_diameter']/2 + M['peg_to_fin_edge_gap_along_length']
+
+
 def spring_latch():
-    # Three curved flexible ribs visibly connect the foot to the transverse
-    # latch. Their free ends stay clear of the frame cross rail.
+    # The close-ups show a continuous transverse wall, reinforced by three
+    # gussets on the peg side. It is not a bar held only by open curved struts.
+    start = fin_start_x()
+    z0 = M['base_wall']
+    wall_top = E['latch_top_z'] - E['latch_bar_thickness']
+    foot = start + E['latch_wall_foot_from_fin_start']
+    thick = E['latch_wall_thickness_x']
+    lean = 1.2
+    wall = xz([[foot,z0-0.15],[foot+thick,z0-0.15],
+               [foot+thick+lean,wall_top+0.1],[foot+lean,wall_top+0.1]],M['latch_width'])
     t = np.linspace(0,1,48)[:,None]
-    p0, p1, p2, p3 = map(np.array, ([10.4,2.2], [14.8,2.2], [14.3,5.8], [19.3,6.25]))
+    p0, p1, p2, p3 = map(np.array, ([start+0.9,z0+0.15], [start+5.3,z0+0.15],
+                                  [start+4.8,wall_top-0.1], [start+9.8,wall_top+0.2]))
     center = (1-t)**3*p0 + 3*(1-t)**2*t*p1 + 3*(1-t)*t**2*p2 + t**3*p3
-    tangent = np.gradient(center, axis=0)
-    normal = np.column_stack([-tangent[:,1],tangent[:,0]])
-    normal /= np.linalg.norm(normal,axis=1)[:,None]
-    h = E['latch_rib_thickness']/2
-    profile = np.vstack([center+normal*h, (center-normal*h)[::-1]])
+    profile = np.vstack([[center[0,0],z0-0.15],center,[center[-1,0],z0-0.15]])
     ribs = [xz(profile, E['latch_rib_width'], y) for y in [-5.4,0,5.4]]
-    w = M['latch_width']/2
     # One cross-section prevents coincident faces between bar and tooth.
-    bar = xz([[18.6,5.9],[20.0,5.9],[20.0,5.6],[20.7,6.2],
-              [20.4,7.2],[18.6,7.2]],M['latch_width'])
-    return mf.Manifold.batch_boolean(ribs+[bar],mf.OpType.Add)
+    bar = xz([[start+9.1,wall_top],[start+10.5,wall_top],
+              [start+10.5,wall_top-0.3],[start+11.2,wall_top+0.3],
+              [start+10.9,E['latch_top_z']],[start+9.1,E['latch_top_z']]],M['latch_width'])
+    return mf.Manifold.batch_boolean(ribs+[wall,bar],mf.OpType.Add)
 
 
 def guides():
     t = M['fin_thickness']
     c = M['guide_outside_width']/2 - t/2
-    start = E['fin_rear_edge_from_peg_end']
+    start = fin_start_x()
     z0 = M['base_wall']
     fins = []
     for side,y in [('right',-c),('left',c)]:
@@ -174,15 +186,19 @@ def build():
     # Keep the peg and latch side of the skin continuous; only the lower hook
     # receives the circular channel cut.
     lower = (hook + ((ramp + webs) - channel)) ^ envelope
-    # Slight overlap avoids leaving disconnected faces at the rail root.
-    # Extend the rail foot into the ramp so the shallower v02 hook cannot
-    # leave a sealed sliver-shaped pocket under the rear of the cross rail.
-    rail = box(19.4,21.7,-M['frame_width']/2,M['frame_width']/2,-0.8,2.5)
+    # The extended flat platform supports the new frame station. Keep its
+    # foot above Z=0 so it cannot intrude into the measured hook mouth.
+    rail = box(fin_start_x()+E['frame_start_from_fin_start'],
+               fin_start_x()+E['frame_end_from_fin_start'],
+               -M['frame_width']/2,M['frame_width']/2,0.02,2.5)
     body = rounded_base() + lower + rail
     parts = [body,peg(),guides(),spring_latch()]
     clip = mf.Manifold.batch_boolean(parts,mf.OpType.Add).simplify(0.0001)
-    # The dimension test uses the exact same hook section, made only 5 mm wide.
-    coupon = xz(profile,E['coupon_width'])
+    # Take the test directly from the finished hook, including the flat roof
+    # introduced by the extended platform. A bare circular U would not test
+    # the same opening as this revision of the complete part.
+    cw = E['coupon_width']/2
+    coupon = clip ^ box(cx-ro-0.01,M['length']+0.1,-cw,cw,-20,M['base_wall'])
     return clip, coupon, dim
 
 
@@ -257,6 +273,16 @@ def preview(mesh):
         lo,hi=mesh.bounds; ax.set_xlim(lo[u]-3,hi[u]+3); ax.set_ylim(lo[v]-3,hi[v]+3)
         ax.set_aspect('equal'); ax.grid(alpha=.2); ax.set_title(label)
         ax.set_xlabel('mm'); ax.set_ylabel('mm')
+        if (u,v)==(0,2):
+            root_edge=E['peg_center_from_rear']+M['peg_base_diameter']/2
+            rear=fin_start_x()
+            z=hi[2]+1.2
+            for x in [root_edge,rear]:
+                ax.plot([x,x],[M['base_wall'],z+.2],color='#b05a25',lw=.8,ls=':')
+            ax.annotate('',xy=(root_edge,z),xytext=(rear,z),
+                        arrowprops={'arrowstyle':'<->','color':'#b05a25','lw':1.2})
+            ax.text((root_edge+rear)/2,z+.25,'9 mm clear gap',ha='center',
+                    va='bottom',fontsize=9,color='#8e451c')
     fig.suptitle('Orthographic silhouettes · compare with the original before fitting',fontsize=15)
     fig.tight_layout(); fig.savefig(PREVIEW/'orthographic.png',dpi=160); plt.close(fig)
 
@@ -292,6 +318,10 @@ def main():
         'right_fin_mm':{k:M['right_fin_'+k] for k in ['base_length','top_length','height_above_surface']},
         'left_fin_mm':{k:M['left_fin_'+k] for k in ['base_length','top_length','height_above_surface']},
         'fin_thickness_mm':M['fin_thickness'],
+        'peg_to_fin_edge_gap_along_length_mm':M['peg_to_fin_edge_gap_along_length'],
+        'fin_rear_station_x_mm':fin_start_x(),
+        'latch_has_continuous_wall':True,
+        'mounting_platform_is_flat':True,
         'nominal_and_on_side_same_volume':True,
         'physical_fit_verified':False,
         'slicer_toolpaths_verified':False,

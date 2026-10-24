@@ -1,5 +1,5 @@
 {
-  "revision": "v02",
+  "revision": "v03",
   "units": "mm",
   "measured": {
     "length": 34.4,
@@ -22,10 +22,10 @@
     "left_fin_base_length": 9.5,
     "left_fin_top_length": 6.9,
     "left_fin_height_above_surface": 3.7,
-    "fin_thickness": 1.6
+    "fin_thickness": 1.6,
+    "peg_to_fin_edge_gap_along_length": 9.0
   },
   "estimated": {
-    "base_length": 21.0,
     "rear_corner_radius": 7.3,
     "peg_center_from_rear": 5.4,
     "peg_inner_diameter": 4.2,
@@ -33,13 +33,16 @@
     "peg_slot_root_z": 3.25,
     "peg_barb_shoulder_z": 6.3,
     "peg_tip_diameter": 6.2,
-    "fin_rear_edge_from_peg_end": 9.5,
     "latch_rib_width": 0.95,
-    "latch_rib_thickness": 0.95,
     "latch_top_z": 7.2,
     "latch_bar_thickness": 1.3,
     "side_web_thickness": 1.5,
-    "coupon_width": 5.0
+    "coupon_width": 5.0,
+    "base_front_from_fin_start": 11.5,
+    "frame_start_from_fin_start": 9.9,
+    "frame_end_from_fin_start": 12.2,
+    "latch_wall_thickness_x": 1.2,
+    "latch_wall_foot_from_fin_start": 7.9
   },
   "interpretation": [
     "X runs from the rounded peg end toward the hook; Y is width; Z points toward the peg.",
@@ -49,7 +52,11 @@
     "The three width readings are preserved as different positions: body 26.3, guides 26.0, frame 27.6.",
     "The opposite clip is interpreted as the raised transverse spring latch, 15 mm wide.",
     "Left and right are defined looking from the rounded peg end toward the hook, with the peg pointing up: right is negative Y, left positive Y.",
-    "Both fin rear edges face the peg and are vertical. Only the hook-facing edge tapers. Fin longitudinal position is still a photo estimate.",
-    "Small offsets, draft angles, radii, springs and hidden surfaces are photo estimates, not measured OEM geometry."
+    "Small offsets, draft angles, radii, springs and hidden surfaces are photo estimates, not measured OEM geometry.",
+    "The approximately 9 mm gap is longitudinal, from the hook-facing edge of the peg root to the vertical peg-facing edge of either fin; the owner confirmed edge-to-edge along the length.",
+    "Fin rear X = peg centre X + peg root radius + 9 mm. Peg centre position remains estimated; the relative gap is now measured.",
+    "A continuous wall across the 15 mm latch width joins the retaining lip to the base; three solid curved gussets reinforce its peg-facing side. Wall thickness, lean and latch station are photo estimates.",
+    "The owner authorized a flat continuous mounting platform beneath the peg and fins instead of reproducing material-saving recesses.",
+    "The mounting plate and front frame are lengthened and moved to support the corrected fins; the under-hook roof changes accordingly. The hook is a circular profile with a flat roof where the platform overlaps; 9.4 mm and 8.1 mm are checked as horizontal spans below the platform."
   ]
 }
