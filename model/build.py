@@ -201,10 +201,14 @@ def fin_start_x():
     return E['peg_center_from_rear'] + M['peg_base_diameter']/2 + M['peg_to_fin_edge_gap_along_length']
 
 
+def latch_start_x():
+    return fin_start_x()+P['requested']['latch_shift_away_from_peg']
+
+
 def spring_latch():
     # The close-ups show a continuous transverse wall, reinforced by three
     # gussets on the peg side. It is not a bar held only by open curved struts.
-    start = fin_start_x()
+    start = latch_start_x()
     z0 = M['base_wall']
     wall_top = E['latch_top_z'] - E['latch_bar_thickness']
     foot = start + E['latch_wall_foot_from_fin_start']
@@ -458,6 +462,9 @@ def main():
         'maximum_frame_width_mm':float(mesh.extents[1]),
         'original_frame_width_reference_mm':M['frame_width'],
         'front_crossbar_is_flush':True,
+        'base_front_x_mm':P['requested']['base_front_x'],
+        'base_length_extension_mm':P['requested']['base_length_extension'],
+        'latch_shift_away_from_peg_mm':P['requested']['latch_shift_away_from_peg'],
         'overall_height_mm':float(mesh.extents[2]),
         'hook_cavity_design_diameter_mm':2*ri,
         'hook_mouth_design_chord_mm':2*ri*math.sin(math.radians(a)),

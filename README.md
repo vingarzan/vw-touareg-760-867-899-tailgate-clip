@@ -2,7 +2,7 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v16 increases the 3D edge fillets across the exposed hook/support edges on both versions. The mounting plate, peg, fins and retaining clip retain their previous geometry. Full clips are supplied only in design coordinates. Physical fit remains untested.**
+**Status: v17 moves the small retaining clip 2 mm farther from the peg and extends the mounting base by 4 mm in the same direction. Peg, fin and hook stations are retained. Both versions remain in design coordinates. Physical fit remains untested.**
 
 ![Model preview](previews/clip.png)
 
@@ -23,6 +23,8 @@ Printable reconstruction from photographs and caliper measurements of the origin
 ![Separate flat-support variant and print orientation](previews/flat_support_profile.png)
 
 ![Example flat-support orientation](previews/flat_support_print.png)
+
+![Base extension and retaining-clip shift](previews/layout_change.png)
 
 ## STL files
 
@@ -178,8 +180,9 @@ and small radii are photo estimates. Photographs do not provide a calibrated 3D 
 
 The mounting face is Z=2.55 mm. The corrected hook drop puts its lowest outside
 edge at Z=-17.45 mm. The right fin reaches Z=10.15 mm, making the complete model
-**approximately 34.17 × 26.3 × 27.6 mm** after tip rounding. The 34.4 mm length
-remains the reference to the former sharp-tip envelope. v01–v03 incorrectly treated the earlier 19.8 mm caliper
+**approximately 34.3 × 26.3 × 27.6 mm** in v17: the extended base now determines
+the overall length. The 34.4 mm OEM sharp-tip envelope is retained as a historical
+reference for locating the hook; the hook itself was not moved. v01–v03 incorrectly treated the earlier 19.8 mm caliper
 span as the entire part height; v04 supersedes that interpretation.
 
 The hook/support body now receives a **nominal R0.4 mm 3D fillet** on its
@@ -192,7 +195,7 @@ v16 doubles the 3D edge radius from 0.2 to 0.4 mm and increases the inner
 free-tip radius from 0.25 to 0.4 mm. The outer tip remains R0.6 mm.
 The extra edge treatment increases the local reference-station opening to
 approximately 8.30 mm. The 9.7 mm bore and mounting datums remain unchanged.
-The above-plate geometry was compared against v15;
+The above-plate geometry in v16 was compared against v15;
 see [`validation/v16_preserved_features.json`](validation/v16_preserved_features.json).
 
 The free hook tip has tangent **R0.6 mm outside** and **R0.4 mm inside** corners,
@@ -202,7 +205,7 @@ by about 0.23 mm and widens the local entrance from the 8.1 mm reference to abou
 
 The hook upper end now uses a smooth curved relief in place of the former
 angled flat face. Its lateral shoulders use a smooth taper rather than straight
-diagonal cuts. The mounting base, peg and retaining latch were compared with v11
+diagonal cuts. In v12, the mounting base, peg and retaining latch were compared with v11
 and have zero geometric difference in their checked regions; see
 [`validation/v12_preserved_features.json`](validation/v12_preserved_features.json).
 The updated hook gauge reproduces the new central upper-end profile.
@@ -225,7 +228,11 @@ is derived from the 20 mm outside drop, 7.7 mm nearest-inside distance and
 
 The peg centre remains an estimate at X=5.4 mm from the rounded end. Its root
 ends at X=9.1 mm; the fins start at X=18.1 mm. The flat platform extends to
-X=29.6 mm to support the fins and latch, with 34.4 mm describing the former sharp-tip envelope (about 34.17 mm after rounding).
+X=34.3 mm in v17, compared with the v16 base/crossbar end at X=30.3 mm.
+This is a **4 mm increase in actual mounting-base length**. The small retaining
+clip, its wall and all three ribs are translated **2 mm along +X**, away from
+the peg. The 15 mm clip width and its shape are retained; the peg, fins and hook
+locations are unchanged. See [`validation/v17_layout_checks.json`](validation/v17_layout_checks.json).
 Only the relative peg-to-fin station has now been measured. The latch station,
 its approximately 1.2 mm-thick support wall and the front frame position remain
 photo estimates and should be compared with the original before printing.

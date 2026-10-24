@@ -245,11 +245,15 @@ def check_export(path, parameters):
     result['peg_barb_diameter_mm']=2*peg_radius_at(estimated['peg_barb_shoulder_z']+eps)
     assert abs(result['peg_base_diameter_mm']-measured['peg_base_diameter'])<0.003
     assert abs(result['peg_barb_diameter_mm']-measured['peg_barb_diameter'])<0.003
-    lip=m.vertices[(m.vertices[:,0]>measured['length']-1.2)]
+    lip=m.vertices[(m.vertices[:,0]>measured['length']-1.2)&(m.vertices[:,2]<-.01)]
     result['hook_lip_width_mm']=float(lip[:,1].max()-lip[:,1].min())
     assert abs(result['hook_lip_width_mm']-measured['hook_lip_width'])<.003
-    latch=m.vertices[(m.vertices[:,0]>fin_start+11.0)&(m.vertices[:,2]>5)]
+    latch_start=fin_start+parameters['requested']['latch_shift_away_from_peg']
+    latch=m.vertices[(m.vertices[:,0]>latch_start+11.0)&(m.vertices[:,2]>5)]
     result['latch_width_mm']=float(latch[:,1].max()-latch[:,1].min())
+    base_xs=section_crossings(m,0,measured['base_wall']/2)
+    result['mounting_base_length_mm']=float(base_xs.max()-base_xs.min())
+    assert abs(result['mounting_base_length_mm']-parameters['requested']['base_front_x'])<.003
     assert abs(result['latch_width_mm']-measured['latch_width'])<.003
     # The section between ribs must still contain a wall, from the platform
     # to the underside of the latch bar. In v02 these positions were air.
@@ -257,7 +261,7 @@ def check_export(path, parameters):
     for y in [-6.9,-3.0,3.0,6.9]:
         for z in [measured['base_wall']+.2,4.0,5.5]:
             xs=section_crossings(m,y,z)
-            xs=xs[(xs>fin_start+7.0)&(xs<fin_start+10.9)]
+            xs=xs[(xs>latch_start+7.0)&(xs<latch_start+10.9)]
             assert len(xs)==2,('continuous latch wall',y,z,xs)
             thickness=float(xs[1]-xs[0])
             assert thickness>=estimated['latch_wall_thickness_x']-.003

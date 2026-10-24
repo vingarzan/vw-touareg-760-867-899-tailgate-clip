@@ -11,6 +11,7 @@ def verify_width_edges(path):
         rows=[]
         for y in [0,8.44,8.50,8.57,8.64]:
             zs=axis_crossings(mesh,sign*y,[33.4,0],[0,1])
+            zs=zs[zs<-.0001]  # Ignore the extended plate above the hook.
             assert len(zs)==2,('tip section missing',sign,y,zs)
             rows.append({'y_mm':sign*y,'upper_z_mm':float(zs.max()),'lower_z_mm':float(zs.min())})
         drop=rows[0]['upper_z_mm']-rows[-1]['upper_z_mm']

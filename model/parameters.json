@@ -1,5 +1,5 @@
 {
-  "revision": "v16",
+  "revision": "v17",
   "units": "mm",
   "measured": {
     "length": 34.4,
@@ -40,7 +40,7 @@
     "latch_top_z": 7.2,
     "latch_bar_thickness": 1.3,
     "coupon_width": 4.0,
-    "base_front_from_fin_start": 11.5,
+    "base_front_from_fin_start": 16.2,
     "frame_start_from_fin_start": 9.9,
     "frame_end_from_fin_start": 12.2,
     "latch_wall_thickness_x": 1.2,
@@ -95,7 +95,8 @@
     "v13 adds a separate flat-support variant while retaining the standard v12 geometry. A full-width solid wedge extends the rear support to X=0,Z=0 at the rear underside of the mounting base, with a plane tangent to the outside hook circle. A separate STL is rotated onto that plane for printing. This adds material behind the hook and under the base; available installation clearance and support requirements remain untested.",
     "v14 rounds both corners of the hook free-end radial face with R0.6 outside and R0.25 inside fillets tangent to the inner/outer circular surfaces and the end face. The sharp-end envelope remains the 34.4 mm reference; actual overall length is slightly shorter after rounding. The bore, tooth and support datums are retained; rounding can widen the local entry above the nominal 8.1 mm sharp-lip clearance. Only design-coordinate full-part STLs are exported, per owner request; previous rotated STLs remain in Git history.",
     "v15 applies a true 3D rolling-ball edge treatment to the hook/support body, not just its XZ silhouette. All exposed convex hook-side edges, including across the width, receive a nominal R0.2 fillet. The mounting plate at Z>=0 and separately constructed peg, fins and retaining latch are restored unchanged. This edge radius is a design choice. The ball is tessellated for STL export; physical fit and printed smoothness remain untested. The reference-station mouth clearance after this additional edge treatment is approximately 8.22 mm.",
-    "v16 increases the hook/support 3D edge fillet from R0.2 to R0.4 and the inner free-tip fillet from R0.25 to R0.4, retaining the outer tip R0.6. The plate and separately constructed peg, fins and retaining latch are unchanged. Larger entry rounding can widen the local throat beyond the original 8.1 mm sharp-lip reference; the actual width is measured in the validation report and the updated gauge reproduces it."
+    "v16 increases the hook/support 3D edge fillet from R0.2 to R0.4 and the inner free-tip fillet from R0.25 to R0.4, retaining the outer tip R0.6. The plate and separately constructed peg, fins and retaining latch are unchanged. Larger entry rounding can widen the local throat beyond the original 8.1 mm sharp-lip reference; the actual width is measured in the validation report and the updated gauge reproduces it.",
+    "v17 moves the complete small 15 mm retaining latch, its continuous wall and three gussets 2 mm farther from the peg along +X. The base is extended at the hook-facing end from the actual v16 plate/crossbar front X=30.3 to X=34.3 (4 mm longer). The former primary skin ended at X=29.6; its new front is X=34.3 so the complete base, including the old crossbar, grows by the requested 4 mm. Peg, fins and hook datums are unchanged. Requested layout changes are separate from OEM measurements."
   ],
   "construction": {
     "solid_hook_back_link": true,
@@ -104,5 +105,11 @@
     "reinforced_peg_roots": true,
     "flush_front_crossbar": true,
     "flat_support_variant_available": true
+  },
+  "requested": {
+    "latch_shift_away_from_peg": 2.0,
+    "base_length_extension": 4.0,
+    "previous_base_front_x": 30.3,
+    "base_front_x": 34.3
   }
 }

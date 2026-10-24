@@ -1,5 +1,13 @@
 # Design history
 
+## v17 — retaining clip moved and base extended — 2026-10-24
+
+- Translated the entire 15 mm retaining clip, supporting wall and three ribs 2 mm farther from the peg along +X.
+- Extended the actual mounting-base length from 30.3 to 34.3 mm at the hook-facing end, a full 4 mm increase. The original primary skin ended at 29.6 mm; v17 accounts for the crossbar when measuring the old complete base.
+- Kept peg, fin and hook stations, hook-side fillets and measured mating dimensions. Updated both full versions.
+- Exported-STL comparisons verify the exact 2 mm rigid translation and 4 mm base increase, with no changes to peg or fin geometry. Added a before/after layout preview.
+- Overall part length is now approximately 34.3 mm because the extended base reaches just beyond the rounded hook tip. Physical fit remains unverified.
+
 ## v16 — larger hook-side fillets — 2026-10-24
 
 - Increased the 3D hook/support edge radius from 0.2 to 0.4 mm on both versions and the inner free-tip radius from 0.25 to 0.4 mm. The outer tip stays R0.6.
