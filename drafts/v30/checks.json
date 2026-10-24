@@ -1,0 +1,30 @@
+[
+  {
+    "layout": "existing",
+    "watertight": true,
+    "consistent_winding": true,
+    "components": 1,
+    "lip_projection_reduction_mm": 1.5,
+    "previous_front_tip_x_mm": 31.3,
+    "new_front_tip_x_mm": 29.8,
+    "lip_height_z_mm": 7.2,
+    "all_three_rib_top_z_mm": 7.2,
+    "leg_position_preserved": true,
+    "three_ribs_continuous_to_top": true,
+    "physical_fit_verified": false
+  },
+  {
+    "layout": "right",
+    "watertight": true,
+    "consistent_winding": true,
+    "components": 1,
+    "lip_projection_reduction_mm": 1.5,
+    "previous_front_tip_x_mm": 31.3,
+    "new_front_tip_x_mm": 29.8,
+    "lip_height_z_mm": 7.2,
+    "all_three_rib_top_z_mm": 7.2,
+    "leg_position_preserved": true,
+    "three_ribs_continuous_to_top": true,
+    "physical_fit_verified": false
+  }
+]
