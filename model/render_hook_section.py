@@ -60,6 +60,9 @@ def render_section(stl_path, parameters, out_path):
                 fontsize=11,color='#234a63',
                 arrowprops={'arrowstyle':'->','color':'#234a63'})
     ax.scatter([cx],[cz],s=12,color='#555')
+    ax.text(cx,cz-ri*.72,f"Ø {mm['hook_cavity']:.1f} mm",ha='center',
+            va='center',fontsize=11,color='#234a63',
+            bbox={'facecolor':'white','edgecolor':'none','alpha':.85,'pad':1})
     ax.set_xlim(cx-ro-3.5,dx+2);ax.set_ylim(bottom-1.5,zface+1.5)
     ax.set_aspect('equal');ax.grid(alpha=.15);ax.set_xlabel('X · mm');ax.set_ylabel('Z · mm')
     ax.set_title(f"{parameters['revision']} · actual STL centre section\n1.4 × 1.4 mm tooth opposite the opening",fontsize=15,pad=16)

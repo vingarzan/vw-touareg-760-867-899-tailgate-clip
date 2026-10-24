@@ -1,5 +1,5 @@
 {
-  "revision": "v06",
+  "revision": "v07",
   "units": "mm",
   "measured": {
     "length": 34.4,
@@ -7,7 +7,7 @@
     "body_width": 26.3,
     "guide_outside_width": 26.0,
     "base_wall": 2.55,
-    "hook_cavity": 9.4,
+    "hook_cavity": 9.7,
     "hook_mouth": 8.1,
     "hook_lip_width": 17.3,
     "peg_total_height_including_wall": 8.5,
@@ -66,7 +66,8 @@
     "The approximately 2.5 mm hook shell wall is estimated; only the mounting base wall was directly measured at 2.5-2.6 mm.",
     "The owner corrected the internal tooth to 1.4 x 1.4 mm. It is centred diametrically opposite the opening and runs across the full width along the cylinder axis.",
     "The tooth projects 1.4 mm radially inward and measures 1.4 mm across the local tangent of the bore; its centreline is exactly opposite the mouth centreline. Only small edge radii remain estimated.",
-    "The owner requested a solid back link from hook to mounting base. A full-width solid web fills the former gap between the inclined rear skin and upper hook/neck. The circular cavity and entry corridor are still cut afterward, so the hook opening and tooth remain clear."
+    "The owner requested a solid back link from hook to mounting base. A full-width solid web fills the former gap between the inclined rear skin and upper hook/neck. The circular cavity and entry corridor are still cut afterward, so the hook opening and tooth remain clear.",
+    "The owner corrected the inside bore diameter to 9.7 mm, explicitly choosing diameter (not 9.7 mm radius). This supersedes the initial 9.4 mm cavity reading; the opening remains 8.1 mm."
   ],
   "construction": {
     "solid_hook_back_link": true

@@ -1,5 +1,15 @@
 # Design history
 
+## v07 — 9.7 mm inside diameter — 2026-10-24
+
+- Owner corrected the hook bore to 9.7 mm inside diameter, explicitly confirming
+  diameter rather than radius. This supersedes the initial 9.4 mm cavity reading.
+- Regenerated the hook shell, cut clearances, centred tooth, fit-test slice and
+  previews from the corrected diameter.
+- Retained the full-width solid back link and the remaining supplied dimensions.
+- All four STL geometry checks, twenty solid-back sections, fifty-one entry rays
+  and exported mating dimensions pass. Physical fit remains untested.
+
 ## v06 — solid back link from hook to base — 2026-10-24
 
 - Filled the former gap behind the hook with a solid web across the full width,

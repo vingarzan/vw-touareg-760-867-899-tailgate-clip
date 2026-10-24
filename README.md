@@ -2,7 +2,7 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v06 reconstructed prototype with a solid hook-to-base back link, open hook, 20 mm hook drop and 1.4 × 1.4 mm internal tooth. No printed fit or retention test has been performed.**
+**Status: v07 reconstructed prototype with a solid hook-to-base back link, open hook, 20 mm hook drop, 9.7 mm inside diameter and 1.4 × 1.4 mm internal tooth. No printed fit or retention test has been performed.**
 
 ![Model preview](previews/clip.png)
 
@@ -49,7 +49,7 @@ python3 -m venv .venv
 ```
 
 [`model/parameters.json`](model/parameters.json) separates measured dimensions
-from estimates. v06 retains the separately measured left and right fins and
+from estimates. v07 retains the separately measured left and right fins and
 places their nearest vertical edges **9 mm beyond the hook-facing edge of the
 peg root along the length of the base**. This is an approximate physical
 measurement implemented as 9.0 mm in the model.
@@ -76,7 +76,7 @@ the original before printing the whole part.
 | Overall length | 34.4 | `reference/measurements/01.jpg` |
 | Body width at first measurement position | 26.3 | `reference/measurements/02.jpg` |
 | Earlier caliper span; not used as total height | 19.8 | `reference/measurements/03.jpg`; superseded height interpretation |
-| Hook cavity, wider interior | 9.4 | `reference/measurements/08.jpg`; interpretation confirmed by owner |
+| Hook inside diameter | 9.7 | Owner correction explicitly confirmed as diameter; supersedes the initial 9.4 mm reading in photo 08 |
 | Hook mouth, narrower entrance | about 8–8.2; model 8.1 | `reference/measurements/09.jpg` and owner clarification |
 | Mounting face down to farthest outside hook edge, perpendicular | 20 | Owner measurement and explicit direction clarification |
 | Internal tooth local height / inward projection | 1.4 / 1.4 | Owner corrected the earlier 2.4 mm values and specified placement opposite the opening |
@@ -104,7 +104,7 @@ span as the entire part height; v04 supersedes that interpretation.
 
 The mouth points diagonally outward, as shown in the new side photo, rather
 than upward into the mounting platform. Its direction is estimated at 30°
-above the base's length axis. The 9.4 mm circular cavity and an 8.1 mm-wide
+above the base's length axis. The 9.7 mm circular cavity and an 8.1 mm-wide
 entry corridor are cleared from the plate/frame/neck geometry; the C-shaped
 hook supplies the mating surface. The upper fixed arm stays attached to the
 mounting platform, while the entry remains open.
