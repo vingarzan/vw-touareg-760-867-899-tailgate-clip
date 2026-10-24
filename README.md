@@ -2,7 +2,7 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v15 adds 3D edge fillets across the exposed hook/support edges on both versions. The mounting plate, peg, fins and retaining clip retain their previous geometry. Full clips are supplied only in design coordinates. Physical fit remains untested.**
+**Status: v16 increases the 3D edge fillets across the exposed hook/support edges on both versions. The mounting plate, peg, fins and retaining clip retain their previous geometry. Full clips are supplied only in design coordinates. Physical fit remains untested.**
 
 ![Model preview](previews/clip.png)
 
@@ -30,7 +30,7 @@ All files use millimetres. Import at 100% scale.
 
 - [`stl/760867899_clip_flat_support.stl`](stl/760867899_clip_flat_support.stl): separate variant with a continuous flat rear support face from the rear underside of the base, tangent to the outside hook curve.
 - [`stl/760867899_clip.stl`](stl/760867899_clip.stl): complete clip in design coordinates.
-- [`stl/760867899_hook_fit_test.stl`](stl/760867899_hook_fit_test.stl): a compact **side-printable hook gauge** with a rounded grip tab. It has the actual 9.7 mm bore, rounded entrance (about 8.22 mm at the reference throat station) and 1.4 × 1.4 mm tooth, without the bulky mounting body. It is already laid on its broad flat side and is only **4 mm high**. Import at 100%, keep this orientation and print without supports. It checks the mating shape, not full-width stiffness or retention.
+- [`stl/760867899_hook_fit_test.stl`](stl/760867899_hook_fit_test.stl): a compact **side-printable hook gauge** with a rounded grip tab. It has the actual 9.7 mm bore, rounded entrance (about 8.30 mm at the reference throat station) and 1.4 × 1.4 mm tooth, without the bulky mounting body. It is already laid on its broad flat side and is only **4 mm high**. Import at 100%, keep this orientation and print without supports. It checks the mating shape, not full-width stiffness or retention.
 - [`stl/760867899_peg_fit_test.stl`](stl/760867899_peg_fit_test.stl): the reinforced split peg on a 14 × 14 mm flat base. Print this updated test with the peg upright to check the new root support and fitting force before printing the complete clip.
 
 The full clips are supplied in design coordinates. Rotate them in your slicer.
@@ -52,7 +52,7 @@ Cross-sections of the exported clip also independently verify the rounded-tip ar
 minimum nominal opening clearance and actual local entry width,
 peg diameters and height, both fins, the 9 mm longitudinal edge gap, lip width
 and latch width to 0.003 mm of their design values. The 8.1 mm
-sharp-lip throat is a nominal reference; the rounded local entry is approximately 8.22 mm. That is a digital geometry tolerance, not a physical measurement
+sharp-lip throat is a nominal reference; the rounded local entry is approximately 8.30 mm. That is a digital geometry tolerance, not a physical measurement
 or printing accuracy claim.
 The checks also measure the 20 mm hook drop and the 1.4 × 1.4 mm projecting tooth
 at both ends and the centre. Fifty-one rays through the exported STL's entry
@@ -138,7 +138,7 @@ design choices. Please compare with the original before printing the whole part.
 The optional version adds a solid wedge under the base, extending the existing
 hook backing to the rounded rear of the base. Its outside face is a single
 plane tangent to the hook circle. In the example flat-face-down orientation,
-it has approximately **705 mm² of bed contact**, and every vertex is above that
+it has approximately **699 mm² of bed contact**, and every vertex is above that
 plane. No rotated full-part STL is supplied. This is a
 geometry check, not a sliced or printed support-free claim. The peg, fins,
 retaining latch and measured hook mating dimensions are retained. The extra
@@ -182,18 +182,20 @@ edge at Z=-17.45 mm. The right fin reaches Z=10.15 mm, making the complete model
 remains the reference to the former sharp-tip envelope. v01–v03 incorrectly treated the earlier 19.8 mm caliper
 span as the entire part height; v04 supersedes that interpretation.
 
-The hook/support body now receives a **nominal R0.2 mm 3D fillet** on its
+The hook/support body now receives a **nominal R0.4 mm 3D fillet** on its
 exposed convex edges, including the across-width edges that remained sharp in
 v14. This uses a tessellated rolling-ball edge treatment. The mounting plate
 at and above its underside plane, plus the peg, fins and retaining clip, are
 restored unchanged; no extra fillets are applied to those features.
 An end-on exported-STL section verifies relief on both lateral tip corners.
+v16 doubles the 3D edge radius from 0.2 to 0.4 mm and increases the inner
+free-tip radius from 0.25 to 0.4 mm. The outer tip remains R0.6 mm.
 The extra edge treatment increases the local reference-station opening to
-approximately 8.22 mm. The 9.7 mm bore and mounting datums remain unchanged.
-The above-plate geometry was compared against v14 with zero volume difference;
-see [`validation/v15_preserved_features.json`](validation/v15_preserved_features.json).
+approximately 8.30 mm. The 9.7 mm bore and mounting datums remain unchanged.
+The above-plate geometry was compared against v15;
+see [`validation/v16_preserved_features.json`](validation/v16_preserved_features.json).
 
-The free hook tip has tangent **R0.6 mm outside** and **R0.25 mm inside** corners,
+The free hook tip has tangent **R0.6 mm outside** and **R0.4 mm inside** corners,
 removing both sharp cap edges. Rounding shortens the overall sharp-tip envelope
 by about 0.23 mm and widens the local entrance from the 8.1 mm reference to about
 8.20 mm. The 9.7 mm bore, tooth and mounting distances are retained.

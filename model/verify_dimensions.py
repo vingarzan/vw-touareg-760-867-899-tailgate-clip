@@ -66,7 +66,7 @@ def check_export(path, parameters):
             ts=axis_crossings(m,y,origin,axis)
             got=float(ts[ts>0].min()-ts[ts<0].max())
             if name=='hook_mouth_clearance_mm':
-                assert want-.003<=got<=want+.13,(name,y,got,want)
+                assert want-.003<=got<=want+.3,(name,y,got,want)
             else:
                 assert abs(got-want)<.003,(name,y,got,want)
             result[name]=got
@@ -81,7 +81,7 @@ def check_export(path, parameters):
     # These stations crossed the large air gap in v05; checking a single
     # connected 3D solid alone would not detect that gap.
     link_checks=[]
-    side=measured['body_width']/2-.3
+    side=measured['body_width']/2-max(.3,estimated['hook_edge_fillet_3d_radius']+.05)
     for y in [-side,-8.0,0.0,8.0,side]:
         for z in [-0.7,-2.7,-4.7,-6.7]:
             xs=section_crossings(m,y,z)
@@ -122,7 +122,8 @@ def check_export(path, parameters):
             if -1e-8<=t<=1+1e-8:ys.append(a[1]+t*(b[1]-a[1]))
         width=max(ys)-min(ys)
         wanted=measured['hook_lip_width']+(measured['body_width']-measured['hook_lip_width'])*(.5+.5*math.cos(math.pi*(x-shoulder)/(end-shoulder)))
-        assert abs(width-wanted)<.003,('hook shoulder not curved',x,width,wanted)
+        # Larger 3D edge rounding slightly insets the nominal shoulder envelope.
+        assert wanted-.03<=width<=wanted+.003,('hook shoulder not curved',x,width,wanted)
         shoulder_checks.append({'x_mm':x,'z_mm':-15,'width_mm':width})
     result['rounded_hook_shoulder_sections']=shoulder_checks
     upper=[float(section_crossings(m,0,z).max()) for z in [-1.,-2.,-3.,-4.]]
@@ -148,7 +149,14 @@ def check_export(path, parameters):
                 rear_limit=r-math.sqrt(max(r*r-dy*dy,0)) if dy else 0
                 wanted=max(wanted,rear_limit)
 
-            assert abs(xs.min()-wanted)<.003,('non-flush backing profile',y,z,xs.min(),wanted)
+            profile_tolerance=.003
+            if parameters['construction'].get('flat_support_variant'):
+                profile_tolerance=.005
+                if rear_limit>=p[0]+(z-p[1])*(q[0]-p[0])/(q[1]-p[1]):
+                    # Here the section crosses the intentionally filleted
+                    # rear-plan/support-plane intersection, not its flat core.
+                    profile_tolerance=estimated['hook_edge_fillet_3d_radius']+.003
+            assert abs(xs.min()-wanted)<profile_tolerance,('non-flush backing profile',y,z,xs.min(),wanted)
     low=m.vertices[m.vertices[:,2]<q[1]-.05]
     low_radii=np.linalg.norm(low[:,[0,2]]-center,axis=1)
     assert low_radii.max()<=ro+.003,('support bump outside hook diameter',low_radii.max(),ro)

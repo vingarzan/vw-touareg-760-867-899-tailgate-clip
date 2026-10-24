@@ -1,5 +1,13 @@
 # Design history
 
+## v16 — larger hook-side fillets — 2026-10-24
+
+- Increased the 3D hook/support edge radius from 0.2 to 0.4 mm on both versions and the inner free-tip radius from 0.25 to 0.4 mm. The outer tip stays R0.6.
+- Retained the plate, peg, fin and retaining-clip geometry. Full-part STLs remain in design coordinates only.
+- The enlarged entry rounding produces approximately 8.30 mm local clearance; updated the hook gauge and measured-section checks accordingly. Critical bore, tooth and mounting dimensions are retained.
+- Updated end-on comparison against v15. Rounded shoulder and rear-plan transitions are checked against their nominal envelopes with allowances for the new edge treatment.
+- Physical printing and fit remain unverified.
+
 ## v15 — 3D hook-side edge fillets — 2026-10-24
 
 - Applied a nominal R0.2 mm rolling-ball fillet to exposed convex edges of the hook/support body, including across its width. Both complete versions receive this change.

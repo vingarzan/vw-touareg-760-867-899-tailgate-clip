@@ -17,7 +17,7 @@ def render_tip(parameters):
     draw(ax,side(load(ROOT/'stl/760867899_clip.stl')),'#b9d1df','#234a63',True)
     # Previous radial cap (sharp envelope) for an explicit before/after outline.
     sharp=np.array([c+ri*u,c+ro*u]);ax.plot(sharp[:,0],sharp[:,1],color='#bf642c',lw=1.5,ls='--')
-    for label,R,r,sign,offset in [('Outside R0.6',ro,e['hook_free_tip_outer_radius'],-1,[.1,1.4]),('Inside R0.25',ri,e['hook_free_tip_inner_radius'],1,[-1.0,.8])]:
+    for label,R,r,sign,offset in [('Outside R0.6',ro,e['hook_free_tip_outer_radius'],-1,[.1,1.4]),(f"Inside R{e['hook_free_tip_inner_radius']:g}",ri,e['hook_free_tip_inner_radius'],1,[-1.0,.8])]:
         a=math.sqrt(R*R+sign*2*R*r);center=c+a*u-r*v
         arcpoint=center+r*np.array([math.cos(theta+math.pi/2-.3),math.sin(theta+math.pi/2-.3)])
         ax.annotate(label,xy=arcpoint,xytext=center+offset,fontsize=12,color='#28734d',arrowprops={'arrowstyle':'->','color':'#28734d'})
