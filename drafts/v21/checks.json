@@ -1,0 +1,19 @@
+[
+  {
+    "variant": "flat",
+    "watertight": true,
+    "consistent_winding": true,
+    "components": 1,
+    "volume_mm3": 7952.162599170661,
+    "extents_mm": [
+      34.29999923706055,
+      27.600000381469727,
+      27.599353790283203
+    ],
+    "native_body_valid": true,
+    "physical_fit_verified": false,
+    "central_hook_bore_mm": 9.698215999999999,
+    "flat_face_contact_mm2": 534.2636318688528,
+    "support_plane_min_mm": -9.882490701329516e-07
+  }
+]

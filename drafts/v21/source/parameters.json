@@ -1,0 +1,807 @@
+{
+  "revision": "v21",
+  "units": "mm",
+  "measured": {
+    "length": 34.4,
+    "frame_width": 27.6,
+    "body_width": 27.6,
+    "guide_outside_width": 24.5,
+    "base_wall": 2.55,
+    "hook_cavity": 9.7,
+    "hook_mouth": 8.1,
+    "hook_lip_width": 17.0,
+    "peg_total_height_including_wall": 8.5,
+    "peg_barb_diameter": 8.8,
+    "peg_base_diameter": 7.4,
+    "latch_width": 15.0,
+    "right_fin_base_length": 9.9,
+    "right_fin_top_length": 5.5,
+    "right_fin_height_above_surface": 7.6,
+    "left_fin_base_length": 9.5,
+    "left_fin_top_length": 6.9,
+    "left_fin_height_above_surface": 3.7,
+    "fin_thickness": 1.6,
+    "peg_to_fin_edge_gap_along_length": 9.0,
+    "earlier_caliper_span": 19.8,
+    "hook_drop_from_mounting_surface": 20.0,
+    "hook_internal_rib_height": 1.4,
+    "hook_internal_rib_projection": 1.4,
+    "hook_base_to_nearest_inside": 7.7,
+    "earlier_body_width": 26.3,
+    "base_clip_end_width": 26.2,
+    "base_peg_end_width": 14.0,
+    "base_max_width_from_peg_end": 10.0,
+    "hook_halfway_width": 20.0,
+    "earlier_guide_outside_width": 26.0
+  },
+  "estimated": {
+    "peg_center_from_rear": 5.4,
+    "peg_inner_diameter": 4.2,
+    "peg_slot_width": 1.0,
+    "peg_slot_root_z": 3.25,
+    "peg_barb_shoulder_z": 6.3,
+    "peg_tip_diameter": 6.2,
+    "latch_rib_width": 0.95,
+    "latch_top_z": 7.2,
+    "latch_bar_thickness": 1.3,
+    "coupon_width": 4.0,
+    "base_front_from_fin_start": 16.2,
+    "frame_start_from_fin_start": 9.9,
+    "frame_end_from_fin_start": 12.2,
+    "latch_wall_thickness_x": 1.2,
+    "latch_wall_foot_from_fin_start": 7.9,
+    "hook_opening_direction_degrees": 30.0,
+    "coupon_handle_length": 7.0,
+    "coupon_handle_height": 8.0,
+    "coupon_handle_overlap": 1.5,
+    "coupon_handle_corner_radius": 0.8,
+    "back_link_start_x": 12.0,
+    "back_link_top_z": 0.0,
+    "peg_root_inner_radius": 0.9,
+    "peg_root_collar_height": 1.1,
+    "peg_slot_round_center_z": 3.9,
+    "hook_upper_blend_start_handle": 0.9,
+    "hook_upper_blend_end_handle": 1.8,
+    "fin_tip_radius": 0.4,
+    "fin_inward_lean_degrees": 5.0,
+    "flat_support_rear_x": 0.0,
+    "flat_support_rear_z": 0.0,
+    "hook_free_tip_outer_radius": 0.6,
+    "hook_free_tip_inner_radius": 0.4,
+    "hook_edge_fillet_3d_radius": 0.4,
+    "hook_depth_taper_end": 12.0,
+    "back_root_blend_radius": 1.5,
+    "side_recess_depth": 0.6,
+    "side_recess_corner_radius": 1.0
+  },
+  "interpretation": [
+    "X runs from the rounded peg end toward the hook; Y is width; Z points toward the peg.",
+    "The outside of the flat rear base is Z=0. The peg reaches Z=8.5 including the 2.55 mm wall.",
+    "The three width readings are preserved as different positions: body 26.3, guides 26.0, frame 27.6.",
+    "The opposite clip is interpreted as the raised transverse spring latch, 15 mm wide.",
+    "Left and right are defined looking from the rounded peg end toward the hook, with the peg pointing up: right is negative Y, left positive Y.",
+    "Small offsets, draft angles, radii, springs and hidden surfaces are photo estimates, not measured OEM geometry.",
+    "The approximately 9 mm gap is longitudinal, from the hook-facing edge of the peg root to the vertical peg-facing edge of either fin; the owner confirmed edge-to-edge along the length.",
+    "Fin rear X = peg centre X + peg root radius + 9 mm. Peg centre position remains estimated; the relative gap is now measured.",
+    "A continuous wall across the 15 mm latch width joins the retaining lip to the base; three solid curved gussets reinforce its peg-facing side. Wall thickness, lean and latch station are photo estimates.",
+    "The owner authorized a flat continuous mounting platform beneath the peg and fins instead of reproducing material-saving recesses.",
+    "The owner clarified the hook drop: 20 mm perpendicular from the peg/fin mounting face (Z=base_wall) to the lowest outside hook edge. The earlier 19.8 mm span is kept as reference evidence and is no longer treated as total part height.",
+    "Hook bottom Z = base_wall - 20 mm. With the 7.6 mm fin above the mounting face, total height is 27.6 mm.",
+    "The new side photo shows the mouth facing diagonally outward, rather than upward into the mounting plate. The 30 degree opening direction above +X is a photo estimate.",
+    "A round cavity and a straight 8.1 mm-wide entry path are subtracted from the entire body after joining plate, frame, neck and hook. The rib is added afterward. This prevents host geometry from closing the mouth.",
+    "The owner corrected the internal tooth to 1.4 x 1.4 mm. It is centred diametrically opposite the opening and runs across the full width along the cylinder axis.",
+    "The tooth projects 1.4 mm radially inward and measures 1.4 mm across the local tangent of the bore; its centreline is exactly opposite the mouth centreline. Only small edge radii remain estimated.",
+    "The owner requested a solid back link from hook to mounting base. A full-width solid web fills the former gap between the inclined rear skin and upper hook/neck. The circular cavity and entry corridor are still cut afterward, so the hook opening and tooth remain clear.",
+    "The owner corrected the inside bore diameter to 9.7 mm, explicitly choosing diameter (not 9.7 mm radius). This supersedes the initial 9.4 mm cavity reading; the opening remains 8.1 mm.",
+    "The v08 hook fit test isolates the actual hook mating profile in a 4 mm-wide slice, adds a rounded external grip tab, and lies on a broad flat side at print Z=0. It is a quick geometry gauge, not a full-width retention or stiffness test.",
+    "The owner requested flush lateral hook supports: separate outer side webs are removed. The hook/back link and neck are limited to the 26.3 mm base width; the independently measured 27.6 mm front crossbar is retained.",
+    "The solid back link now joins the hook outer circle on a tangent from the mounting base, avoiding the stepped mid-profile and protruding lower support corners.",
+    "The owner reported peg legs breaking and requested inside root support. A conical inner collar reduces the cavity radius to 0.9 mm at its floor, tapering to the existing 2.1 mm radius over 1.1 mm; these reinforcement dimensions are design choices.",
+    "The 1 mm-wide peg slots now have 0.5 mm-radius lower ends centred at Z=3.9 mm (lowest cut at Z=3.4), replacing the sharp rectangular slot roots. Outer peg dimensions are retained; insertion force and fatigue require a new physical trial.",
+    "Owner photo 20 shows 7.7 mm perpendicular from the peg/fin mounting face to the nearest inside hook curve. With the existing 20 mm outside drop and 9.7 mm bore, the derived radial hook wall is 20 - 7.7 - 9.7 = 2.6 mm, replacing the estimated 2.5 mm. This reduces the v09 nearest-inside distance by 0.1 mm; it is not a 7.7 mm measurement to the free lip or deepest inside curve.",
+    "In v11 the owner requested removal of the remaining base-side tabs at the hook end. The front crossbar is narrowed from the original measured 27.6 mm to the 26.3 mm body width, trimming 0.65 mm from each side. The original frame_width measurement remains recorded as reference rather than the current model width. All mating dimensions and reinforced peg geometry are retained.",
+    "v12 rounds only the hook upper end and side shoulders, preserving sharp base, peg and retaining latch. The upper entry relief is a smooth cubic blend tangent to the entry direction and front base edge. Straight lateral taper cuts are replaced by cosine-eased shoulders below the base. Fin tips alone have R0.4 end corners and fins lean 5 degrees inward; the original fin lengths describe their unrounded envelope. Root width, root station and heights are preserved. These rounding and lean values are design choices, not new measurements.",
+    "v13 adds a separate flat-support variant while retaining the standard v12 geometry. A full-width solid wedge extends the rear support to X=0,Z=0 at the rear underside of the mounting base, with a plane tangent to the outside hook circle. A separate STL is rotated onto that plane for printing. This adds material behind the hook and under the base; available installation clearance and support requirements remain untested.",
+    "v14 rounds both corners of the hook free-end radial face with R0.6 outside and R0.25 inside fillets tangent to the inner/outer circular surfaces and the end face. The sharp-end envelope remains the 34.4 mm reference; actual overall length is slightly shorter after rounding. The bore, tooth and support datums are retained; rounding can widen the local entry above the nominal 8.1 mm sharp-lip clearance. Only design-coordinate full-part STLs are exported, per owner request; previous rotated STLs remain in Git history.",
+    "v15 applies a true 3D rolling-ball edge treatment to the hook/support body, not just its XZ silhouette. All exposed convex hook-side edges, including across the width, receive a nominal R0.2 fillet. The mounting plate at Z>=0 and separately constructed peg, fins and retaining latch are restored unchanged. This edge radius is a design choice. The ball is tessellated for STL export; physical fit and printed smoothness remain untested. The reference-station mouth clearance after this additional edge treatment is approximately 8.22 mm.",
+    "v16 increases the hook/support 3D edge fillet from R0.2 to R0.4 and the inner free-tip fillet from R0.25 to R0.4, retaining the outer tip R0.6. The plate and separately constructed peg, fins and retaining latch are unchanged. Larger entry rounding can widen the local throat beyond the original 8.1 mm sharp-lip reference; the actual width is measured in the validation report and the updated gauge reproduces it.",
+    "v17 moves the complete small 15 mm retaining latch, its continuous wall and three gussets 2 mm farther from the peg along +X. The base is extended at the hook-facing end from the actual v16 plate/crossbar front X=30.3 to X=34.3 (4 mm longer). The former primary skin ended at X=29.6; its new front is X=34.3 so the complete base, including the old crossbar, grows by the requested 4 mm. Peg, fins and hook datums are unchanged. Requested layout changes are separate from OEM measurements.",
+    "v18 uses the approved measured taper targets: base width 14 at peg end, 27.6 maximum at X=10, 27.5 at the approximate middle, 26.2 at X=34.3; hook width 20 halfway and 17 at its narrow end. The approved hook width profile is parameterized over the estimated 12 mm depth extent. The standard support begins farther toward the peg at X=12 with an R1.5 root blend, matching photo 23 approximately. Both sides have a shallow 0.6 mm triangular recess with R1 plan corners. Unmeasured profile and recess dimensions remain estimates. The flat-support alternative retains its tangent plane. The owner has printed a previous revision; v18 fit remains untested.",
+    "v19-draft interprets the owner\u2019s 24.5 mm between fin bases as the outside-to-outside root span, consistent with the earlier outside-width measurement. This takes precedence over the approximate 0.5 mm inward request: the previous 26.0 span becomes 24.5, moving each root inward by 0.75. Fin wall thickness, height, tip rounding and inward lean are retained. Fast draft export omits the expensive final support fillets and recess-floor fillet."
+  ],
+  "construction": {
+    "solid_hook_back_link": true,
+    "flush_hook_supports": true,
+    "tangent_hook_back_link": true,
+    "reinforced_peg_roots": true,
+    "flush_front_crossbar": true,
+    "flat_support_variant_available": true
+  },
+  "requested": {
+    "latch_shift_away_from_peg": 2.0,
+    "base_length_extension": 4.0,
+    "previous_base_front_x": 30.3,
+    "base_front_x": 34.3
+  },
+  "native_dimensions": [
+    27.739786018071314,
+    -9.999999999999998,
+    4.85,
+    7.450000000000001,
+    56.62120593732541
+  ],
+  "base_front_samples": [
+    [
+      10.0,
+      13.8
+    ],
+    [
+      10.6075,
+      13.799488030072574
+    ],
+    [
+      11.215,
+      13.798008210695782
+    ],
+    [
+      11.8225,
+      13.795644677477855
+    ],
+    [
+      12.43,
+      13.792481566027025
+    ],
+    [
+      13.0375,
+      13.788603011951524
+    ],
+    [
+      13.645,
+      13.784093150859587
+    ],
+    [
+      14.2525,
+      13.77903611835944
+    ],
+    [
+      14.86,
+      13.77351605005932
+    ],
+    [
+      15.4675,
+      13.767617081567455
+    ],
+    [
+      16.075,
+      13.761423348492077
+    ],
+    [
+      16.682499999999997,
+      13.75501898644142
+    ],
+    [
+      17.15,
+      13.75
+    ],
+    [
+      17.29,
+      13.748452607319212
+    ],
+    [
+      17.8975,
+      13.740887093873443
+    ],
+    [
+      18.505,
+      13.731956474050389
+    ],
+    [
+      19.112499999999997,
+      13.72168498227611
+    ],
+    [
+      19.72,
+      13.710096852976669
+    ],
+    [
+      20.3275,
+      13.697216320578127
+    ],
+    [
+      20.935,
+      13.683067619506541
+    ],
+    [
+      21.542499999999997,
+      13.667674984187977
+    ],
+    [
+      22.15,
+      13.651062649048495
+    ],
+    [
+      22.7575,
+      13.633254848514156
+    ],
+    [
+      23.365,
+      13.61427581701102
+    ],
+    [
+      23.972499999999997,
+      13.594149788965147
+    ],
+    [
+      24.58,
+      13.5729009988026
+    ],
+    [
+      25.1875,
+      13.550553680949442
+    ],
+    [
+      25.794999999999998,
+      13.52713206983173
+    ],
+    [
+      26.402499999999996,
+      13.502660399875527
+    ],
+    [
+      27.009999999999998,
+      13.477162905506896
+    ],
+    [
+      27.6175,
+      13.450663821151894
+    ],
+    [
+      28.224999999999998,
+      13.423187381236584
+    ],
+    [
+      28.832499999999996,
+      13.394757820187028
+    ],
+    [
+      29.439999999999998,
+      13.365399372429287
+    ],
+    [
+      30.0475,
+      13.33513627238942
+    ],
+    [
+      30.654999999999998,
+      13.30399275449349
+    ],
+    [
+      31.262499999999996,
+      13.27199305316756
+    ],
+    [
+      31.869999999999997,
+      13.239161402837686
+    ],
+    [
+      32.4775,
+      13.20552203792993
+    ],
+    [
+      33.084999999999994,
+      13.17109919287036
+    ],
+    [
+      33.692499999999995,
+      13.135917102085028
+    ],
+    [
+      34.3,
+      13.1
+    ]
+  ],
+  "base_rear_samples": [
+    [
+      0.0,
+      7.0
+    ],
+    [
+      0.00770963759277099,
+      7.266966747161667
+    ],
+    [
+      0.03082666266872036,
+      7.533521850949345
+    ],
+    [
+      0.06931543045073707,
+      7.799254302713296
+    ],
+    [
+      0.1231165940486223,
+      8.06375436227357
+    ],
+    [
+      0.1921471959676957,
+      8.326614189709673
+    ],
+    [
+      0.27630079602323443,
+      8.587428474220157
+    ],
+    [
+      0.3754476354635272,
+      8.845795059082505
+    ],
+    [
+      0.4894348370484647,
+      9.101315561749642
+    ],
+    [
+      0.6180866407751584,
+      9.353595988126951
+    ],
+    [
+      0.7612046748871326,
+      9.60224734008261
+    ],
+    [
+      0.9185682617491875,
+      9.84688621525451
+    ],
+    [
+      1.089934758116321,
+      10.087135398228918
+    ],
+    [
+      1.2750399292720282,
+      10.322624442179293
+    ],
+    [
+      1.473598356459077,
+      10.552990240068452
+    ],
+    [
+      1.6853038769745476,
+      10.777877584533295
+    ],
+    [
+      1.9098300562505255,
+      10.996939715588818
+    ],
+    [
+      2.1468306911925508,
+      11.20983885530687
+    ],
+    [
+      2.3959403439996905,
+      11.416246728645248
+    ],
+    [
+      2.6567749056431444,
+      11.615845069624005
+    ],
+    [
+      2.9289321881345245,
+      11.808326112068523
+    ],
+    [
+      3.211992544670582,
+      11.99339306416266
+    ],
+    [
+      3.5055195166981634,
+      12.17076056608021
+    ],
+    [
+      3.8090605069016603,
+      12.340155129989064
+    ],
+    [
+      4.122147477075268,
+      12.501315561749642
+    ],
+    [
+      4.444297669803977,
+      12.653993363657307
+    ],
+    [
+      4.775014352840511,
+      12.797953117607825
+    ],
+    [
+      5.11378758503045,
+      12.93297284809502
+    ],
+    [
+      5.460095002604532,
+      13.058844364480901
+    ],
+    [
+      5.813402624625718,
+      13.175373582010552
+    ],
+    [
+      6.173165676349102,
+      13.28238082107675
+    ],
+    [
+      6.53882942922507,
+      13.379701084272892
+    ],
+    [
+      6.9098300562505255,
+      13.467184310807044
+    ],
+    [
+      7.285595501349257,
+      13.544695607884801
+    ],
+    [
+      7.665546361440945,
+      13.6121154587042
+    ],
+    [
+      8.049096779838717,
+      13.669339906741968
+    ],
+    [
+      8.43565534959769,
+      13.716280716046937
+    ],
+    [
+      8.824626025421622,
+      13.7528655072935
+    ],
+    [
+      9.21540904272155,
+      13.77903786938527
+    ],
+    [
+      9.607401842409313,
+      13.794757446436915
+    ],
+    [
+      9.999999999999998,
+      13.8
+    ]
+  ],
+  "hook_taper_samples": [
+    [
+      13.1,
+      -0.0
+    ],
+    [
+      12.906339130434782,
+      -0.3
+    ],
+    [
+      12.715495652173912,
+      -0.6
+    ],
+    [
+      12.527678260869566,
+      -0.8999999999999999
+    ],
+    [
+      12.343095652173913,
+      -1.2
+    ],
+    [
+      12.16195652173913,
+      -1.5
+    ],
+    [
+      11.98446956521739,
+      -1.7999999999999998
+    ],
+    [
+      11.81084347826087,
+      -2.1
+    ],
+    [
+      11.64128695652174,
+      -2.4
+    ],
+    [
+      11.476008695652174,
+      -2.6999999999999997
+    ],
+    [
+      11.315217391304348,
+      -3.0
+    ],
+    [
+      11.159121739130436,
+      -3.3
+    ],
+    [
+      11.007930434782608,
+      -3.5999999999999996
+    ],
+    [
+      10.861852173913043,
+      -3.9
+    ],
+    [
+      10.721095652173915,
+      -4.2
+    ],
+    [
+      10.585869565217392,
+      -4.5
+    ],
+    [
+      10.456382608695652,
+      -4.8
+    ],
+    [
+      10.33284347826087,
+      -5.1
+    ],
+    [
+      10.215460869565216,
+      -5.3999999999999995
+    ],
+    [
+      10.104443478260869,
+      -5.7
+    ],
+    [
+      10.0,
+      -6.0
+    ],
+    [
+      9.89955652173913,
+      -6.3
+    ],
+    [
+      9.800539130434784,
+      -6.6
+    ],
+    [
+      9.70315652173913,
+      -6.8999999999999995
+    ],
+    [
+      9.607617391304348,
+      -7.199999999999999
+    ],
+    [
+      9.514130434782608,
+      -7.5
+    ],
+    [
+      9.422904347826087,
+      -7.8
+    ],
+    [
+      9.334147826086957,
+      -8.1
+    ],
+    [
+      9.248069565217392,
+      -8.4
+    ],
+    [
+      9.164878260869566,
+      -8.7
+    ],
+    [
+      9.084782608695653,
+      -9.0
+    ],
+    [
+      9.007991304347827,
+      -9.299999999999999
+    ],
+    [
+      8.934713043478261,
+      -9.6
+    ],
+    [
+      8.86515652173913,
+      -9.9
+    ],
+    [
+      8.799530434782609,
+      -10.2
+    ],
+    [
+      8.73804347826087,
+      -10.5
+    ],
+    [
+      8.680904347826086,
+      -10.799999999999999
+    ],
+    [
+      8.628321739130435,
+      -11.1
+    ],
+    [
+      8.580504347826087,
+      -11.4
+    ],
+    [
+      8.537660869565219,
+      -11.7
+    ],
+    [
+      8.5,
+      -12.0
+    ]
+  ],
+  "pocket_contours": [
+    [
+      [
+        21.790643140673637,
+        -9.910144090652466
+      ],
+      [
+        21.80885212123394,
+        -9.52451641857624
+      ],
+      [
+        21.85708984732628,
+        -9.107836417853832
+      ],
+      [
+        21.934556737542152,
+        -8.69563526660204
+      ],
+      [
+        22.040874421596527,
+        -8.28989102691412
+      ],
+      [
+        22.175505481660366,
+        -7.892670288681984
+      ],
+      [
+        22.337796047329903,
+        -7.5058930814266205
+      ],
+      [
+        22.63777208328247,
+        -6.938838057219982
+      ],
+      [
+        22.84779392927885,
+        -6.61320274323225
+      ],
+      [
+        23.24534346163273,
+        -6.101019501686096
+      ],
+      [
+        23.519372701644897,
+        -5.805935367941856
+      ],
+      [
+        23.823345609009266,
+        -5.520773783326149
+      ],
+      [
+        24.354723431169987,
+        -5.106947116553783
+      ],
+      [
+        24.686115726828575,
+        -4.8934201300144196
+      ],
+      [
+        25.053456246852875,
+        -4.690980017185211
+      ],
+      [
+        25.416300296783447,
+        -4.522465407848358
+      ],
+      [
+        25.807951226830482,
+        -4.372390553355217
+      ],
+      [
+        26.12675979733467,
+        -4.272853329777718
+      ],
+      [
+        26.534243181347847,
+        -4.1734462678432465
+      ],
+      [
+        26.94771508872509,
+        -4.102993510663509
+      ],
+      [
+        27.34435524046421,
+        -4.063208572566509
+      ],
+      [
+        27.79401095956564,
+        -3.8059980273246765
+      ],
+      [
+        28.14988750219345,
+        -3.22635468095541
+      ],
+      [
+        28.436468467116356,
+        -2.666621468961239
+      ],
+      [
+        28.713064827024937,
+        -2.028517358005047
+      ],
+      [
+        28.378715589642525,
+        -1.2419848069548607
+      ],
+      [
+        28.158218331635,
+        -1.2000000029802322
+      ],
+      [
+        15.266312636435032,
+        -1.2000000029802322
+      ],
+      [
+        14.666312642395496,
+        -1.7999999970197678
+      ],
+      [
+        14.76902587711811,
+        -2.135716959834099
+      ],
+      [
+        16.755056887865067,
+        -5.077549822628498
+      ],
+      [
+        16.770190708339214,
+        -5.067332983016968
+      ],
+      [
+        16.75505691766739,
+        -5.077549859881401
+      ],
+      [
+        17.52675297856331,
+        -6.220634542405605
+      ],
+      [
+        17.55515567213297,
+        -6.2014599069952965
+      ],
+      [
+        17.52675297856331,
+        -6.220634549856186
+      ],
+      [
+        19.569915607571602,
+        -9.247094467282295
+      ],
+      [
+        19.587100319564342,
+        -9.235493078827858
+      ],
+      [
+        19.569915659725666,
+        -9.24709452688694
+      ],
+      [
+        20.23733466118574,
+        -10.235718071460724
+      ],
+      [
+        20.734620667994022,
+        -10.5
+      ],
+      [
+        21.190728902816772,
+        -10.5
+      ]
+    ]
+  ]
+}

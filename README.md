@@ -1,6 +1,6 @@
 # VW Touareg tailgate clip — 760 867 899
 
-**Latest tapered models with restored side rounding: [v20 standard and flat-backed files](drafts/v20/README.md).** The root `stl/` files below are the older v17 baseline; use `drafts/v20/stl/` for the latest parts.
+**Latest flat-backed model: [v21 STL, contour recess and CAD fillets](drafts/v21/README.md).** Root `stl/` files remain the older v17 baseline. Only the flat-backed variant is being developed from v21 onward.
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
