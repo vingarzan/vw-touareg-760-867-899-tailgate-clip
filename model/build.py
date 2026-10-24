@@ -8,6 +8,7 @@ photogrammetry; see parameters.json for measured and estimated dimensions.
 import json
 import math
 import os
+from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -246,6 +247,7 @@ def guides():
     return fins[0]+fins[1]
 
 
+@lru_cache(maxsize=2)
 def build(flat_support=False):
     profile, dim = hook_profile(flat_support)
     cx,cz,ri,ro,a = dim
@@ -307,6 +309,13 @@ def build(flat_support=False):
     # Fuse the support and hook in 2D before extruding one flush side face.
     # This eliminates the tiny overlapping coplanar support facets in 3D.
     body=xz(body_section+section(profile),support_width)^envelope^rear_plan_mask()
+    # A 3D morphological opening rolls a ball over all convex hook edges,
+    # including the edges at both lateral faces. Restore the sharp plate.
+    ball=mf.Manifold.sphere(E['hook_edge_fillet_3d_radius'],16)
+    rounded=body.minkowski_difference(ball).minkowski_sum(ball)
+    rounded=rounded.simplify(.0005)
+    sharp_plate=body^box(-1,40,-20,20,0,20)
+    body=(rounded^box(-1,40,-20,20,-30,0))+sharp_plate
     parts = [body,peg(),guides(),spring_latch()]
     clip = mf.Manifold.batch_boolean(parts,mf.OpType.Add).simplify(0.0001)
     # Isolate the actual mating profile without the bulky back link or mount.
@@ -328,8 +337,15 @@ def build(flat_support=False):
 def as_mesh(solid):
     assert solid.status() == mf.Error.NoError, solid.status()
     m = solid.to_mesh()
-    return trimesh.Trimesh(vertices=np.array(m.vert_properties)[:,:3],
-                           faces=np.array(m.tri_verts),process=True)
+    mesh=trimesh.Trimesh(vertices=np.array(m.vert_properties)[:,:3],
+                         faces=np.array(m.tri_verts),process=True)
+    # Welding float32 coordinates can collapse micron-scale CSG faces.
+    # Remove only collapsed triangles, then require a watertight STL roundtrip.
+    keep=mesh.area_faces>1e-16
+    removed=int(np.count_nonzero(~keep))
+    mesh.update_faces(keep);mesh.remove_unreferenced_vertices()
+    mesh.metadata['collapsed_numeric_faces_removed']=removed
+    return mesh
 
 
 def place_on_bed(mesh):
@@ -357,7 +373,9 @@ def validate_and_save(mesh,name):
         'bounds_mm': saved.bounds.tolist(),
         'dimensions_mm': saved.extents.tolist(),
         'volume_mm3': float(saved.volume),
-        'degenerate_triangles': int(np.count_nonzero(saved.area_faces < 1e-9)),
+        'degenerate_triangles': int(np.count_nonzero(saved.area_faces <= 1e-16)),
+        'collapsed_numeric_faces_removed':mesh.metadata.get('collapsed_numeric_faces_removed',0),
+        'minimum_triangle_area_mm2':float(saved.area_faces.min()),
         'finite_coordinates': bool(np.isfinite(saved.vertices).all()),
     }
     assert report['watertight'] and report['winding_consistent'] and report['positive_volume'], report

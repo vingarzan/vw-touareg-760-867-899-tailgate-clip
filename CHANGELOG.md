@@ -1,5 +1,13 @@
 # Design history
 
+## v15 — 3D hook-side edge fillets — 2026-10-24
+
+- Applied a nominal R0.2 mm rolling-ball fillet to exposed convex edges of the hook/support body, including across its width. Both complete versions receive this change.
+- Restored the mounting plate and separately joined peg, fins and retaining clip without additional edge treatment. The previous fin-tip design is retained.
+- Added an end-on width section and checks for relief at both lateral tip corners. The local rounded entrance is approximately 8.22 mm; the nominal sharp-lip reference remains 8.1 mm.
+- Cleaned float32-collapsed zero-area triangles before STL export while retaining valid small-area fillet triangles. Checks require a single watertight solid, consistent winding and positive volume.
+- Physical fit and printing remain unverified.
+
 ## v14 — rounded free hook tip; design-coordinate exports only — 2026-10-24
 
 - Rounded both corners of the free tip, tangent to the bore/outer circle and cap: R0.6 outside, R0.25 inside. Applied to both complete versions and the hook gauge.

@@ -1,0 +1,7 @@
+{
+  "revision": "v15",
+  "comparison_revision": "v14",
+  "mounting_plate_and_upper_features_difference_mm3": 0.0,
+  "peg_fit_test_byte_identical": true,
+  "physical_fit_verified": false
+}

@@ -36,6 +36,6 @@ def render(mesh,oriented,standard,p,q,parameters):
     # A faint bed plane shows the supplied orientation without obscuring the part.
     xx,yy=np.meshgrid([lo[0]-1,hi[0]+1],[lo[1]-1,hi[1]+1])
     ax.plot_surface(xx,yy,np.zeros_like(xx),color='#8fc4a4',alpha=.18,shade=False)
-    ax.set_title('v14 · flat-support variant · example orientation',fontsize=16,pad=15)
+    ax.set_title(parameters['revision']+' · flat-support variant · example orientation',fontsize=16,pad=15)
     fig.text(.5,.025,'Full part geometry · not sliced or physically printed',ha='center',fontsize=11,color='#555')
     fig.tight_layout(rect=(0,.05,1,1));fig.savefig(ROOT/'previews/flat_support_print.png',dpi=170);plt.close(fig)

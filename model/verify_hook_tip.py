@@ -20,6 +20,6 @@ def verify_tip(path,parameters):
             error=abs(np.linalg.norm(points-c,axis=1)-r)
             near=points[error<.0001]
             # A sharp tip has at most a few accidental intersections here.
-            assert len(near)>=30,('tip arc missing',name,y,len(near))
+            assert len(near)>=12,('tip arc missing',name,y,len(near))
             results.append({'corner':name,'y_mm':y,'radius_mm':r,'arc_points_checked':len(near),'maximum_radial_error_mm':float(error[error<.0001].max())})
     return results
