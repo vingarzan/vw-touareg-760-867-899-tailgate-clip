@@ -1,5 +1,22 @@
 # Design history
 
+## v02 — measured asymmetric fins — 2026-10-24
+
+- Right fin: base 9.9, top 5.5, height 7.6 mm above the inner base surface.
+- Left fin: base 9.5, top 6.9, height 3.7 mm above the inner base surface.
+- Both fins are 1.6 mm thick, vertical on the peg side, tapering only toward the hook.
+- Corrected the height datum: the taller right fin, not the peg, is the top of
+  the part. Preserved the measured 19.8 mm overall height by moving the hook.
+- Extended the rail foot into the ramp to avoid a trapped internal CSG pocket.
+- Added a small peg fit-test STL and independent exported-STL section checks
+  for the mating dimensions. All four exported meshes pass geometry checks.
+- Incorporated the remaining four measurement photos with explicit owner
+  permission to publish personal reference photos.
+- Seller photographs are kept outside the published history at the owner's
+  request; the source listing and photo URLs remain as reference links only.
+- No print, slicer or vehicle fit validation. Unmeasured offsets and flexure
+  geometry remain documented reconstruction assumptions.
+
 ## v01 — first reconstructed model — 2026-10-24
 
 - Added a rebuildable measured-photo reconstruction and three STL outputs.
@@ -16,7 +33,7 @@
 
 ## Reference baseline — 2026-10-24
 
-- Imported eight listing photographs and ten owner-provided photographs.
+- Collected eight listing photographs locally and ten owner-provided photographs.
 - Recorded measured spans of 34.4, 26.3, and 19.8 mm; hook cavity 9.4 mm,
   hook mouth 8.1 mm; narrow hook lip width read as 17.3 mm.
 - Owner confirmed the interpretation of the two hook opening measurements.

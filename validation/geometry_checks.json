@@ -1,11 +1,11 @@
 {
-  "revision": "v01",
+  "revision": "v02",
   "units": "mm",
   "meshes": [
     {
       "file": "stl/760867899_clip.stl",
-      "triangles": 4528,
-      "vertices": 2262,
+      "triangles": 4432,
+      "vertices": 2214,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -14,27 +14,27 @@
         [
           0.0,
           -13.800000190734863,
-          -11.300000190734863
+          -9.649999618530273
         ],
         [
           34.400001525878906,
           13.800000190734863,
-          8.5
+          10.149999618530273
         ]
       ],
       "dimensions_mm": [
         34.400001525878906,
         27.600000381469727,
-        19.800000190734863
+        19.799999237060547
       ],
-      "volume_mm3": 3215.679719359369,
+      "volume_mm3": 3207.72234381799,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     },
     {
       "file": "stl/760867899_clip_on_side.stl",
-      "triangles": 4528,
-      "vertices": 2262,
+      "triangles": 4432,
+      "vertices": 2214,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -56,7 +56,7 @@
         19.799999237060547,
         27.600000381469727
       ],
-      "volume_mm3": 3215.679813869472,
+      "volume_mm3": 3207.7224207660124,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     },
@@ -85,7 +85,36 @@
         10.853384017944336,
         5.0
       ],
-      "volume_mm3": 312.78965846337684,
+      "volume_mm3": 312.7896755700385,
+      "degenerate_triangles": 0,
+      "finite_coordinates": true
+    },
+    {
+      "file": "stl/760867899_peg_fit_test.stl",
+      "triangles": 1460,
+      "vertices": 732,
+      "watertight": true,
+      "winding_consistent": true,
+      "positive_volume": true,
+      "connected_solids": 1,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          14.0,
+          14.0,
+          8.5
+        ]
+      ],
+      "dimensions_mm": [
+        14.0,
+        14.0,
+        8.5
+      ],
+      "volume_mm3": 652.2543811721048,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     }
@@ -93,7 +122,7 @@
   "dimensions": {
     "overall_length_mm": 34.400001525878906,
     "maximum_frame_width_mm": 27.600000381469727,
-    "overall_height_mm": 19.800000190734863,
+    "overall_height_mm": 19.799999237060547,
     "hook_cavity_design_diameter_mm": 9.4,
     "hook_mouth_design_chord_mm": 8.1,
     "peg_base_design_diameter_mm": 7.4,
@@ -105,9 +134,42 @@
     ],
     "base_wall_design_mm": 2.55,
     "latch_bar_design_width_mm": 15.0,
+    "right_fin_mm": {
+      "base_length": 9.9,
+      "top_length": 5.5,
+      "height_above_surface": 7.6
+    },
+    "left_fin_mm": {
+      "base_length": 9.5,
+      "top_length": 6.9,
+      "height_above_surface": 3.7
+    },
+    "fin_thickness_mm": 1.6,
     "nominal_and_on_side_same_volume": true,
     "physical_fit_verified": false,
     "slicer_toolpaths_verified": false
+  },
+  "exported_stl_section_measurements": {
+    "hook_cavity_horizontal_mm": 9.399999999999999,
+    "hook_mouth_horizontal_mm": 8.100114000000001,
+    "right_fin": {
+      "base_length_mm": 9.899942,
+      "top_length_mm": 5.500057999999999,
+      "height_above_surface_mm": 7.599999618530274,
+      "thickness_mm": 1.6000003814697266
+    },
+    "left_fin": {
+      "base_length_mm": 9.499929999999999,
+      "top_length_mm": 6.9000699999999995,
+      "height_above_surface_mm": 3.7,
+      "thickness_mm": 1.6000003814697266
+    },
+    "peg_total_height_mm": 8.5,
+    "peg_base_diameter_mm": 7.400000762939452,
+    "peg_barb_diameter_mm": 8.799882871115233,
+    "hook_lip_width_mm": 17.299999237060547,
+    "latch_width_mm": 15.0,
+    "tolerance_mm": 0.003
   },
   "limitations": [
     "Mesh checks do not validate physical fit, material fatigue, creep or retention.",

@@ -1,5 +1,5 @@
 {
-  "revision": "v01",
+  "revision": "v02",
   "units": "mm",
   "measured": {
     "length": 34.4,
@@ -15,7 +15,14 @@
     "peg_total_height_including_wall": 8.5,
     "peg_barb_diameter": 8.8,
     "peg_base_diameter": 7.4,
-    "latch_width": 15.0
+    "latch_width": 15.0,
+    "right_fin_base_length": 9.9,
+    "right_fin_top_length": 5.5,
+    "right_fin_height_above_surface": 7.6,
+    "left_fin_base_length": 9.5,
+    "left_fin_top_length": 6.9,
+    "left_fin_height_above_surface": 3.7,
+    "fin_thickness": 1.6
   },
   "estimated": {
     "base_length": 21.0,
@@ -26,8 +33,7 @@
     "peg_slot_root_z": 3.25,
     "peg_barb_shoulder_z": 6.3,
     "peg_tip_diameter": 6.2,
-    "guide_thickness": 1.25,
-    "guide_top_z": 7.8,
+    "fin_rear_edge_from_peg_end": 9.5,
     "latch_rib_width": 0.95,
     "latch_rib_thickness": 0.95,
     "latch_top_z": 7.2,
@@ -39,9 +45,11 @@
     "X runs from the rounded peg end toward the hook; Y is width; Z points toward the peg.",
     "The outside of the flat rear base is Z=0. The peg reaches Z=8.5 including the 2.55 mm wall.",
     "The hook is reconstructed as an open circular channel; 9.4 mm cavity diameter and 8.1 mm mouth chord.",
-    "Hook centre Z is derived from the measured 19.8 mm overall height, assuming the peg is the tallest feature.",
+    "The right fin is the tallest feature at base_wall + 7.6 mm; hook centre Z is derived from this and the 19.8 mm overall height.",
     "The three width readings are preserved as different positions: body 26.3, guides 26.0, frame 27.6.",
     "The opposite clip is interpreted as the raised transverse spring latch, 15 mm wide.",
+    "Left and right are defined looking from the rounded peg end toward the hook, with the peg pointing up: right is negative Y, left positive Y.",
+    "Both fin rear edges face the peg and are vertical. Only the hook-facing edge tapers. Fin longitudinal position is still a photo estimate.",
     "Small offsets, draft angles, radii, springs and hidden surfaces are photo estimates, not measured OEM geometry."
   ]
 }

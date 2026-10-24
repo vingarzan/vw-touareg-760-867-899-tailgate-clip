@@ -19,6 +19,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+from verify_dimensions import check_export
 
 P = json.loads((ROOT / 'model' / 'parameters.json').read_text())
 M, E = P['measured'], P['estimated']
@@ -69,7 +70,10 @@ def hook_profile():
     ri = M['hook_cavity']/2
     ro = ri + M['hook_wall']
     cx = M['length'] - ro
-    bottom = M['peg_total_height_including_wall'] - M['overall_height']
+    highest = max(M['peg_total_height_including_wall'],
+                  M['base_wall'] + M['right_fin_height_above_surface'],
+                  M['base_wall'] + M['left_fin_height_above_surface'], E['latch_top_z'])
+    bottom = highest - M['overall_height']
     cz = bottom + ro
     a = math.degrees(math.acos(M['hook_mouth'] / (2*ri)))
     # Add cardinal extrema explicitly so the mesh bounds preserve measured size.
@@ -128,11 +132,22 @@ def spring_latch():
 
 
 def guides():
-    profile = [[10.1,2.3],[17.5,2.3],[17.0,7.2],[16.3,E['guide_top_z']],
-               [14.2,E['guide_top_z']],[10.1,4.9]]
-    t = E['guide_thickness']
+    t = M['fin_thickness']
     c = M['guide_outside_width']/2 - t/2
-    return xz(profile,t,-c) + xz(profile,t,c)
+    start = E['fin_rear_edge_from_peg_end']
+    z0 = M['base_wall']
+    fins = []
+    for side,y in [('right',-c),('left',c)]:
+        base = M[side+'_fin_base_length']
+        top = M[side+'_fin_top_length']
+        height = M[side+'_fin_height_above_surface']
+        # Full design dimensions are taken at the inner base surface. Extend
+        # the root vertically 0.15 mm into the skin for a robust solid union.
+        profile = [[start,z0-0.15],[start+base,z0-0.15],
+                   [start+base,z0],[start+top,z0+height],
+                   [start,z0+height]]
+        fins.append(xz(profile,t,y))
+    return fins[0]+fins[1]
 
 
 def build():
@@ -142,9 +157,12 @@ def build():
     hook = xz(profile,M['frame_width'])
     # Ramp skin and two outer shoulder webs join the rear plate to the hook.
     # The common cylindrical cut preserves the 9.4 mm channel through them.
-    ramp_profile = [[16.5,-0.1],[19.8,-0.1],[25.0,-7.5],[23.0,-9.2],[18.0,0.2],[16.5,0.2]]
+    bottom = cz-ro
+    ramp_profile = [[16.5,-0.1],[19.8,-0.1],[25.0,bottom+3.8],
+                    [23.0,bottom+2.1],[18.0,0.2],[16.5,0.2]]
     ramp = xz(ramp_profile,M['frame_width'])
-    web_profile = [[13.6,0.1],[21.5,2.5],[27.6,-10.8],[24.0,-10.8],[17.8,-1.0]]
+    web_profile = [[13.6,0.1],[21.5,2.5],[27.6,bottom+0.5],
+                   [24.0,bottom+0.5],[17.8,-1.0]]
     thick = E['side_web_thickness']
     web_c = M['frame_width']/2-thick/2
     webs = xz(web_profile,thick,-web_c)+xz(web_profile,thick,web_c)
@@ -157,7 +175,9 @@ def build():
     # receives the circular channel cut.
     lower = (hook + ((ramp + webs) - channel)) ^ envelope
     # Slight overlap avoids leaving disconnected faces at the rail root.
-    rail = box(19.4,21.7,-M['frame_width']/2,M['frame_width']/2,-0.12,2.5)
+    # Extend the rail foot into the ramp so the shallower v02 hook cannot
+    # leave a sealed sliver-shaped pocket under the rear of the cross rail.
+    rail = box(19.4,21.7,-M['frame_width']/2,M['frame_width']/2,-0.8,2.5)
     body = rounded_base() + lower + rail
     parts = [body,peg(),guides(),spring_latch()]
     clip = mf.Manifold.batch_boolean(parts,mf.OpType.Add).simplify(0.0001)
@@ -248,6 +268,12 @@ def main():
     reports=[validate_and_save(mesh,'760867899_clip.stl'),
              validate_and_save(place_on_bed(mesh),'760867899_clip_on_side.stl'),
              validate_and_save(coupon_mesh,'760867899_hook_fit_test.stl')]
+    # Isolate the measured split peg on a small flat base for a quick trial.
+    peg_test = (box(0,14,-7,7,0,M['base_wall']) +
+                peg().translate([7-E['peg_center_from_rear'],0,0])).simplify(0.0001)
+    peg_mesh = as_mesh(peg_test)
+    peg_mesh.apply_translation(-peg_mesh.bounds[0])
+    reports.append(validate_and_save(peg_mesh,'760867899_peg_fit_test.stl'))
     np.testing.assert_allclose(mesh.extents,[M['length'],M['frame_width'],M['overall_height']],atol=0.002)
     assert abs(reports[0]['volume_mm3']-reports[1]['volume_mm3']) < 0.01
     cx,cz,ri,ro,a=dim
@@ -263,11 +289,16 @@ def main():
         'measured_base_wall_range_mm':[2.5,2.6],
         'base_wall_design_mm':M['base_wall'],
         'latch_bar_design_width_mm':M['latch_width'],
+        'right_fin_mm':{k:M['right_fin_'+k] for k in ['base_length','top_length','height_above_surface']},
+        'left_fin_mm':{k:M['left_fin_'+k] for k in ['base_length','top_length','height_above_surface']},
+        'fin_thickness_mm':M['fin_thickness'],
         'nominal_and_on_side_same_volume':True,
         'physical_fit_verified':False,
         'slicer_toolpaths_verified':False,
     }
+    actual_checks=check_export(OUT/'760867899_clip.stl',P)
     report={'revision':P['revision'],'units':'mm','meshes':reports,'dimensions':dimensional_checks,
+            'exported_stl_section_measurements':actual_checks,
             'limitations':['Mesh checks do not validate physical fit, material fatigue, creep or retention.',
                            'Measured dimensions constrain a photo reconstruction; unmeasured features remain estimates.',
                            'No FEA, calibrated 3D scan, printed trial, or vehicle fit test has been performed.']}
