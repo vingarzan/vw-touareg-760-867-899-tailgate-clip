@@ -1,6 +1,6 @@
 # VW Touareg tailgate clip — 760 867 899
 
-**Latest flat-backed models: [v26 recess aligned with flat-back support, both fin layouts](drafts/v26/README.md).** Root `stl/` files remain the older v17 baseline.
+**Latest flat-backed models: [v27 filled latch support ribs, both fin layouts](drafts/v27/README.md).** Root `stl/` files remain the older v17 baseline.
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 

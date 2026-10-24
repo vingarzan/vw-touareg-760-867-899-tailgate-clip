@@ -1,0 +1,28 @@
+[
+  {
+    "layout": "existing",
+    "watertight": true,
+    "consistent_winding": true,
+    "connected_components": 1,
+    "added_material_mm3": 3.1574998601822224,
+    "removed_material_mm3": 6.494832970679085e-07,
+    "ribs": 3,
+    "full_height_wall_contact_checked": true,
+    "contact_height_samples_per_rib": 75,
+    "wall_angle_degrees": 115,
+    "physical_fit_verified": false
+  },
+  {
+    "layout": "right",
+    "watertight": true,
+    "consistent_winding": true,
+    "connected_components": 1,
+    "added_material_mm3": 3.157499916993264,
+    "removed_material_mm3": 1.0094144330743601e-06,
+    "ribs": 3,
+    "full_height_wall_contact_checked": true,
+    "contact_height_samples_per_rib": 75,
+    "wall_angle_degrees": 115,
+    "physical_fit_verified": false
+  }
+]
