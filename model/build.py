@@ -242,10 +242,12 @@ def build():
     platform_section=section([[0,0],[base_end,0],[base_end,M['base_wall']],[0,M['base_wall']]])
     neck_section=section([[cx-1.5,cz+ri-.2],[frame_end,cz+ri-.2],
                           [frame_end,.1],[cx-1.5,.1]])
-    rail = box(fin_start_x()+E['frame_start_from_fin_start'],
-               fin_start_x()+E['frame_end_from_fin_start'],
-               -M['frame_width']/2,M['frame_width']/2,0.02,2.5)
-    host_section=(platform_section+back_section+neck_section)-circle_section-entry_section
+    # Fuse the trimmed crossbar in the same 2D profile as the base so its
+    # lateral faces are exactly flush, without coincident 3D union seams.
+    rail_start=fin_start_x()+E['frame_start_from_fin_start']
+    rail_section=section([[rail_start,.02],[frame_end,.02],
+                          [frame_end,2.5],[rail_start,2.5]])
+    host_section=(platform_section+back_section+neck_section+rail_section)-circle_section-entry_section
     body_section=host_section+hook_section
     # The corrected 1.4 x 1.4 mm tooth is diametrically opposite the mouth.
     # U points through the opening; the tooth is centred on the negative U
@@ -257,7 +259,7 @@ def build():
     # Fuse the support and hook in 2D before extruding one flush side face.
     # This eliminates the tiny overlapping coplanar support facets in 3D.
     body=xz(body_section+section(profile),support_width)^envelope^rear_plan_mask()
-    parts = [body,rail,peg(),guides(),spring_latch()]
+    parts = [body,peg(),guides(),spring_latch()]
     clip = mf.Manifold.batch_boolean(parts,mf.OpType.Add).simplify(0.0001)
     # Isolate the actual mating profile without the bulky back link or mount.
     # This central slice is prismatic: its full broad side can sit on the bed.
@@ -382,12 +384,14 @@ def main():
                 M['base_wall']+M['right_fin_height_above_surface'],
                 M['base_wall']+M['left_fin_height_above_surface'],E['latch_top_z'])
     total_height=highest-(M['base_wall']-M['hook_drop_from_mounting_surface'])
-    np.testing.assert_allclose(mesh.extents,[M['length'],M['frame_width'],total_height],atol=0.002)
+    np.testing.assert_allclose(mesh.extents,[M['length'],M['body_width'],total_height],atol=0.002)
     assert abs(reports[0]['volume_mm3']-reports[1]['volume_mm3']) < 0.01
     cx,cz,ri,ro,a=dim
     dimensional_checks={
         'overall_length_mm':float(mesh.extents[0]),
         'maximum_frame_width_mm':float(mesh.extents[1]),
+        'original_frame_width_reference_mm':M['frame_width'],
+        'front_crossbar_is_flush':True,
         'overall_height_mm':float(mesh.extents[2]),
         'hook_cavity_design_diameter_mm':2*ri,
         'hook_mouth_design_chord_mm':2*ri*math.sin(math.radians(a)),

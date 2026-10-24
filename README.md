@@ -2,7 +2,7 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v10 prototype with the measured 7.7 mm base-to-inside hook distance, flush backing and reinforced peg roots. This revision has not been printed or fit-tested.**
+**Status: v11 prototype with the front crossbar flush to the base sides, the measured 7.7 mm hook clearance and reinforced peg roots. This revision has not been printed or fit-tested.**
 
 ![Model preview](previews/clip.png)
 
@@ -11,6 +11,8 @@ Printable reconstruction from photographs and caliper measurements of the origin
 ![Side-printable hook fit test](previews/hook_fit_test.png)
 
 ![Peg root reinforcement and rounded slot ends](previews/peg_reinforcement.png)
+
+![Flush base sides, before and after](previews/flush_base_sides.png)
 
 ## STL files
 
@@ -46,10 +48,15 @@ constant profile through its 4 mm print height, matching mating geometry against
 the complete clip, and measured bore, mouth and tooth at three width stations.
 The external grip tab does not intrude into the cavity or entry. Its footprint
 is approximately 20.92 × 14.75 mm.
+Three sections through the front crossbar and the overall model width verify
+that its lateral edges are flush with the 26.3 mm base.
 Additional exported sections check the flush side width, tangent backing and
 lower circular exterior, eight diagonal sections of the peg collar, and ten
 points along its rounded slot ends. These are geometry checks, not evidence of
 physical strength, printed fit or service life.
+
+The before/after base preview is generated from exported STL sections with
+`python model/render_base_sides.py old.stl new.stl preview.png`.
 
 The rebuildable source is provided to preserve the design history even though
 only STLs are needed for printing:
@@ -61,7 +68,7 @@ python3 -m venv .venv
 ```
 
 [`model/parameters.json`](model/parameters.json) separates measured dimensions
-from estimates. v10 retains the separately measured left and right fins and
+from estimates. v11 retains the separately measured left and right fins and
 places their nearest vertical edges **9 mm beyond the hook-facing edge of the
 peg root along the length of the base**. This is an approximate physical
 measurement implemented as 9.0 mm in the model.
@@ -77,8 +84,9 @@ The separate lateral support webs have been removed. The hook, back link and
 neck now stay within the **26.3 mm base width**, with no support projecting
 past the base below the mounting plane. The solid back link meets the outer
 hook circle at a tangent, eliminating the stepped middle/lower support corners.
-The independently measured **27.6 mm front crossbar** remains local to the frame;
-it is distinct from the removed side-support ledges.
+In v11 the **front crossbar is also trimmed to 26.3 mm**, removing its remaining
+0.65 mm tab on each side. The original 27.6 mm width is retained in the measurement
+record as reference; the printable model now has a maximum width of 26.3 mm.
 
 The peg now includes an **internal tapered root collar**. At the cavity floor
 (Z=3.25 mm), the inner radius is reduced from 2.1 to 0.9 mm; it tapers back to
@@ -112,7 +120,7 @@ the original before printing the whole part.
 | Mounting face down to farthest outside hook edge, perpendicular | 20 | Owner measurement and explicit direction clarification |
 | Internal tooth local height / inward projection | 1.4 / 1.4 | Owner corrected the earlier 2.4 mm values and specified placement opposite the opening |
 | Narrow hook lip width | 17.3 | `reference/measurements/10.jpg`; read from jaw placement |
-| Maximum frame width | 27.6 | `reference/measurements/11.jpg` |
+| Original maximum frame width; trimmed to 26.3 in v11 | 27.6 | `reference/measurements/11.jpg` |
 | Outside guide width | 26.0 | `reference/measurements/12.jpg` and owner clarification |
 | Base wall | 2.5–2.6 | Owner measurement; design uses midpoint 2.55 |
 | Peg total height, including base wall | 8.5 | Owner measurement |
@@ -130,7 +138,7 @@ and small radii are photo estimates. Photographs do not provide a calibrated 3D 
 
 The mounting face is Z=2.55 mm. The corrected hook drop puts its lowest outside
 edge at Z=-17.45 mm. The right fin reaches Z=10.15 mm, making the complete model
-**34.4 × 27.6 × 27.6 mm**. v01–v03 incorrectly treated the earlier 19.8 mm caliper
+**34.4 × 26.3 × 27.6 mm**. v01–v03 incorrectly treated the earlier 19.8 mm caliper
 span as the entire part height; v04 supersedes that interpretation.
 
 The mouth points diagonally outward, as shown in the new side photo, rather

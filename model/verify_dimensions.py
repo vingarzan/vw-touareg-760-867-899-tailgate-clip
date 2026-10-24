@@ -90,6 +90,24 @@ def check_export(path, parameters):
     below_width=float(below[:,1].max()-below[:,1].min())
     assert below_width<=measured['body_width']+.003,('protruding lateral hook support',below_width)
     result['hook_support_max_width_below_base_mm']=below_width
+    # Include the front crossbar ABOVE the underside; v09's check below Z=0
+    # could not detect the remaining 0.65 mm lateral tabs at the base edge.
+    actual_width=float(m.bounds[1,1]-m.bounds[0,1])
+    assert abs(actual_width-measured['body_width'])<.003,('base-side tabs remain',actual_width)
+    rail_widths=[]
+    rail_x=fin_start+estimated['frame_end_from_fin_start']-.1
+    for z in [.1,1.25,2.4]:
+        lines=trimesh.intersections.mesh_plane(m,[1,0,0],[rail_x,0,0])
+        ys=[]
+        for a,b in lines:
+            if abs(b[2]-a[2])<1e-10:continue
+            t=(z-a[2])/(b[2]-a[2])
+            if -1e-8<=t<=1+1e-8:ys.append(a[1]+t*(b[1]-a[1]))
+        width=max(ys)-min(ys)
+        assert abs(width-measured['body_width'])<.003,('crossbar not flush',z,width)
+        rail_widths.append({'z_mm':z,'width_mm':float(width)})
+    result['flush_front_crossbar_sections']=rail_widths
+
     # Check the actual rear outline against the tangent line, then ensure
     # that no old support corner projects past the circular lower surface.
     p=np.array([estimated['back_link_start_x'],estimated['back_link_top_z']])

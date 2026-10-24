@@ -1,5 +1,5 @@
 {
-  "revision": "v10",
+  "revision": "v11",
   "units": "mm",
   "measured": {
     "length": 34.4,
@@ -80,12 +80,14 @@
     "The solid back link now joins the hook outer circle on a tangent from the mounting base, avoiding the stepped mid-profile and protruding lower support corners.",
     "The owner reported peg legs breaking and requested inside root support. A conical inner collar reduces the cavity radius to 0.9 mm at its floor, tapering to the existing 2.1 mm radius over 1.1 mm; these reinforcement dimensions are design choices.",
     "The 1 mm-wide peg slots now have 0.5 mm-radius lower ends centred at Z=3.9 mm (lowest cut at Z=3.4), replacing the sharp rectangular slot roots. Outer peg dimensions are retained; insertion force and fatigue require a new physical trial.",
-    "Owner photo 20 shows 7.7 mm perpendicular from the peg/fin mounting face to the nearest inside hook curve. With the existing 20 mm outside drop and 9.7 mm bore, the derived radial hook wall is 20 - 7.7 - 9.7 = 2.6 mm, replacing the estimated 2.5 mm. This reduces the v09 nearest-inside distance by 0.1 mm; it is not a 7.7 mm measurement to the free lip or deepest inside curve."
+    "Owner photo 20 shows 7.7 mm perpendicular from the peg/fin mounting face to the nearest inside hook curve. With the existing 20 mm outside drop and 9.7 mm bore, the derived radial hook wall is 20 - 7.7 - 9.7 = 2.6 mm, replacing the estimated 2.5 mm. This reduces the v09 nearest-inside distance by 0.1 mm; it is not a 7.7 mm measurement to the free lip or deepest inside curve.",
+    "In v11 the owner requested removal of the remaining base-side tabs at the hook end. The front crossbar is narrowed from the original measured 27.6 mm to the 26.3 mm body width, trimming 0.65 mm from each side. The original frame_width measurement remains recorded as reference rather than the current model width. All mating dimensions and reinforced peg geometry are retained."
   ],
   "construction": {
     "solid_hook_back_link": true,
     "flush_hook_supports": true,
     "tangent_hook_back_link": true,
-    "reinforced_peg_roots": true
+    "reinforced_peg_roots": true,
+    "flush_front_crossbar": true
   }
 }

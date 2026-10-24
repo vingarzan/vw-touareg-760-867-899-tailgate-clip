@@ -1,5 +1,13 @@
 # Design history
 
+## v11 — trim the remaining lateral base tabs — 2026-10-24
+
+- Narrowed the hook-end front crossbar from 27.6 to 26.3 mm, removing the 0.65 mm protrusion on each side and making it flush with the mounting base. The original width remains in the measurement record.
+- Fused the crossbar into the base profile before extrusion for continuous flush faces.
+- Added overall-width and three exported crossbar-section checks, plus a before/after preview.
+- Retained the v10 hook clearance, bore, mouth, tooth and reinforced peg.
+- Physical fit remains unverified.
+
 ## v10 — measured base-to-inside hook distance — 2026-10-24
 
 - Added owner photo 20 and the 7.7 mm perpendicular distance from the peg/fin mounting face to the nearest inside hook curve (7.8 mm in v09).

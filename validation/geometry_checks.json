@@ -1,11 +1,11 @@
 {
-  "revision": "v10",
+  "revision": "v11",
   "units": "mm",
   "meshes": [
     {
       "file": "stl/760867899_clip.stl",
-      "triangles": 5462,
-      "vertices": 2733,
+      "triangles": 5442,
+      "vertices": 2723,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -13,28 +13,28 @@
       "bounds_mm": [
         [
           0.0,
-          -13.800000190734863,
+          -13.149999618530273,
           -17.450000762939453
         ],
         [
           34.400001525878906,
-          13.800000190734863,
+          13.149999618530273,
           10.149999618530273
         ]
       ],
       "dimensions_mm": [
         34.400001525878906,
-        27.600000381469727,
+        26.299999237060547,
         27.600000381469727
       ],
-      "volume_mm3": 5641.491807588794,
+      "volume_mm3": 5634.076603519466,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     },
     {
       "file": "stl/760867899_clip_on_side.stl",
-      "triangles": 5462,
-      "vertices": 2733,
+      "triangles": 5442,
+      "vertices": 2723,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -48,15 +48,15 @@
         [
           34.400001525878906,
           27.600000381469727,
-          27.600000381469727
+          26.299999237060547
         ]
       ],
       "dimensions_mm": [
         34.400001525878906,
         27.600000381469727,
-        27.600000381469727
+        26.299999237060547
       ],
-      "volume_mm3": 5641.491963998006,
+      "volume_mm3": 5634.076655865542,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     },
@@ -121,7 +121,9 @@
   ],
   "dimensions": {
     "overall_length_mm": 34.400001525878906,
-    "maximum_frame_width_mm": 27.600000381469727,
+    "maximum_frame_width_mm": 26.299999237060547,
+    "original_frame_width_reference_mm": 27.6,
+    "front_crossbar_is_flush": true,
     "overall_height_mm": 27.600000381469727,
     "hook_cavity_design_diameter_mm": 9.7,
     "hook_mouth_design_chord_mm": 8.1,
@@ -341,6 +343,20 @@
       }
     ],
     "hook_support_max_width_below_base_mm": 26.299999237060547,
+    "flush_front_crossbar_sections": [
+      {
+        "z_mm": 0.1,
+        "width_mm": 26.299999237060547
+      },
+      {
+        "z_mm": 1.25,
+        "width_mm": 26.299999237060547
+      },
+      {
+        "z_mm": 2.4,
+        "width_mm": 26.299999237060547
+      }
+    ],
     "back_link_tangent_point_xz_mm": [
       20.446982227712553,
       -11.522338726510245
