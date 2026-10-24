@@ -1,6 +1,6 @@
 # VW Touareg tailgate clip — 760 867 899
 
-**Latest flat-backed models: [v23 existing and right-side fin variants](drafts/v23/README.md).** Root `stl/` files remain the older v17 baseline.
+**Latest flat-backed models: [v24 continuous latch cap, existing and right-side versions](drafts/v24/README.md).** Root `stl/` files remain the older v17 baseline.
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
