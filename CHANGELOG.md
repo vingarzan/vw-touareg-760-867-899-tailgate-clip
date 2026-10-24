@@ -1,5 +1,23 @@
 # Design history
 
+## v08 — compact hook fit test for printing on its side — 2026-10-24
+
+- Replaced the bulky 5 mm hook slice with a compact, 4 mm-wide hook gauge.
+- Isolated its mating geometry directly from the complete clip, retaining the
+  9.7 mm bore, 8.1 mm mouth and 1.4 × 1.4 mm tooth opposite the opening.
+- Added a rounded external grip tab and placed the entire broad side at Z=0.
+  Print size is approximately 20.92 × 14.75 × 4 mm, with 130.28 mm² of bed contact.
+- Verified that the whole profile contacts the bed and remains constant through
+  its height, so this gauge geometry requires no supports. No printer profile
+  or physical print has been tested.
+- Compared the saved test STL with the complete clip's mating region; checked
+  the bore, mouth and tooth at three width stations and 51 clear entry rays.
+- Added a dedicated hook-gauge print preview and instructions.
+- Complete clip, its side-oriented copy and the peg test STLs are byte-identical
+  to v07. This revision changes the hook test and its verification/documentation.
+- The thin gauge checks fit dimensions; it does not reproduce full-width
+  stiffness, spring force, retention or service life.
+
 ## v07 — 9.7 mm inside diameter — 2026-10-24
 
 - Owner corrected the hook bore to 9.7 mm inside diameter, explicitly confirming

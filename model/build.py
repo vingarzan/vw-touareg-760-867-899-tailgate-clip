@@ -232,11 +232,19 @@ def build():
     body=(body+rib)^envelope
     parts = [body,peg(),guides(),spring_latch()]
     clip = mf.Manifold.batch_boolean(parts,mf.OpType.Add).simplify(0.0001)
-    # Take the test directly from the finished hook, including the flat roof
-    # introduced by the extended platform. A bare circular U would not test
-    # the same opening as this revision of the complete part.
-    cw = E['coupon_width']/2
-    coupon = clip ^ box(cx-ro-0.01,M['length']+0.1,-cw,cw,-20,M['base_wall'])
+    # Isolate the actual mating profile without the bulky back link or mount.
+    # This central slice is prismatic: its full broad side can sit on the bed.
+    mask=xz(arc(cx,cz,ro+0.05,0,360,361)[:-1],E['coupon_width'])
+    core=clip^mask
+    left=cx-ro
+    tab_profile=section([[left-E['coupon_handle_length'],cz-E['coupon_handle_height']/2],
+                         [left+E['coupon_handle_overlap'],cz-E['coupon_handle_height']/2],
+                         [left+E['coupon_handle_overlap'],cz+E['coupon_handle_height']/2],
+                         [left-E['coupon_handle_length'],cz+E['coupon_handle_height']/2]])
+    radius=E['coupon_handle_corner_radius']
+    tab=tab_profile.offset(-radius).offset(radius).extrude(E['coupon_width']).transform([
+        [1,0,0,0],[0,0,-1,E['coupon_width']/2],[0,1,0,0]])
+    coupon=(core+tab).simplify(0.0001)
     return clip, coupon, dim
 
 
@@ -328,7 +336,8 @@ def preview(mesh):
 def main():
     clip,coupon,dim=build()
     mesh=as_mesh(clip)
-    coupon_mesh=place_on_bed(as_mesh(coupon))
+    coupon_in_design=as_mesh(coupon)
+    coupon_mesh=place_on_bed(coupon_in_design)
     reports=[validate_and_save(mesh,'760867899_clip.stl'),
              validate_and_save(place_on_bed(mesh),'760867899_clip_on_side.stl'),
              validate_and_save(coupon_mesh,'760867899_hook_fit_test.stl')]
@@ -373,15 +382,37 @@ def main():
         'slicer_toolpaths_verified':False,
     }
     actual_checks=check_export(OUT/'760867899_clip.stl',P)
+    from verify_hook_test import check_hook_test
+    hook_test_checks=check_hook_test(OUT/'760867899_hook_fit_test.stl',
+                                    OUT/'760867899_clip.stl',P,dim,coupon_in_design.bounds)
     report={'revision':P['revision'],'units':'mm','meshes':reports,'dimensions':dimensional_checks,
             'exported_stl_section_measurements':actual_checks,
+            'hook_fit_test_checks':hook_test_checks,
             'limitations':['Mesh checks do not validate physical fit, material fatigue, creep or retention.',
                            'Measured dimensions constrain a photo reconstruction; unmeasured features remain estimates.',
                            'No FEA, calibrated 3D scan, printed trial, or vehicle fit test has been performed.']}
     (CHECKS/'geometry_checks.json').write_text(json.dumps(report,indent=2)+'\n')
     preview(mesh)
     render_section(OUT/'760867899_clip.stl',P,PREVIEW/'hook_section.png')
+    preview_hook_test(coupon_mesh)
     print(json.dumps(report,indent=2))
+
+
+def preview_hook_test(mesh):
+    fig=plt.figure(figsize=(11,5.5),facecolor='#f5f6f8')
+    ax=fig.add_subplot(1,2,1,projection='3d',facecolor='#f5f6f8')
+    draw_3d(ax,mesh,36,-63)
+    ax.set_title('Broad flat side on the bed',fontsize=12,pad=-8)
+    ax=fig.add_subplot(1,2,2,facecolor='#f5f6f8')
+    from matplotlib.collections import PolyCollection
+    ax.add_collection(PolyCollection(mesh.triangles[:,:,:2],facecolors='#366582',edgecolors='none'))
+    lo,hi=mesh.bounds
+    ax.set_xlim(lo[0]-1.5,hi[0]+1.5);ax.set_ylim(lo[1]-1.5,hi[1]+1.5)
+    ax.set_aspect('equal');ax.set_axis_off();ax.set_title('Top view · opening and tooth',fontsize=12)
+    fig.suptitle(f"{P['revision']} · hook fit test · Ø 9.7 / 8.1 mm mouth / 1.4 mm tooth",fontsize=15,y=.97)
+    fig.text(.5,.055,'4 mm print height · flat contact face · rounded grip tab · import at 100%',ha='center',fontsize=11,color='#555')
+    plt.subplots_adjust(left=.01,right=.99,top=.88,bottom=.13,wspace=.03)
+    fig.savefig(PREVIEW/'hook_fit_test.png',dpi=170);plt.close(fig)
 
 
 if __name__=='__main__':

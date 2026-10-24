@@ -1,5 +1,5 @@
 {
-  "revision": "v07",
+  "revision": "v08",
   "units": "mm",
   "measured": {
     "length": 34.4,
@@ -39,14 +39,18 @@
     "latch_top_z": 7.2,
     "latch_bar_thickness": 1.3,
     "side_web_thickness": 1.5,
-    "coupon_width": 5.0,
+    "coupon_width": 4.0,
     "base_front_from_fin_start": 11.5,
     "frame_start_from_fin_start": 9.9,
     "frame_end_from_fin_start": 12.2,
     "latch_wall_thickness_x": 1.2,
     "latch_wall_foot_from_fin_start": 7.9,
     "hook_shell_wall": 2.5,
-    "hook_opening_direction_degrees": 30.0
+    "hook_opening_direction_degrees": 30.0,
+    "coupon_handle_length": 7.0,
+    "coupon_handle_height": 8.0,
+    "coupon_handle_overlap": 1.5,
+    "coupon_handle_corner_radius": 0.8
   },
   "interpretation": [
     "X runs from the rounded peg end toward the hook; Y is width; Z points toward the peg.",
@@ -67,7 +71,8 @@
     "The owner corrected the internal tooth to 1.4 x 1.4 mm. It is centred diametrically opposite the opening and runs across the full width along the cylinder axis.",
     "The tooth projects 1.4 mm radially inward and measures 1.4 mm across the local tangent of the bore; its centreline is exactly opposite the mouth centreline. Only small edge radii remain estimated.",
     "The owner requested a solid back link from hook to mounting base. A full-width solid web fills the former gap between the inclined rear skin and upper hook/neck. The circular cavity and entry corridor are still cut afterward, so the hook opening and tooth remain clear.",
-    "The owner corrected the inside bore diameter to 9.7 mm, explicitly choosing diameter (not 9.7 mm radius). This supersedes the initial 9.4 mm cavity reading; the opening remains 8.1 mm."
+    "The owner corrected the inside bore diameter to 9.7 mm, explicitly choosing diameter (not 9.7 mm radius). This supersedes the initial 9.4 mm cavity reading; the opening remains 8.1 mm.",
+    "The v08 hook fit test isolates the actual hook mating profile in a 4 mm-wide slice, adds a rounded external grip tab, and lies on a broad flat side at print Z=0. It is a quick geometry gauge, not a full-width retention or stiffness test."
   ],
   "construction": {
     "solid_hook_back_link": true

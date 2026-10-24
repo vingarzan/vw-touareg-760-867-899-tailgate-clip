@@ -2,11 +2,13 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v07 reconstructed prototype with a solid hook-to-base back link, open hook, 20 mm hook drop, 9.7 mm inside diameter and 1.4 × 1.4 mm internal tooth. No printed fit or retention test has been performed.**
+**Status: v08 reconstructed prototype with a solid hook-to-base back link, open hook, 20 mm hook drop, 9.7 mm inside diameter and 1.4 × 1.4 mm internal tooth. No printed fit or retention test has been performed.**
 
 ![Model preview](previews/clip.png)
 
 ![Section of the actual STL showing the hook opening and rib](previews/hook_section.png)
+
+![Side-printable hook fit test](previews/hook_fit_test.png)
 
 ## STL files
 
@@ -14,7 +16,7 @@ All files use millimetres. Import at 100% scale.
 
 - [`stl/760867899_clip.stl`](stl/760867899_clip.stl): complete clip in design coordinates.
 - [`stl/760867899_clip_on_side.stl`](stl/760867899_clip_on_side.stl): the same clip rotated onto one side, with its lowest surface at Z=0. Inspect supports before printing.
-- [`stl/760867899_hook_fit_test.stl`](stl/760867899_hook_fit_test.stl): a 5 mm-wide section cut directly from the finished hook, including its fixed upper arm, open mouth and internal rib. Its flat end is on the bed; print this first to check the cavity and mouth. It does not test the peg, full-width hook stiffness, or complete assembly retention.
+- [`stl/760867899_hook_fit_test.stl`](stl/760867899_hook_fit_test.stl): a compact **side-printable hook gauge** with a rounded grip tab. It has the actual 9.7 mm bore, 8.1 mm mouth and 1.4 × 1.4 mm tooth, without the bulky mounting body. It is already laid on its broad flat side and is only **4 mm high**. Import at 100%, keep this orientation and print without supports. It checks the mating shape, not full-width stiffness or retention.
 - [`stl/760867899_peg_fit_test.stl`](stl/760867899_peg_fit_test.stl): the measured split peg on a 14 × 14 mm flat base. This is a small trial of the peg geometry, not a substitute for testing the complete clip.
 
 The complete part has undercuts and a horizontal peg in the side orientation.
@@ -37,6 +39,11 @@ at both ends and the centre. Fifty-one rays through the exported STL's entry
 path check that the mouth is not blocked by the platform, frame or neck.
 Twenty additional sections across the back link verify one continuous material
 interval at the former gap, including the centre and both sides.
+The hook gauge has separate exported-STL checks: full first-layer contact, a
+constant profile through its 4 mm print height, matching mating geometry against
+the complete clip, and measured bore, mouth and tooth at three width stations.
+The external grip tab does not intrude into the cavity or entry. Its footprint
+is approximately 20.92 × 14.75 mm.
 These are geometry checks, not evidence of printed fit or service life.
 
 The rebuildable source is provided to preserve the design history even though
@@ -49,7 +56,7 @@ python3 -m venv .venv
 ```
 
 [`model/parameters.json`](model/parameters.json) separates measured dimensions
-from estimates. v07 retains the separately measured left and right fins and
+from estimates. v08 retains the separately measured left and right fins and
 places their nearest vertical edges **9 mm beyond the hook-facing edge of the
 peg root along the length of the base**. This is an approximate physical
 measurement implemented as 9.0 mm in the model.
@@ -128,7 +135,10 @@ photo estimates and should be compared with the original before printing.
 ## First print
 
 1. Print the hook and peg fit-test pieces at 100% scale. The peg piece sits flat
-   with the peg upright; the hook piece stands on its flat 5 mm-wide end.
+   with the peg upright. Keep the hook gauge on its broad flat side as supplied:
+   it is 4 mm high with approximately 130 mm² of bed contact. No supports are
+   needed for its constant profile. Use the rounded external tab to hold it.
+   The complete clip still requires separate inspection of support placement.
 2. Compare the full clip preview with the original, especially the tall-fin side.
 3. Inspect support placement and layer paths for the full clip. The side STL is
    an orientation option, not a validated print profile. Its small contact area
