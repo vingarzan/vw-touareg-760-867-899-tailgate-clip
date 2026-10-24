@@ -1,5 +1,5 @@
 {
-  "revision": "v12",
+  "revision": "v13",
   "units": "mm",
   "measured": {
     "length": 34.4,
@@ -58,7 +58,9 @@
     "hook_upper_blend_start_handle": 0.9,
     "hook_upper_blend_end_handle": 1.8,
     "fin_tip_radius": 0.4,
-    "fin_inward_lean_degrees": 5.0
+    "fin_inward_lean_degrees": 5.0,
+    "flat_support_rear_x": 0.0,
+    "flat_support_rear_z": 0.0
   },
   "interpretation": [
     "X runs from the rounded peg end toward the hook; Y is width; Z points toward the peg.",
@@ -86,13 +88,15 @@
     "The 1 mm-wide peg slots now have 0.5 mm-radius lower ends centred at Z=3.9 mm (lowest cut at Z=3.4), replacing the sharp rectangular slot roots. Outer peg dimensions are retained; insertion force and fatigue require a new physical trial.",
     "Owner photo 20 shows 7.7 mm perpendicular from the peg/fin mounting face to the nearest inside hook curve. With the existing 20 mm outside drop and 9.7 mm bore, the derived radial hook wall is 20 - 7.7 - 9.7 = 2.6 mm, replacing the estimated 2.5 mm. This reduces the v09 nearest-inside distance by 0.1 mm; it is not a 7.7 mm measurement to the free lip or deepest inside curve.",
     "In v11 the owner requested removal of the remaining base-side tabs at the hook end. The front crossbar is narrowed from the original measured 27.6 mm to the 26.3 mm body width, trimming 0.65 mm from each side. The original frame_width measurement remains recorded as reference rather than the current model width. All mating dimensions and reinforced peg geometry are retained.",
-    "v12 rounds only the hook upper end and side shoulders, preserving sharp base, peg and retaining latch. The upper entry relief is a smooth cubic blend tangent to the entry direction and front base edge. Straight lateral taper cuts are replaced by cosine-eased shoulders below the base. Fin tips alone have R0.4 end corners and fins lean 5 degrees inward; the original fin lengths describe their unrounded envelope. Root width, root station and heights are preserved. These rounding and lean values are design choices, not new measurements."
+    "v12 rounds only the hook upper end and side shoulders, preserving sharp base, peg and retaining latch. The upper entry relief is a smooth cubic blend tangent to the entry direction and front base edge. Straight lateral taper cuts are replaced by cosine-eased shoulders below the base. Fin tips alone have R0.4 end corners and fins lean 5 degrees inward; the original fin lengths describe their unrounded envelope. Root width, root station and heights are preserved. These rounding and lean values are design choices, not new measurements.",
+    "v13 adds a separate flat-support variant while retaining the standard v12 geometry. A full-width solid wedge extends the rear support to X=0,Z=0 at the rear underside of the mounting base, with a plane tangent to the outside hook circle. A separate STL is rotated onto that plane for printing. This adds material behind the hook and under the base; available installation clearance and support requirements remain untested."
   ],
   "construction": {
     "solid_hook_back_link": true,
     "flush_hook_supports": true,
     "tangent_hook_back_link": true,
     "reinforced_peg_roots": true,
-    "flush_front_crossbar": true
+    "flush_front_crossbar": true,
+    "flat_support_variant_available": true
   }
 }

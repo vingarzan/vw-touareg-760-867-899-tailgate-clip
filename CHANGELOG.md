@@ -1,5 +1,12 @@
 # Design history
 
+## v13 — separate flat-support print variant — 2026-10-24
+
+- Added a separate full-width backing wedge from the rear underside of the base to a tangent on the outer hook curve. The standard v12 STL geometry is retained unchanged.
+- Added design-orientation and flat-face-on-bed STL files. The supplied print version is rotated about 34.46° and has approximately 723 mm² of bed contact.
+- Verified that all vertices lie above the support plane, the upper features are unchanged, and the measured hook mating geometry matches the gauge. Both extra meshes pass the existing manifold checks.
+- Added side-section and 3D print-orientation previews. The wedge adds approximately 3.43 cm³ of material; installation clearance, slicing and physical printing remain unverified.
+
 ## v12 — rounded hook and inward-leaning fin tips — 2026-10-24
 
 - Replaced the hook upper angled face with a smooth entry relief and the straight diagonal shoulder cuts with curved transitions. Retained the 7.7 mm clearance, 9.7 mm bore, 8.1 mm mouth and internal tooth.

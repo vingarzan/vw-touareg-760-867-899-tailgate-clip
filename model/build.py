@@ -76,8 +76,8 @@ def rounded_base():
     return section(points).extrude(M['base_wall'])
 
 
-def back_link_tangent(cx,cz,ro):
-    p=np.array([E['back_link_start_x'],E['back_link_top_z']])
+def back_link_tangent(cx,cz,ro,flat_support=False):
+    p=np.array([E['flat_support_rear_x'],E['flat_support_rear_z']]) if flat_support else np.array([E['back_link_start_x'],E['back_link_top_z']])
     center=np.array([cx,cz]);w=p-center;d2=float(w@w)
     assert d2>ro*ro
     a=ro*ro/d2;b=ro*math.sqrt(d2-ro*ro)/d2
@@ -87,7 +87,7 @@ def back_link_tangent(cx,cz,ro):
     return p,q
 
 
-def hook_profile():
+def hook_profile(flat_support=False):
     ri = M['hook_cavity']/2
     ro = M['hook_drop_from_mounting_surface'] - M['hook_base_to_nearest_inside'] - ri
     direction = E['hook_opening_direction_degrees']
@@ -100,7 +100,7 @@ def hook_profile():
     cz = bottom + ro
     # Add cardinal extrema explicitly so the mesh bounds preserve measured size.
     cardinals=[t for t in [0.,90.,180.,270.,360.] if start<=t<=end]
-    _,tangent=back_link_tangent(cx,cz,ro)
+    _,tangent=back_link_tangent(cx,cz,ro,flat_support)
     tangent_angle=math.degrees(math.atan2(tangent[1]-cz,tangent[0]-cx))%360
     angles = np.unique(np.r_[np.linspace(start,end,201),cardinals,tangent_angle])
     outer = [[cx+ro*math.cos(math.radians(t)), cz+ro*math.sin(math.radians(t))] for t in angles]
@@ -231,8 +231,8 @@ def guides():
     return fins[0]+fins[1]
 
 
-def build():
-    profile, dim = hook_profile()
+def build(flat_support=False):
+    profile, dim = hook_profile(flat_support)
     cx,cz,ri,ro,a = dim
     envelope = hook_envelope()
     support_width=M['body_width']
@@ -240,7 +240,7 @@ def build():
     # A single solid profile replaces the overlapping ramp and lateral webs.
     # Its rear edge meets the outside hook circle at an exact tangent.
     bottom = cz-ro
-    p,tangent=back_link_tangent(cx,cz,ro)
+    p,tangent=back_link_tangent(cx,cz,ro,flat_support)
     back_section=section([p,[fin_start_x()+E['frame_end_from_fin_start'],p[1]],
                           [cx,cz],tangent])
     # Build the circular void from the same angular vertices as the hook.
@@ -467,6 +467,9 @@ def main():
     from render_peg_section import render_peg_section
     render_peg_section(OUT/'760867899_peg_fit_test.stl',P,PREVIEW/'peg_reinforcement.png')
     preview_hook_test(coupon_mesh)
+    from flat_support import export_variant
+    report['flat_support_variant']=export_variant(P,build,as_mesh,validate_and_save)
+    (CHECKS/'geometry_checks.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))
 
 

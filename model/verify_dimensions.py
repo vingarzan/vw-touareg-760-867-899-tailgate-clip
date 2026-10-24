@@ -137,6 +137,14 @@ def check_export(path, parameters):
         for z in [-1.0,-3.0,-6.0,-9.0]:
             xs=section_crossings(m,y,z)
             wanted=p[0]+(z-p[1])*(q[0]-p[0])/(q[1]-p[1])
+            if parameters['construction'].get('flat_support_variant'):
+                # The rear base has rounded plan-view corners: near its sides,
+                # the footprint starts forward of the rear-centre tangent plane.
+                r=estimated['rear_corner_radius']
+                dy=max(abs(y)-(measured['body_width']/2-r),0)
+                rear_limit=r-math.sqrt(max(r*r-dy*dy,0)) if dy else 0
+                wanted=max(wanted,rear_limit)
+
             assert abs(xs.min()-wanted)<.003,('non-flush backing profile',y,z,xs.min(),wanted)
     low=m.vertices[m.vertices[:,2]<q[1]-.05]
     low_radii=np.linalg.norm(low[:,[0,2]]-center,axis=1)

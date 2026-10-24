@@ -2,7 +2,7 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v12 prototype with rounded hook shoulders, rounded fin tips and a 5° inward fin lean. The mounting base, reinforced peg and retaining latch retain their sharp geometry. This revision has not been printed or fit-tested.**
+**Status: v13 adds a separate flat-support print variant. The standard model retains the v12 geometry. Neither version has been physically fit-tested.**
 
 ![Model preview](previews/clip.png)
 
@@ -16,10 +16,16 @@ Printable reconstruction from photographs and caliper measurements of the origin
 
 ![Rounded fin tips and inward lean](previews/rounded_fins.png)
 
+![Separate flat-support variant and print orientation](previews/flat_support_profile.png)
+
+![Flat-support version on the print bed](previews/flat_support_print.png)
+
 ## STL files
 
 All files use millimetres. Import at 100% scale.
 
+- [`stl/760867899_clip_flat_support.stl`](stl/760867899_clip_flat_support.stl): separate variant with a continuous flat rear support face from the rear underside of the base, tangent to the outside hook curve.
+- [`stl/760867899_clip_on_flat_support.stl`](stl/760867899_clip_on_flat_support.stl): that variant already rotated onto its flat support face, approximately 34.46° about the width axis. Keep the supplied orientation to try printing on this face; inspect remaining overhangs/supports in the slicer.
 - [`stl/760867899_clip.stl`](stl/760867899_clip.stl): complete clip in design coordinates.
 - [`stl/760867899_clip_on_side.stl`](stl/760867899_clip_on_side.stl): the same clip rotated onto one side, with its lowest surface at Z=0. Inspect supports before printing.
 - [`stl/760867899_hook_fit_test.stl`](stl/760867899_hook_fit_test.stl): a compact **side-printable hook gauge** with a rounded grip tab. It has the actual 9.7 mm bore, 8.1 mm mouth and 1.4 × 1.4 mm tooth, without the bulky mounting body. It is already laid on its broad flat side and is only **4 mm high**. Import at 100%, keep this orientation and print without supports. It checks the mating shape, not full-width stiffness or retention.
@@ -73,7 +79,7 @@ python3 -m venv .venv
 ```
 
 [`model/parameters.json`](model/parameters.json) separates measured dimensions
-from estimates. v12 retains the measured fin root positions and heights and
+from estimates. The standard model retains the measured fin root positions and heights and
 places their nearest root edges **9 mm beyond the hook-facing edge of the
 peg root along the length of the base**. This is an approximate physical
 measurement implemented as 9.0 mm in the model.
@@ -116,6 +122,19 @@ the flat part at the very top. Both fins lean **5° inward across the width**,
 shifting their ends inward by 0.66 mm (right) and 0.32 mm (left). Root positions,
 1.6 mm wall thickness and heights are retained. The rounding and lean values are
 design choices. Please compare with the original before printing the whole part.
+
+## Flat-support variant
+
+The optional version adds a solid wedge under the base, extending the existing
+hook backing to the rounded rear of the base. Its outside face is a single
+plane tangent to the hook circle. The print-oriented STL has approximately
+**723 mm² of bed contact**, and every vertex is above that plane. This is a
+geometry check, not a sliced or printed support-free claim. The peg, fins,
+retaining latch and measured hook mating dimensions are retained. The extra
+backing adds approximately **3.43 cm³** of material; its installation clearance
+needs checking. The standard version remains available with unchanged v12 STL
+geometry. See [`validation/flat_support_checks.json`](validation/flat_support_checks.json)
+for the exported mesh, contact-plane and mating-section checks.
 
 ## Reference measurements
 
