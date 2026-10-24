@@ -1,11 +1,11 @@
 {
-  "revision": "v11",
+  "revision": "v12",
   "units": "mm",
   "meshes": [
     {
       "file": "stl/760867899_clip.stl",
-      "triangles": 5442,
-      "vertices": 2723,
+      "triangles": 7582,
+      "vertices": 3793,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -19,22 +19,22 @@
         [
           34.400001525878906,
           13.149999618530273,
-          10.149999618530273
+          10.149923324584961
         ]
       ],
       "dimensions_mm": [
         34.400001525878906,
         26.299999237060547,
-        27.600000381469727
+        27.599924087524414
       ],
-      "volume_mm3": 5634.076603519466,
+      "volume_mm3": 5563.426481187951,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     },
     {
       "file": "stl/760867899_clip_on_side.stl",
-      "triangles": 5442,
-      "vertices": 2723,
+      "triangles": 7582,
+      "vertices": 3793,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -47,23 +47,23 @@
         ],
         [
           34.400001525878906,
-          27.600000381469727,
+          27.599924087524414,
           26.299999237060547
         ]
       ],
       "dimensions_mm": [
         34.400001525878906,
-        27.600000381469727,
+        27.599924087524414,
         26.299999237060547
       ],
-      "volume_mm3": 5634.076655865542,
+      "volume_mm3": 5563.426547434793,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     },
     {
       "file": "stl/760867899_hook_fit_test.stl",
-      "triangles": 1768,
-      "vertices": 886,
+      "triangles": 2008,
+      "vertices": 1006,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -85,7 +85,7 @@
         14.950000762939453,
         4.0
       ],
-      "volume_mm3": 534.9094377463971,
+      "volume_mm3": 528.1293005163869,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     },
@@ -124,7 +124,7 @@
     "maximum_frame_width_mm": 26.299999237060547,
     "original_frame_width_reference_mm": 27.6,
     "front_crossbar_is_flush": true,
-    "overall_height_mm": 27.600000381469727,
+    "overall_height_mm": 27.599924087524414,
     "hook_cavity_design_diameter_mm": 9.7,
     "hook_mouth_design_chord_mm": 8.1,
     "hook_drop_from_mounting_surface_mm": 20.0,
@@ -186,7 +186,7 @@
         "z_mm": -0.7,
         "solid_x_interval_mm": [
           18.187872,
-          30.299999
+          30.237501
         ]
       },
       {
@@ -194,7 +194,7 @@
         "z_mm": -2.7,
         "solid_x_interval_mm": [
           18.605362,
-          30.299999
+          29.626738
         ]
       },
       {
@@ -202,7 +202,7 @@
         "z_mm": -4.7,
         "solid_x_interval_mm": [
           19.022852,
-          28.819655
+          28.500915
         ]
       },
       {
@@ -218,7 +218,7 @@
         "z_mm": -0.7,
         "solid_x_interval_mm": [
           18.187872,
-          30.299999
+          30.237501
         ]
       },
       {
@@ -226,7 +226,7 @@
         "z_mm": -2.7,
         "solid_x_interval_mm": [
           18.605362,
-          30.299999
+          29.626738
         ]
       },
       {
@@ -234,7 +234,7 @@
         "z_mm": -4.7,
         "solid_x_interval_mm": [
           19.022852,
-          28.819655
+          28.500915
         ]
       },
       {
@@ -250,7 +250,7 @@
         "z_mm": -0.7,
         "solid_x_interval_mm": [
           18.187872,
-          30.299999
+          30.237501
         ]
       },
       {
@@ -258,7 +258,7 @@
         "z_mm": -2.7,
         "solid_x_interval_mm": [
           18.605362,
-          30.299999
+          29.626738
         ]
       },
       {
@@ -266,7 +266,7 @@
         "z_mm": -4.7,
         "solid_x_interval_mm": [
           19.022852,
-          28.819655
+          28.500915
         ]
       },
       {
@@ -282,7 +282,7 @@
         "z_mm": -0.7,
         "solid_x_interval_mm": [
           18.187872,
-          30.299999
+          30.237501
         ]
       },
       {
@@ -290,7 +290,7 @@
         "z_mm": -2.7,
         "solid_x_interval_mm": [
           18.605362,
-          30.299999
+          29.626738
         ]
       },
       {
@@ -298,7 +298,7 @@
         "z_mm": -4.7,
         "solid_x_interval_mm": [
           19.022852,
-          28.819655
+          28.500915
         ]
       },
       {
@@ -314,7 +314,7 @@
         "z_mm": -0.7,
         "solid_x_interval_mm": [
           18.187872,
-          30.299999
+          30.237501
         ]
       },
       {
@@ -322,7 +322,7 @@
         "z_mm": -2.7,
         "solid_x_interval_mm": [
           18.605362,
-          30.299999
+          29.626738
         ]
       },
       {
@@ -330,7 +330,7 @@
         "z_mm": -4.7,
         "solid_x_interval_mm": [
           19.022852,
-          28.819655
+          28.500915
         ]
       },
       {
@@ -356,6 +356,34 @@
         "z_mm": 2.4,
         "width_mm": 26.299999237060547
       }
+    ],
+    "rounded_hook_shoulder_sections": [
+      {
+        "x_mm": 30.4,
+        "z_mm": -15,
+        "width_mm": 26.093162272622358
+      },
+      {
+        "x_mm": 31.0,
+        "z_mm": -15,
+        "width_mm": 24.55443774291993
+      },
+      {
+        "x_mm": 31.6,
+        "z_mm": -15,
+        "width_mm": 22.027893397783323
+      },
+      {
+        "x_mm": 32.2,
+        "z_mm": -15,
+        "width_mm": 19.419883126744303
+      }
+    ],
+    "curved_upper_hook_end_x_at_z_minus_1_2_3_4_mm": [
+      30.180455,
+      29.896521,
+      29.494551,
+      28.974146
     ],
     "back_link_tangent_point_xz_mm": [
       20.446982227712553,
@@ -383,18 +411,56 @@
       }
     ],
     "right_fin": {
-      "base_length_mm": 9.899942,
+      "unrounded_top_envelope_length_mm": 5.5,
       "peg_to_fin_longitudinal_edge_gap_mm": 9.0,
-      "top_length_mm": 5.500057999999999,
-      "height_above_surface_mm": 7.599999618530274,
-      "thickness_mm": 1.6000003814697266
+      "base_length_mm": 9.899942,
+      "top_length_mm": 4.88673,
+      "rounded_tip_length_mm": 5.256547000000001,
+      "height_above_surface_mm": 7.599923324584961,
+      "tip_inward_offset_mm": 0.6649138427970224,
+      "lean_sections": [
+        {
+          "height_above_surface_mm": 0.1,
+          "center_y_mm": -12.191250942400634,
+          "thickness_mm": 1.6000003814697266
+        },
+        {
+          "height_above_surface_mm": 3.8,
+          "center_y_mm": -11.867543021141927,
+          "thickness_mm": 1.6000002279834842
+        },
+        {
+          "height_above_surface_mm": 7.5,
+          "center_y_mm": -11.543834833721206,
+          "thickness_mm": 1.5999997639927113
+        }
+      ]
     },
     "left_fin": {
-      "base_length_mm": 9.499929999999999,
+      "unrounded_top_envelope_length_mm": 6.9,
       "peg_to_fin_longitudinal_edge_gap_mm": 9.0,
-      "top_length_mm": 6.9000699999999995,
-      "height_above_surface_mm": 3.7,
-      "thickness_mm": 1.6000003814697266
+      "base_length_mm": 9.499929999999999,
+      "top_length_mm": 6.309354000000003,
+      "rounded_tip_length_mm": 6.679336999999997,
+      "height_above_surface_mm": 3.6999356269836428,
+      "tip_inward_offset_mm": 0.32370805504591876,
+      "lean_sections": [
+        {
+          "height_above_surface_mm": 0.1,
+          "center_y_mm": 12.19125093816145,
+          "thickness_mm": 1.6000003814697266
+        },
+        {
+          "height_above_surface_mm": 1.85,
+          "center_y_mm": 12.03814578560609,
+          "thickness_mm": 1.6000001387225868
+        },
+        {
+          "height_above_surface_mm": 3.6,
+          "center_y_mm": 11.885040736214279,
+          "thickness_mm": 1.599999850086851
+        }
+      ]
     },
     "peg_total_height_mm": 8.5,
     "peg_base_diameter_mm": 7.400000762939452,
@@ -509,12 +575,12 @@
       4.0
     ],
     "print_height_mm": 4.0,
-    "flat_contact_area_mm2": 133.72735943659927,
+    "flat_contact_area_mm2": 132.0323266636641,
     "full_profile_contacts_bed": true,
     "constant_profile_over_print_height": true,
-    "maximum_section_difference_mm2": 1.5200750297372778e-08,
+    "maximum_section_difference_mm2": 1.7263311437587525e-06,
     "geometry_requires_supports": false,
-    "mating_region_difference_from_complete_clip_mm3": 3.3136393855159785e-06,
+    "mating_region_difference_from_complete_clip_mm3": 5.120133313325784e-06,
     "section_measurements": [
       {
         "y_mm": -1.9,

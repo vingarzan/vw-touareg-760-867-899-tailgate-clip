@@ -1,5 +1,13 @@
 # Design history
 
+## v12 — rounded hook and inward-leaning fin tips — 2026-10-24
+
+- Replaced the hook upper angled face with a smooth entry relief and the straight diagonal shoulder cuts with curved transitions. Retained the 7.7 mm clearance, 9.7 mm bore, 8.1 mm mouth and internal tooth.
+- Rounded the two upper profile corners of each fin to R0.4 mm and leaned both fins 5° inward. Root positions, wall thickness and heights are retained; measured top lengths remain the unrounded construction envelopes.
+- Preserved the sharp mounting base, reinforced peg and retaining latch; geometric comparisons with v11 found zero difference in those regions.
+- Updated the complete models and hook gauge, added hook/fin close-ups and checks for curved shoulders, rounded fin tips and inward lean. Peg gauge remains byte-identical.
+- These new rounding/lean dimensions are design choices; physical fit remains unverified.
+
 ## v11 — trim the remaining lateral base tabs — 2026-10-24
 
 - Narrowed the hook-end front crossbar from 27.6 to 26.3 mm, removing the 0.65 mm protrusion on each side and making it flush with the mounting base. The original width remains in the measurement record.

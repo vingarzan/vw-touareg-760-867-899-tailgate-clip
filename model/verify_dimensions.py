@@ -108,6 +108,25 @@ def check_export(path, parameters):
         rail_widths.append({'z_mm':z,'width_mm':float(width)})
     result['flush_front_crossbar_sections']=rail_widths
 
+    shoulder_checks=[]
+    shoulder=fin_start+estimated['frame_end_from_fin_start']-.2
+    end=measured['length']-1.2
+    for x in [30.4,31.0,31.6,32.2]:
+        lines=trimesh.intersections.mesh_plane(m,[1,0,0],[x,0,0]);ys=[]
+        for a,b in lines:
+            if abs(b[2]-a[2])<1e-10:continue
+            t=(-15-a[2])/(b[2]-a[2])
+            if -1e-8<=t<=1+1e-8:ys.append(a[1]+t*(b[1]-a[1]))
+        width=max(ys)-min(ys)
+        wanted=measured['hook_lip_width']+(measured['body_width']-measured['hook_lip_width'])*(.5+.5*math.cos(math.pi*(x-shoulder)/(end-shoulder)))
+        assert abs(width-wanted)<.003,('hook shoulder not curved',x,width,wanted)
+        shoulder_checks.append({'x_mm':x,'z_mm':-15,'width_mm':width})
+    result['rounded_hook_shoulder_sections']=shoulder_checks
+    upper=[float(section_crossings(m,0,z).max()) for z in [-1.,-2.,-3.,-4.]]
+    assert upper[0]-upper[-1]>.4,('upper hook still has straight vertical end',upper)
+    assert np.ptp(np.diff(upper))>.02,('upper hook still has planar angled cut',upper)
+    result['curved_upper_hook_end_x_at_z_minus_1_2_3_4_mm']=upper
+
     # Check the actual rear outline against the tangent line, then ensure
     # that no old support corner projects past the circular lower surface.
     p=np.array([estimated['back_link_start_x'],estimated['back_link_top_z']])
@@ -142,30 +161,54 @@ def check_export(path, parameters):
                             'tangential_center_offset_mm':offset})
     result['internal_rib_sections']=rib_results
     for side,sign in [('right',-1),('left',1)]:
-        y=sign*(measured['guide_outside_width']/2-measured['fin_thickness']/2)
-        z0=measured['base_wall']
-        h=measured[side+'_fin_height_above_surface']
-        spans={}
-        for where,z in [('base',z0+eps),('top',z0+h-eps)]:
+        c=measured['guide_outside_width']/2-measured['fin_thickness']/2
+        z0=measured['base_wall'];h=measured[side+'_fin_height_above_surface']
+        base=measured[side+'_fin_base_length'];top=measured[side+'_fin_top_length']
+        radius=estimated['fin_tip_radius'];lean=math.tan(math.radians(estimated['fin_inward_lean_degrees']))
+        # Original measured lengths describe the unrounded design envelope.
+        corner_angle=math.acos(-(base-top)/math.hypot(base-top,h))
+        tangent=radius/math.tan(corner_angle/2)
+        spans={'unrounded_top_envelope_length_mm':top}
+        for name,dz in [('base',eps),('top',h-eps),('rounded_tip',h-.05)]:
+            z=z0+dz;y=sign*(c-dz*lean)
             xs=section_crossings(m,y,z)
-            assert len(xs)==2,(side,where,xs)
+            assert len(xs)==2,(side,name,xs)
             span=float(xs[-1]-xs[0])
-            want=measured[side+'_fin_'+('base_length' if where=='base' else 'top_length')]
-            assert abs(span-want)<0.003,(side,where,span,want)
-            spans[where+'_length_mm']=span
-            # Both top and bottom must have the same vertical rear edge.
-            assert abs(xs[0]-fin_start)<0.003
-            if where=='base':
+            if name=='base':
+                want=base-(base-top)*dz/h
+                rear=fin_start
                 gap=float(xs[0]-(estimated['peg_center_from_rear']+measured['peg_base_diameter']/2))
-                assert abs(gap-measured['peg_to_fin_edge_gap_along_length'])<0.003
+                assert abs(gap-measured['peg_to_fin_edge_gap_along_length'])<.003
                 spans['peg_to_fin_longitudinal_edge_gap_mm']=gap
-        points=m.vertices[(sign*m.vertices[:,1]>measured['guide_outside_width']/2-measured['fin_thickness']-.001)
-                           & (m.vertices[:,2]>z0+.001)]
+            else:
+                delta=h-dz
+                cap=math.sqrt(2*radius*delta-delta*delta)
+                want=top-radius-tangent+2*cap
+                rear=fin_start+radius-cap
+            assert abs(span-want)<.003,(side,name,span,want)
+            assert abs(xs[0]-rear)<.003,(side,name,'rear tip radius')
+            spans[name+'_length_mm']=span
+        # Measure width and centre at three heights, independent of the shear.
+        lines=trimesh.intersections.mesh_plane(m,[1,0,0],[fin_start+2,0,0])
+        lean_checks=[]
+        for dz in [.1,h/2,h-.1]:
+            ys=[]
+            for a,b in lines:
+                if abs(b[2]-a[2])<1e-10:continue
+                t=(z0+dz-a[2])/(b[2]-a[2])
+                if -1e-8<=t<=1+1e-8:
+                    y=a[1]+t*(b[1]-a[1])
+                    if sign*y>9:ys.append(y)
+            width=max(ys)-min(ys);center=(max(ys)+min(ys))/2
+            assert abs(width-measured['fin_thickness'])<.003
+            assert abs(center-sign*(c-dz*lean))<.003
+            lean_checks.append({'height_above_surface_mm':dz,'center_y_mm':center,'thickness_mm':width})
+        points=m.vertices[(sign*m.vertices[:,1]>9)&(m.vertices[:,2]>z0+.001)]
         got_h=float(points[:,2].max()-z0)
-        assert abs(got_h-h)<0.003,(side,got_h,h)
+        assert abs(got_h-h)<.003
         spans['height_above_surface_mm']=got_h
-        spans['thickness_mm']=float(points[:,1].max()-points[:,1].min())
-        assert abs(spans['thickness_mm']-measured['fin_thickness'])<0.003
+        spans['tip_inward_offset_mm']=h*lean
+        spans['lean_sections']=lean_checks
         result[side+'_fin']=spans
     peg_points=m.vertices[(abs(m.vertices[:,0]-estimated['peg_center_from_rear'])<5)
                           & (abs(m.vertices[:,1])<5)

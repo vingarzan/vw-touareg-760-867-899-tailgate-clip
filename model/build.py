@@ -120,14 +120,34 @@ def hook_entry_void(cx,cz,ri):
 
 
 def hook_envelope():
-    # Front free lip narrows to the measured 17.3 mm. Side shoulders support
-    # the wider 27.6 mm frame; the precise taper is estimated from photographs.
-    w, lip = M['frame_width']/2, M['hook_lip_width']/2
-    shoulder = fin_start_x() + E['frame_end_from_fin_start'] - 0.2
-    taper_end = M['length']-1.2
-    plan = [[-2,-w], [shoulder,-w], [taper_end,-lip], [36,-lip],
-            [36,lip], [taper_end,lip], [shoulder,w], [-2,w]]
-    return section(plan).extrude(40).translate([0,0,-20])
+    # Smooth shoulders replace the planar diagonal cuts below the base.
+    w,lip=M['body_width']/2,M['hook_lip_width']/2
+    shoulder=fin_start_x()+E['frame_end_from_fin_start']-.2
+    end=M['length']-1.2
+    x=np.linspace(shoulder,end,101)
+    widths=lip+(w-lip)*(.5+.5*np.cos(np.linspace(0,math.pi,101)))
+    plan=[[-2,-w]]+[[xx,-yy] for xx,yy in zip(x,widths)]+[[36,-lip],[36,lip]]
+    plan+=[[xx,yy] for xx,yy in zip(x[::-1],widths[::-1])]+[[-2,w]]
+    lower=section(plan).extrude(20).translate([0,0,-20])
+    # Keep the mounting platform and its front crossbar sharp and flush.
+    return lower+box(-2,36,-w,w,0,20)
+
+
+def round_fin_end(points,radius):
+    result=[]
+    for i,b in enumerate(np.asarray(points,dtype=float)):
+        if i not in [3,4]:
+            result.append(b);continue
+        a=np.asarray(points[i-1]);c=np.asarray(points[(i+1)%len(points)])
+        u=(a-b)/np.linalg.norm(a-b);v=(c-b)/np.linalg.norm(c-b)
+        half=math.acos(float(np.clip(u@v,-1,1)))/2
+        tangent=radius/math.tan(half)
+        center=b+(u+v)/np.linalg.norm(u+v)*radius/math.sin(half)
+        first=b+u*tangent;last=b+v*tangent
+        start=math.atan2(*(first-center)[::-1]);end=math.atan2(*(last-center)[::-1])
+        while end<start:end+=2*math.pi
+        result.extend(center+radius*np.c_[np.cos(np.linspace(start,end,161)),np.sin(np.linspace(start,end,161))])
+    return result
 
 
 def peg():
@@ -204,7 +224,10 @@ def guides():
         profile = [[start,z0-0.15],[start+base,z0-0.15],
                    [start+base,z0],[start+top,z0+height],
                    [start,z0+height]]
-        fins.append(xz(profile,t,y))
+        fin=xz(round_fin_end(profile,E['fin_tip_radius']),t,y)
+        lean=-math.copysign(math.tan(math.radians(E['fin_inward_lean_degrees'])),y)
+        fin=fin.transform([[1,0,0,0],[0,1,lean,-lean*z0],[0,0,1,0]])
+        fins.append(fin)
     return fins[0]+fins[1]
 
 
@@ -248,6 +271,16 @@ def build():
     rail_section=section([[rail_start,.02],[frame_end,.02],
                           [frame_end,2.5],[rail_start,2.5]])
     host_section=(platform_section+back_section+neck_section+rail_section)-circle_section-entry_section
+    # A smooth upper lip relief removes the old straight angled end face.
+    # Its first tangent follows the open entry, its last follows the base end.
+    upper=np.array([cx,cz])+u*lip+v*mouth_half
+    q=np.array([frame_end,0.0])
+    c1=upper+u*E['hook_upper_blend_start_handle']
+    c2=q-np.array([0,E['hook_upper_blend_end_handle']])
+    t=np.linspace(0,1,121)[:,None]
+    curve=(1-t)**3*upper+3*(1-t)**2*t*c1+3*(1-t)*t*t*c2+t**3*q
+    relief=section(np.vstack([curve,[frame_end+4,0],[frame_end+4,-30],[upper[0],-30]]))
+    host_section=host_section-relief
     body_section=host_section+hook_section
     # The corrected 1.4 x 1.4 mm tooth is diametrically opposite the mouth.
     # U points through the opening; the tooth is centred on the negative U

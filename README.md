@@ -2,7 +2,7 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v11 prototype with the front crossbar flush to the base sides, the measured 7.7 mm hook clearance and reinforced peg roots. This revision has not been printed or fit-tested.**
+**Status: v12 prototype with rounded hook shoulders, rounded fin tips and a 5° inward fin lean. The mounting base, reinforced peg and retaining latch retain their sharp geometry. This revision has not been printed or fit-tested.**
 
 ![Model preview](previews/clip.png)
 
@@ -12,7 +12,9 @@ Printable reconstruction from photographs and caliper measurements of the origin
 
 ![Peg root reinforcement and rounded slot ends](previews/peg_reinforcement.png)
 
-![Flush base sides, before and after](previews/flush_base_sides.png)
+![Rounded hook upper end and shoulders](previews/rounded_hook.png)
+
+![Rounded fin tips and inward lean](previews/rounded_fins.png)
 
 ## STL files
 
@@ -55,6 +57,9 @@ lower circular exterior, eight diagonal sections of the peg collar, and ten
 points along its rounded slot ends. These are geometry checks, not evidence of
 physical strength, printed fit or service life.
 
+Hook and fin close-ups are generated with `python model/render_rounding.py old.stl`
+using an exported previous clip for the orange outline.
+
 The before/after base preview is generated from exported STL sections with
 `python model/render_base_sides.py old.stl new.stl preview.png`.
 
@@ -68,8 +73,8 @@ python3 -m venv .venv
 ```
 
 [`model/parameters.json`](model/parameters.json) separates measured dimensions
-from estimates. v11 retains the separately measured left and right fins and
-places their nearest vertical edges **9 mm beyond the hook-facing edge of the
+from estimates. v12 retains the measured fin root positions and heights and
+places their nearest root edges **9 mm beyond the hook-facing edge of the
 peg root along the length of the base**. This is an approximate physical
 measurement implemented as 9.0 mm in the model.
 
@@ -103,9 +108,14 @@ are photo estimates. The mounting surface beneath peg and fins is flat and
 continuous, as requested by the owner; material-saving recesses are omitted.
 
 Looking from the **rounded peg end toward the hook**, with the peg pointing up,
-the **right fin is the taller fin** (negative Y). Both fins have a vertical edge
-at the peg end and taper toward the hook. Please compare this orientation with
-the original before printing the whole part.
+the **right fin is the taller fin** (negative Y). In their side profiles, both
+fins retain a straight peg-facing edge below the rounded tip and taper toward
+the hook. The upper profile corners now have **R0.4 mm** rounding. The measured
+top lengths are kept as the unrounded construction envelope; rounding shortens
+the flat part at the very top. Both fins lean **5° inward across the width**,
+shifting their ends inward by 0.66 mm (right) and 0.32 mm (left). Root positions,
+1.6 mm wall thickness and heights are retained. The rounding and lean values are
+design choices. Please compare with the original before printing the whole part.
 
 ## Reference measurements
 
@@ -140,6 +150,13 @@ The mounting face is Z=2.55 mm. The corrected hook drop puts its lowest outside
 edge at Z=-17.45 mm. The right fin reaches Z=10.15 mm, making the complete model
 **34.4 × 26.3 × 27.6 mm**. v01–v03 incorrectly treated the earlier 19.8 mm caliper
 span as the entire part height; v04 supersedes that interpretation.
+
+The hook upper end now uses a smooth curved relief in place of the former
+angled flat face. Its lateral shoulders use a smooth taper rather than straight
+diagonal cuts. The mounting base, peg and retaining latch were compared with v11
+and have zero geometric difference in their checked regions; see
+[`validation/v12_preserved_features.json`](validation/v12_preserved_features.json).
+The updated hook gauge reproduces the new central upper-end profile.
 
 The mouth points diagonally outward, as shown in the new side photo, rather
 than upward into the mounting platform. Its direction is estimated at 30°
