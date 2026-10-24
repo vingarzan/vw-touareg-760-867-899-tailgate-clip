@@ -1,0 +1,30 @@
+[
+  {
+    "layout": "existing",
+    "watertight": true,
+    "consistent_winding": true,
+    "components": 1,
+    "added_material_mm3": 13.097150803205151,
+    "removed_material_mm3": -1.0842021724855044e-19,
+    "retaining_edge_unchanged": true,
+    "lower_leg_angle_degrees": 115,
+    "rear_top_x_mm": 25.35,
+    "previous_rear_top_x_mm": 26.39123858,
+    "rear_bevel_height_mm": 2.22,
+    "physical_strength_verified": false
+  },
+  {
+    "layout": "right",
+    "watertight": true,
+    "consistent_winding": true,
+    "components": 1,
+    "added_material_mm3": 13.097150803205151,
+    "removed_material_mm3": -1.0842021724855044e-19,
+    "retaining_edge_unchanged": true,
+    "lower_leg_angle_degrees": 115,
+    "rear_top_x_mm": 25.35,
+    "previous_rear_top_x_mm": 26.39123858,
+    "rear_bevel_height_mm": 2.22,
+    "physical_strength_verified": false
+  }
+]
