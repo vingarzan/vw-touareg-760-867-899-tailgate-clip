@@ -1,5 +1,5 @@
 {
-  "revision": "v08",
+  "revision": "v09",
   "units": "mm",
   "measured": {
     "length": 34.4,
@@ -38,7 +38,6 @@
     "latch_rib_width": 0.95,
     "latch_top_z": 7.2,
     "latch_bar_thickness": 1.3,
-    "side_web_thickness": 1.5,
     "coupon_width": 4.0,
     "base_front_from_fin_start": 11.5,
     "frame_start_from_fin_start": 9.9,
@@ -50,7 +49,12 @@
     "coupon_handle_length": 7.0,
     "coupon_handle_height": 8.0,
     "coupon_handle_overlap": 1.5,
-    "coupon_handle_corner_radius": 0.8
+    "coupon_handle_corner_radius": 0.8,
+    "back_link_start_x": 18.0,
+    "back_link_top_z": 0.2,
+    "peg_root_inner_radius": 0.9,
+    "peg_root_collar_height": 1.1,
+    "peg_slot_round_center_z": 3.9
   },
   "interpretation": [
     "X runs from the rounded peg end toward the hook; Y is width; Z points toward the peg.",
@@ -72,9 +76,16 @@
     "The tooth projects 1.4 mm radially inward and measures 1.4 mm across the local tangent of the bore; its centreline is exactly opposite the mouth centreline. Only small edge radii remain estimated.",
     "The owner requested a solid back link from hook to mounting base. A full-width solid web fills the former gap between the inclined rear skin and upper hook/neck. The circular cavity and entry corridor are still cut afterward, so the hook opening and tooth remain clear.",
     "The owner corrected the inside bore diameter to 9.7 mm, explicitly choosing diameter (not 9.7 mm radius). This supersedes the initial 9.4 mm cavity reading; the opening remains 8.1 mm.",
-    "The v08 hook fit test isolates the actual hook mating profile in a 4 mm-wide slice, adds a rounded external grip tab, and lies on a broad flat side at print Z=0. It is a quick geometry gauge, not a full-width retention or stiffness test."
+    "The v08 hook fit test isolates the actual hook mating profile in a 4 mm-wide slice, adds a rounded external grip tab, and lies on a broad flat side at print Z=0. It is a quick geometry gauge, not a full-width retention or stiffness test.",
+    "The owner requested flush lateral hook supports: separate outer side webs are removed. The hook/back link and neck are limited to the 26.3 mm base width; the independently measured 27.6 mm front crossbar is retained.",
+    "The solid back link now joins the hook outer circle on a tangent from the mounting base, avoiding the stepped mid-profile and protruding lower support corners.",
+    "The owner reported peg legs breaking and requested inside root support. A conical inner collar reduces the cavity radius to 0.9 mm at its floor, tapering to the existing 2.1 mm radius over 1.1 mm; these reinforcement dimensions are design choices.",
+    "The 1 mm-wide peg slots now have 0.5 mm-radius lower ends centred at Z=3.9 mm (lowest cut at Z=3.4), replacing the sharp rectangular slot roots. Outer peg dimensions are retained; insertion force and fatigue require a new physical trial."
   ],
   "construction": {
-    "solid_hook_back_link": true
+    "solid_hook_back_link": true,
+    "flush_hook_supports": true,
+    "tangent_hook_back_link": true,
+    "reinforced_peg_roots": true
   }
 }

@@ -41,9 +41,17 @@ def section(points):
 
 def xz(points, width, center_y=0):
     # (u,v,w) -> (X,-Y,Z), right-handed; extrusion axis becomes -Y.
-    return section(points).extrude(width).transform([
+    cs=points if isinstance(points,mf.CrossSection) else section(points)
+    return cs.extrude(width).transform([
         [1, 0, 0, 0], [0, 0, -1, center_y + width / 2], [0, 1, 0, 0]
     ])
+
+
+def rear_plan_mask():
+    w=M['body_width']/2;r=E['rear_corner_radius']
+    plan=arc(r,-w+r,r,180,270,40)+[[40,-w],[40,w],[r,w]]
+    plan+=arc(r,w-r,r,90,180,40)
+    return section(plan).extrude(60).translate([0,0,-30])
 
 
 def box(x0, x1, y0, y1, z0, z1):
@@ -68,6 +76,17 @@ def rounded_base():
     return section(points).extrude(M['base_wall'])
 
 
+def back_link_tangent(cx,cz,ro):
+    p=np.array([E['back_link_start_x'],E['back_link_top_z']])
+    center=np.array([cx,cz]);w=p-center;d2=float(w@w)
+    assert d2>ro*ro
+    a=ro*ro/d2;b=ro*math.sqrt(d2-ro*ro)/d2
+    perp=np.array([-w[1],w[0]])
+    choices=[center+a*w+b*perp,center+a*w-b*perp]
+    q=min(choices,key=lambda t:t[0])
+    return p,q
+
+
 def hook_profile():
     ri = M['hook_cavity']/2
     ro = ri + E['hook_shell_wall']
@@ -81,7 +100,9 @@ def hook_profile():
     cz = bottom + ro
     # Add cardinal extrema explicitly so the mesh bounds preserve measured size.
     cardinals=[t for t in [0.,90.,180.,270.,360.] if start<=t<=end]
-    angles = np.unique(np.r_[np.linspace(start,end,201),cardinals])
+    _,tangent=back_link_tangent(cx,cz,ro)
+    tangent_angle=math.degrees(math.atan2(tangent[1]-cz,tangent[0]-cx))%360
+    angles = np.unique(np.r_[np.linspace(start,end,201),cardinals,tangent_angle])
     outer = [[cx+ro*math.cos(math.radians(t)), cz+ro*math.sin(math.radians(t))] for t in angles]
     inner = [[cx+ri*math.cos(math.radians(t)), cz+ri*math.sin(math.radians(t))] for t in angles[::-1]]
     return outer+inner, (cx, cz, ri, ro, half_opening)
@@ -122,10 +143,21 @@ def peg():
     head = mf.Manifold.cylinder(top-shoulder, barb, tip, 144).translate([x,0,shoulder])
     p = stem + head
     slot_z = E['peg_slot_root_z']
-    inner = mf.Manifold.cylinder(top-slot_z+1, E['peg_inner_diameter']/2,
-                                E['peg_inner_diameter']/2, 96).translate([x,0,slot_z])
+    collar_height=E['peg_root_collar_height']
+    inner_radius=E['peg_inner_diameter']/2
+    inner_root=mf.Manifold.cylinder(collar_height,E['peg_root_inner_radius'],
+                                   inner_radius,144).translate([x,0,slot_z])
+    inner_upper=mf.Manifold.cylinder(top-slot_z-collar_height+1,inner_radius,
+                                    inner_radius,144).translate([x,0,slot_z+collar_height])
+    inner=inner_root+inner_upper
     s = E['peg_slot_width']/2
-    slots = box(x-6,x+6,-s,s,slot_z,top+1) + box(x-s,x+s,-6,6,slot_z,top+1)
+    round_z=E['peg_slot_round_center_z']
+    # Semicircular lower ends remove the sharp corners at the leg roots.
+    slot_x=box(x-6,x+6,-s,s,round_z,top+1)+mf.Manifold.cylinder(12,s,s,144).transform([
+        [0,0,1,x-6],[1,0,0,0],[0,1,0,round_z]])
+    slot_y=box(x-s,x+s,-6,6,round_z,top+1)+mf.Manifold.cylinder(12,s,s,144).transform([
+        [1,0,0,x],[0,0,-1,6],[0,1,0,round_z]])
+    slots=slot_x+slot_y
     return p - inner - slots
 
 
@@ -180,24 +212,14 @@ def build():
     profile, dim = hook_profile()
     cx,cz,ri,ro,a = dim
     envelope = hook_envelope()
-    hook = xz(profile,M['frame_width'])
-    # Ramp skin and two outer shoulder webs join the rear plate to the hook.
-    # The common cylindrical cut preserves the 9.4 mm channel through them.
+    support_width=M['body_width']
+    hook_section=section(profile)
+    # A single solid profile replaces the overlapping ramp and lateral webs.
+    # Its rear edge meets the outside hook circle at an exact tangent.
     bottom = cz-ro
-    ramp_profile = [[16.5,-0.1],[19.8,-0.1],[25.0,bottom+3.8],
-                    [23.0,bottom+2.1],[18.0,0.2],[16.5,0.2]]
-    ramp = xz(ramp_profile,M['frame_width'])
-    web_profile = [[13.6,0.1],[21.5,2.5],[27.6,bottom+0.5],
-                   [24.0,bottom+0.5],[17.8,-1.0]]
-    thick = E['side_web_thickness']
-    web_c = M['frame_width']/2-thick/2
-    webs = xz(web_profile,thick,-web_c)+xz(web_profile,thick,web_c)
-    # Fill the former triangular space behind the hook, across the entire
-    # width. Keep the original rear slope while making the back-to-base link
-    # solid rather than a thin inclined skin and separate upper neck.
-    back_link=xz([[18.0,0.2],
-                  [fin_start_x()+E['frame_end_from_fin_start'],0.2],
-                  [27.6,bottom+0.5],[23.0,bottom+2.1]],M['frame_width'])
+    p,tangent=back_link_tangent(cx,cz,ro)
+    back_section=section([p,[fin_start_x()+E['frame_end_from_fin_start'],p[1]],
+                          [cx,cz],tangent])
     # Build the circular void from the same angular vertices as the hook.
     # This avoids independent circle tessellations creating sliver faces.
     _,_,_,_,half=dim
@@ -205,32 +227,37 @@ def build():
     angles=np.unique(np.r_[np.linspace(direction+half,direction-half+360,201),
                             [90.,180.,270.],np.linspace(direction-half,direction+half,101)])
     # The host cut is 0.01 mm oversize; the untouched C shell supplies the
-    # exact 9.4 mm mating surface without near-coincident circle subtraction.
+    # exact mating surface without near-coincident circle subtraction.
     circle=[[cx+(ri+0.01)*math.cos(math.radians(t)),cz+(ri+0.01)*math.sin(math.radians(t))] for t in angles]
-    channel=xz(circle,40)
-    # Join all host geometry first, then cut the real opening through every
-    # intersecting component. v03 incorrectly left the plate over the opening.
-    lower = ramp + webs + back_link
-    neck=box(cx-1.5,fin_start_x()+E['frame_end_from_fin_start'],
-             -M['frame_width']/2,M['frame_width']/2,cz+ri-0.2,0.1)
-    rail = box(fin_start_x()+E['frame_start_from_fin_start'],
-               fin_start_x()+E['frame_end_from_fin_start'],
-               -M['frame_width']/2,M['frame_width']/2,0.02,2.5)
-    host=(rounded_base()+lower+rail+neck)-channel-hook_entry_void(cx,cz,ri)
-    body=host+hook
-    # The corrected 1.4 x 1.4 mm tooth is diametrically opposite the mouth.
-    # U points through the opening; the tooth is centred on the negative U
-    # axis. Its local height runs along V. Embed the root 0.3 mm into the wall.
+    circle_section=section(circle)
     angle=math.radians(E['hook_opening_direction_degrees'])
     u=np.array([math.cos(angle),math.sin(angle)])
     v=np.array([-math.sin(angle),math.cos(angle)])
+    mouth_half=M['hook_mouth']/2
+    lip=math.sqrt(ri*ri-mouth_half*mouth_half)-.0001
+    entry_section=section([np.array([cx,cz])+u*a+v*b for a,b in
+                          [(lip,-mouth_half),(40,-mouth_half),(40,mouth_half),(lip,mouth_half)]])
+    frame_end=fin_start_x()+E['frame_end_from_fin_start']
+    base_end=fin_start_x()+E['base_front_from_fin_start']
+    platform_section=section([[0,0],[base_end,0],[base_end,M['base_wall']],[0,M['base_wall']]])
+    neck_section=section([[cx-1.5,cz+ri-.2],[frame_end,cz+ri-.2],
+                          [frame_end,.1],[cx-1.5,.1]])
+    rail = box(fin_start_x()+E['frame_start_from_fin_start'],
+               fin_start_x()+E['frame_end_from_fin_start'],
+               -M['frame_width']/2,M['frame_width']/2,0.02,2.5)
+    host_section=(platform_section+back_section+neck_section)-circle_section-entry_section
+    body_section=host_section+hook_section
+    # The corrected 1.4 x 1.4 mm tooth is diametrically opposite the mouth.
+    # U points through the opening; the tooth is centred on the negative U
+    # axis. Its local height runs along V. Embed the root 0.3 mm into the wall.
     h=M['hook_internal_rib_height']/2
     profile=[np.array([cx,cz])+u*a+v*b for a,b in [
         (-ri-.3,-h),(-ri+M['hook_internal_rib_projection'],-h),
         (-ri+M['hook_internal_rib_projection'],h),(-ri-.3,h)]]
-    rib=xz(profile,M['frame_width'])
-    body=(body+rib)^envelope
-    parts = [body,peg(),guides(),spring_latch()]
+    # Fuse the support and hook in 2D before extruding one flush side face.
+    # This eliminates the tiny overlapping coplanar support facets in 3D.
+    body=xz(body_section+section(profile),support_width)^envelope^rear_plan_mask()
+    parts = [body,rail,peg(),guides(),spring_latch()]
     clip = mf.Manifold.batch_boolean(parts,mf.OpType.Add).simplify(0.0001)
     # Isolate the actual mating profile without the bulky back link or mount.
     # This central slice is prismatic: its full broad side can sit on the bed.
@@ -289,9 +316,13 @@ def validate_and_save(mesh,name):
 
 
 def draw_3d(ax,mesh,elev,azim):
-    tris=mesh.triangles
+    # Smaller preview facets improve painter-order occlusion on broad flat
+    # surfaces without modifying the printable mesh.
+    vertices,faces=trimesh.remesh.subdivide_to_size(mesh.vertices,mesh.faces,max_edge=2.0,max_iter=7)
+    shown=trimesh.Trimesh(vertices=vertices,faces=faces,process=False)
+    tris=shown.triangles
     light=np.array([-0.4,-0.3,0.85]); light/=np.linalg.norm(light)
-    intensity=0.45+0.55*np.maximum(0,mesh.face_normals@light)
+    intensity=0.45+0.55*np.maximum(0,shown.face_normals@light)
     colors=np.column_stack([intensity*0.33,intensity*0.62,intensity*0.83,np.ones(len(tris))])
     poly=Poly3DCollection(tris,facecolors=colors,linewidths=0,edgecolors='none',zsort='average')
     ax.add_collection3d(poly)
@@ -394,6 +425,8 @@ def main():
     (CHECKS/'geometry_checks.json').write_text(json.dumps(report,indent=2)+'\n')
     preview(mesh)
     render_section(OUT/'760867899_clip.stl',P,PREVIEW/'hook_section.png')
+    from render_peg_section import render_peg_section
+    render_peg_section(OUT/'760867899_peg_fit_test.stl',P,PREVIEW/'peg_reinforcement.png')
     preview_hook_test(coupon_mesh)
     print(json.dumps(report,indent=2))
 

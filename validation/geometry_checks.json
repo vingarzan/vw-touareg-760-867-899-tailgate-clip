@@ -1,11 +1,11 @@
 {
-  "revision": "v08",
+  "revision": "v09",
   "units": "mm",
   "meshes": [
     {
       "file": "stl/760867899_clip.stl",
-      "triangles": 4036,
-      "vertices": 2020,
+      "triangles": 5458,
+      "vertices": 2731,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -27,14 +27,14 @@
         27.600000381469727,
         27.600000381469727
       ],
-      "volume_mm3": 5659.449391019577,
+      "volume_mm3": 5611.743386044342,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     },
     {
       "file": "stl/760867899_clip_on_side.stl",
-      "triangles": 4036,
-      "vertices": 2020,
+      "triangles": 5458,
+      "vertices": 2731,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -56,14 +56,14 @@
         27.600000381469727,
         27.600000381469727
       ],
-      "volume_mm3": 5659.449519360533,
+      "volume_mm3": 5611.743576501951,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     },
     {
       "file": "stl/760867899_hook_fit_test.stl",
-      "triangles": 1772,
-      "vertices": 888,
+      "triangles": 1764,
+      "vertices": 884,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -85,14 +85,14 @@
         14.750000953674316,
         4.0
       ],
-      "volume_mm3": 521.1216995485165,
+      "volume_mm3": 521.121674676885,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     },
     {
       "file": "stl/760867899_peg_fit_test.stl",
-      "triangles": 1460,
-      "vertices": 732,
+      "triangles": 3140,
+      "vertices": 1572,
       "watertight": true,
       "winding_consistent": true,
       "positive_volume": true,
@@ -114,7 +114,7 @@
         14.0,
         8.5
       ],
-      "volume_mm3": 652.2543811721048,
+      "volume_mm3": 659.3491539476425,
       "degenerate_triangles": 0,
       "finite_coordinates": true
     }
@@ -164,34 +164,34 @@
     "unobstructed_entry_rays_checked": 51,
     "solid_hook_back_link_sections": [
       {
-        "y_mm": -13.5,
+        "y_mm": -12.85,
         "z_mm": -0.7,
         "solid_x_interval_mm": [
-          16.654545,
-          30.280582
+          18.200834,
+          30.299999
         ]
       },
       {
-        "y_mm": -13.5,
+        "y_mm": -12.85,
         "z_mm": -2.7,
         "solid_x_interval_mm": [
-          18.460814,
-          30.280582
+          18.647132,
+          30.299999
         ]
       },
       {
-        "y_mm": -13.5,
+        "y_mm": -12.85,
         "z_mm": -4.7,
         "solid_x_interval_mm": [
-          19.238244,
+          19.09343,
           29.082259
         ]
       },
       {
-        "y_mm": -13.5,
+        "y_mm": -12.85,
         "z_mm": -6.7,
         "solid_x_interval_mm": [
-          20.015673,
+          19.539728,
           24.370877
         ]
       },
@@ -199,7 +199,7 @@
         "y_mm": -8.0,
         "z_mm": -0.7,
         "solid_x_interval_mm": [
-          18.289389,
+          18.200834,
           30.299999
         ]
       },
@@ -207,7 +207,7 @@
         "y_mm": -8.0,
         "z_mm": -2.7,
         "solid_x_interval_mm": [
-          18.932476,
+          18.647132,
           30.299999
         ]
       },
@@ -215,7 +215,7 @@
         "y_mm": -8.0,
         "z_mm": -4.7,
         "solid_x_interval_mm": [
-          19.575563,
+          19.09343,
           29.082259
         ]
       },
@@ -223,7 +223,7 @@
         "y_mm": -8.0,
         "z_mm": -6.7,
         "solid_x_interval_mm": [
-          20.218649,
+          19.539728,
           24.370877
         ]
       },
@@ -231,7 +231,7 @@
         "y_mm": 0.0,
         "z_mm": -0.7,
         "solid_x_interval_mm": [
-          18.289389,
+          18.200834,
           30.299999
         ]
       },
@@ -239,7 +239,7 @@
         "y_mm": 0.0,
         "z_mm": -2.7,
         "solid_x_interval_mm": [
-          18.932476,
+          18.647132,
           30.299999
         ]
       },
@@ -247,7 +247,7 @@
         "y_mm": 0.0,
         "z_mm": -4.7,
         "solid_x_interval_mm": [
-          19.575563,
+          19.09343,
           29.082259
         ]
       },
@@ -255,7 +255,7 @@
         "y_mm": 0.0,
         "z_mm": -6.7,
         "solid_x_interval_mm": [
-          20.218649,
+          19.539728,
           24.370877
         ]
       },
@@ -263,7 +263,7 @@
         "y_mm": 8.0,
         "z_mm": -0.7,
         "solid_x_interval_mm": [
-          18.289389,
+          18.200834,
           30.299999
         ]
       },
@@ -271,7 +271,7 @@
         "y_mm": 8.0,
         "z_mm": -2.7,
         "solid_x_interval_mm": [
-          18.932476,
+          18.647132,
           30.299999
         ]
       },
@@ -279,7 +279,7 @@
         "y_mm": 8.0,
         "z_mm": -4.7,
         "solid_x_interval_mm": [
-          19.575563,
+          19.09343,
           29.082259
         ]
       },
@@ -287,46 +287,52 @@
         "y_mm": 8.0,
         "z_mm": -6.7,
         "solid_x_interval_mm": [
-          20.218649,
+          19.539728,
           24.370877
         ]
       },
       {
-        "y_mm": 13.5,
+        "y_mm": 12.85,
         "z_mm": -0.7,
         "solid_x_interval_mm": [
-          16.654545,
-          30.280582
+          18.200834,
+          30.299999
         ]
       },
       {
-        "y_mm": 13.5,
+        "y_mm": 12.85,
         "z_mm": -2.7,
         "solid_x_interval_mm": [
-          18.460814,
-          30.280582
+          18.647132,
+          30.299999
         ]
       },
       {
-        "y_mm": 13.5,
+        "y_mm": 12.85,
         "z_mm": -4.7,
         "solid_x_interval_mm": [
-          19.238244,
+          19.09343,
           29.082259
         ]
       },
       {
-        "y_mm": 13.5,
+        "y_mm": 12.85,
         "z_mm": -6.7,
         "solid_x_interval_mm": [
-          20.015673,
+          19.539728,
           24.370877
         ]
       }
     ],
+    "hook_support_max_width_below_base_mm": 26.299999237060547,
+    "back_link_tangent_point_xz_mm": [
+      20.655617405221044,
+      -11.700759933459548
+    ],
+    "maximum_lower_hook_radius_mm": 7.350000914488217,
     "internal_rib_sections": [
       {
-        "y_mm": -13.5,
+        "y_mm": -12.85,
         "height_mm": 1.399999,
         "projection_mm": 1.3999999999999995,
         "tangential_center_offset_mm": 4.999999999588667e-07
@@ -338,7 +344,7 @@
         "tangential_center_offset_mm": 4.999999999588667e-07
       },
       {
-        "y_mm": 13.5,
+        "y_mm": 12.85,
         "height_mm": 1.399999,
         "projection_mm": 1.3999999999999995,
         "tangential_center_offset_mm": 4.999999999588667e-07
@@ -364,6 +370,103 @@
     "hook_lip_width_mm": 17.299999237060547,
     "latch_width_mm": 15.0,
     "latch_wall_minimum_x_thickness_between_ribs_mm": 1.1999989999999983,
+    "peg_root_reinforcement": {
+      "collar_sections": [
+        {
+          "section_degrees": 45,
+          "z_mm": 3.3,
+          "inner_radius_mm": 0.9545455
+        },
+        {
+          "section_degrees": 45,
+          "z_mm": 3.75,
+          "inner_radius_mm": 1.445455
+        },
+        {
+          "section_degrees": 45,
+          "z_mm": 4.3,
+          "inner_radius_mm": 2.045455
+        },
+        {
+          "section_degrees": 45,
+          "z_mm": 4.55,
+          "inner_radius_mm": 2.1
+        },
+        {
+          "section_degrees": 135,
+          "z_mm": 3.3,
+          "inner_radius_mm": 0.9545455
+        },
+        {
+          "section_degrees": 135,
+          "z_mm": 3.75,
+          "inner_radius_mm": 1.445455
+        },
+        {
+          "section_degrees": 135,
+          "z_mm": 4.3,
+          "inner_radius_mm": 2.045455
+        },
+        {
+          "section_degrees": 135,
+          "z_mm": 4.55,
+          "inner_radius_mm": 2.1
+        }
+      ],
+      "rounded_slot_sections": [
+        {
+          "slot_degrees": 0,
+          "offset_mm": -0.45,
+          "bottom_z_mm": 3.682295
+        },
+        {
+          "slot_degrees": 0,
+          "offset_mm": -0.25,
+          "bottom_z_mm": 3.466987
+        },
+        {
+          "slot_degrees": 0,
+          "offset_mm": 0,
+          "bottom_z_mm": 3.4
+        },
+        {
+          "slot_degrees": 0,
+          "offset_mm": 0.25,
+          "bottom_z_mm": 3.466987
+        },
+        {
+          "slot_degrees": 0,
+          "offset_mm": 0.45,
+          "bottom_z_mm": 3.682295
+        },
+        {
+          "slot_degrees": 90,
+          "offset_mm": -0.45,
+          "bottom_z_mm": 3.682296
+        },
+        {
+          "slot_degrees": 90,
+          "offset_mm": -0.25,
+          "bottom_z_mm": 3.466987
+        },
+        {
+          "slot_degrees": 90,
+          "offset_mm": 0,
+          "bottom_z_mm": 3.4
+        },
+        {
+          "slot_degrees": 90,
+          "offset_mm": 0.25,
+          "bottom_z_mm": 3.466987
+        },
+        {
+          "slot_degrees": 90,
+          "offset_mm": 0.45,
+          "bottom_z_mm": 3.682295
+        }
+      ],
+      "physical_strength_verified": false
+    },
     "tolerance_mm": 0.003
   },
   "hook_fit_test_checks": {
@@ -374,12 +477,12 @@
       4.0
     ],
     "print_height_mm": 4.0,
-    "flat_contact_area_mm2": 130.28042488712913,
+    "flat_contact_area_mm2": 130.28041866922126,
     "full_profile_contacts_bed": true,
     "constant_profile_over_print_height": true,
     "maximum_section_difference_mm2": 1.732083812489016e-08,
     "geometry_requires_supports": false,
-    "mating_region_difference_from_complete_clip_mm3": 6.076470056015638e-07,
+    "mating_region_difference_from_complete_clip_mm3": 5.0950681407258e-07,
     "section_measurements": [
       {
         "y_mm": -1.9,

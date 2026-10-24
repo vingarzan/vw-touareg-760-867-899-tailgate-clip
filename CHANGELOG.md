@@ -1,5 +1,25 @@
 # Design history
 
+## v09 — flush hook supports and reinforced peg roots — 2026-10-24
+
+- Removed the separate lateral support webs. Hook shell, solid backing and
+  neck now fit within the 26.3 mm base width, removing the 0.65 mm side ledges.
+  The measured 27.6 mm front crossbar is retained as a local frame feature.
+- Replaced the overlapping support pieces with one extruded side profile. Its
+  rear outline meets the outside hook circle at a tangent, with no stepped
+  lower corners outside the hook diameter.
+- Added a tapered internal peg-root collar: inner radius 0.9 mm at Z=3.25,
+  expanding to the existing 2.1 mm cavity radius over 1.1 mm of height.
+- Rounded the lower ends of the 1 mm peg slots to R0.5, centred at Z=3.9 mm.
+  Their lowest cut is now Z=3.4 mm. Outer peg dimensions are retained.
+- Updated the full part and both fit-test pieces. Added actual peg STL sections
+  showing the interior material and rounded roots, and improved preview facets.
+- Added checks for flush support width, tangent contact and lower circular
+  exterior, eight collar sections and ten rounded-slot measurements. Existing
+  hook mouth, tooth, peg diameters, fins and side-print hook-gauge checks pass.
+- New physical strength and insertion-force testing is required; CAD checks
+  do not establish that the reported leg breakage has been resolved.
+
 ## v08 — compact hook fit test for printing on its side — 2026-10-24
 
 - Replaced the bulky 5 mm hook slice with a compact, 4 mm-wide hook gauge.

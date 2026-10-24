@@ -2,13 +2,15 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v08 reconstructed prototype with a solid hook-to-base back link, open hook, 20 mm hook drop, 9.7 mm inside diameter and 1.4 × 1.4 mm internal tooth. No printed fit or retention test has been performed.**
+**Status: v09 prototype with flush/tangent hook backing and reinforced peg roots. This revision has not been printed or fit-tested.**
 
 ![Model preview](previews/clip.png)
 
 ![Section of the actual STL showing the hook opening and rib](previews/hook_section.png)
 
 ![Side-printable hook fit test](previews/hook_fit_test.png)
+
+![Peg root reinforcement and rounded slot ends](previews/peg_reinforcement.png)
 
 ## STL files
 
@@ -17,7 +19,7 @@ All files use millimetres. Import at 100% scale.
 - [`stl/760867899_clip.stl`](stl/760867899_clip.stl): complete clip in design coordinates.
 - [`stl/760867899_clip_on_side.stl`](stl/760867899_clip_on_side.stl): the same clip rotated onto one side, with its lowest surface at Z=0. Inspect supports before printing.
 - [`stl/760867899_hook_fit_test.stl`](stl/760867899_hook_fit_test.stl): a compact **side-printable hook gauge** with a rounded grip tab. It has the actual 9.7 mm bore, 8.1 mm mouth and 1.4 × 1.4 mm tooth, without the bulky mounting body. It is already laid on its broad flat side and is only **4 mm high**. Import at 100%, keep this orientation and print without supports. It checks the mating shape, not full-width stiffness or retention.
-- [`stl/760867899_peg_fit_test.stl`](stl/760867899_peg_fit_test.stl): the measured split peg on a 14 × 14 mm flat base. This is a small trial of the peg geometry, not a substitute for testing the complete clip.
+- [`stl/760867899_peg_fit_test.stl`](stl/760867899_peg_fit_test.stl): the reinforced split peg on a 14 × 14 mm flat base. Print this updated test with the peg upright to check the new root support and fitting force before printing the complete clip.
 
 The complete part has undercuts and a horizontal peg in the side orientation.
 It has not been sliced or printed. Keep support material out of the four peg
@@ -44,7 +46,10 @@ constant profile through its 4 mm print height, matching mating geometry against
 the complete clip, and measured bore, mouth and tooth at three width stations.
 The external grip tab does not intrude into the cavity or entry. Its footprint
 is approximately 20.92 × 14.75 mm.
-These are geometry checks, not evidence of printed fit or service life.
+Additional exported sections check the flush side width, tangent backing and
+lower circular exterior, eight diagonal sections of the peg collar, and ten
+points along its rounded slot ends. These are geometry checks, not evidence of
+physical strength, printed fit or service life.
 
 The rebuildable source is provided to preserve the design history even though
 only STLs are needed for printing:
@@ -56,7 +61,7 @@ python3 -m venv .venv
 ```
 
 [`model/parameters.json`](model/parameters.json) separates measured dimensions
-from estimates. v08 retains the separately measured left and right fins and
+from estimates. v09 retains the separately measured left and right fins and
 places their nearest vertical edges **9 mm beyond the hook-facing edge of the
 peg root along the length of the base**. This is an approximate physical
 measurement implemented as 9.0 mm in the model.
@@ -65,6 +70,22 @@ The back of the hook now joins the mounting base through a **solid full-width
 web**, filling the triangular gap left in v05. The original rear slope is kept;
 only the hook cavity and entry remain open. This is a geometry change requested
 by the owner, rather than a reproduction of the OEM material-saving recess.
+
+The separate lateral support webs have been removed. The hook, back link and
+neck now stay within the **26.3 mm base width**, with no support projecting
+past the base below the mounting plane. The solid back link meets the outer
+hook circle at a tangent, eliminating the stepped middle/lower support corners.
+The independently measured **27.6 mm front crossbar** remains local to the frame;
+it is distinct from the removed side-support ledges.
+
+The peg now includes an **internal tapered root collar**. At the cavity floor
+(Z=3.25 mm), the inner radius is reduced from 2.1 to 0.9 mm; it tapers back to
+2.1 mm over 1.1 mm of height. This adds material inside each leg at its root
+while retaining the upper hollow section. The 1 mm-wide slots now terminate in
+0.5 mm-radius semicircles, with their lowest cut at Z=3.4 mm instead of the old
+sharp Z=3.25 mm corners. Outer diameters and total peg height are retained.
+These are new design choices intended to reinforce the roots; insertion force,
+flexibility, strength and fatigue must be checked with a fresh physical trial.
 
 The opposite 15 mm-wide latch now joins the base through a continuous wall,
 reinforced by three solid gussets on the peg side. Its wall thickness and lean

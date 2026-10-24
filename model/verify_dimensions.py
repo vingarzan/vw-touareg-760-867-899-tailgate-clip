@@ -70,17 +70,38 @@ def check_export(path, parameters):
     # These stations crossed the large air gap in v05; checking a single
     # connected 3D solid alone would not detect that gap.
     link_checks=[]
-    for y in [-13.5,-8.0,0.0,8.0,13.5]:
+    side=measured['body_width']/2-.3
+    for y in [-side,-8.0,0.0,8.0,side]:
         for z in [-0.7,-2.7,-4.7,-6.7]:
             xs=section_crossings(m,y,z)
             assert len(xs)==2,('gap in solid hook back link',y,z,xs)
             assert xs[0]<23.0<xs[1],('back link missing at former gap',y,z,xs)
             link_checks.append({'y_mm':y,'z_mm':z,'solid_x_interval_mm':xs.tolist()})
     result['solid_hook_back_link_sections']=link_checks
+    below=m.vertices[m.vertices[:,2]<-.001]
+    below_width=float(below[:,1].max()-below[:,1].min())
+    assert below_width<=measured['body_width']+.003,('protruding lateral hook support',below_width)
+    result['hook_support_max_width_below_base_mm']=below_width
+    # Check the actual rear outline against the tangent line, then ensure
+    # that no old support corner projects past the circular lower surface.
+    p=np.array([estimated['back_link_start_x'],estimated['back_link_top_z']])
+    w=p-center;d2=float(w@w);perp=np.array([-w[1],w[0]])
+    choices=[center+(ro*ro/d2)*w+sign*ro*math.sqrt(d2-ro*ro)/d2*perp for sign in [-1,1]]
+    q=min(choices,key=lambda point:point[0])
+    for y in [-side,0,side]:
+        for z in [-1.0,-3.0,-6.0,-9.0]:
+            xs=section_crossings(m,y,z)
+            wanted=p[0]+(z-p[1])*(q[0]-p[0])/(q[1]-p[1])
+            assert abs(xs.min()-wanted)<.003,('non-flush backing profile',y,z,xs.min(),wanted)
+    low=m.vertices[m.vertices[:,2]<q[1]-.05]
+    low_radii=np.linalg.norm(low[:,[0,2]]-center,axis=1)
+    assert low_radii.max()<=ro+.003,('support bump outside hook diameter',low_radii.max(),ro)
+    result['back_link_tangent_point_xz_mm']=q.tolist()
+    result['maximum_lower_hook_radius_mm']=float(low_radii.max())
     # Check the radial projection and tangential height at both sides and
     # the centre. The tooth must lie on the diameter opposite the mouth.
     rib_results=[]
-    for y in [-13.5,0,13.5]:
+    for y in [-side,0,side]:
         ts=axis_crossings(m,y,center,outward)
         tip=float(ts[ts<0].max())
         projection=tip+ri
@@ -154,5 +175,36 @@ def check_export(path, parameters):
             assert thickness>=estimated['latch_wall_thickness_x']-.003
             wall_checks.append(thickness)
     result['latch_wall_minimum_x_thickness_between_ribs_mm']=min(wall_checks)
+    result['peg_root_reinforcement']=check_peg_roots(m,measured,estimated)
     result['tolerance_mm']=0.003
     return result
+
+
+def check_peg_roots(mesh,measured,estimated):
+    checks=[]
+    floor=estimated['peg_slot_root_z'];height=estimated['peg_root_collar_height']
+    r0=estimated['peg_root_inner_radius'];r1=estimated['peg_inner_diameter']/2
+    for angle in [45,135]:
+        section_mesh=mesh.copy()
+        section_mesh.apply_translation([-estimated['peg_center_from_rear'],0,0])
+        section_mesh.apply_transform(trimesh.transformations.rotation_matrix(math.radians(-angle),[0,0,1]))
+        for z in [floor+.05,floor+.5,floor+height-.05,floor+height+.2]:
+            xs=axis_crossings(section_mesh,0,[0,z],[1,0])
+            radius=float((xs[xs>0].min()-xs[xs<0].max())/2)
+            wanted=r0+(r1-r0)*min((z-floor)/height,1)
+            assert abs(radius-wanted)<.003,('missing inside peg collar',angle,z,radius,wanted)
+            checks.append({'section_degrees':angle,'z_mm':z,'inner_radius_mm':radius})
+    slot_radius=estimated['peg_slot_width']/2
+    rounded_checks=[]
+    for angle in [0,90]:
+        section_mesh=mesh.copy()
+        section_mesh.apply_translation([-estimated['peg_center_from_rear'],0,0])
+        section_mesh.apply_transform(trimesh.transformations.rotation_matrix(math.radians(-angle),[0,0,1]))
+        for y in [-.45,-.25,0,.25,.45]:
+            zs=axis_crossings(section_mesh,y,[3.0,0],[0,1])
+            wanted=estimated['peg_slot_round_center_z']-math.sqrt(slot_radius*slot_radius-y*y)
+            top=float(zs.max())
+            assert abs(top-wanted)<.003,('peg slot root is not rounded',angle,y,top,wanted)
+            rounded_checks.append({'slot_degrees':angle,'offset_mm':y,'bottom_z_mm':top})
+    return {'collar_sections':checks,'rounded_slot_sections':rounded_checks,
+            'physical_strength_verified':False}
