@@ -1,5 +1,20 @@
 # Design history
 
+## v06 — solid back link from hook to base — 2026-10-24
+
+- Filled the former gap behind the hook with a solid web across the full width,
+  joining the inclined rear wall, upper hook and mounting base.
+- Preserved the existing rear slope, overall size and flat mounting surface.
+- Applied the cavity and mouth clearances after adding the solid backing,
+  preserving the 8.1 mm opening and centred 1.4 × 1.4 mm tooth.
+- Updated the hook fit-test slice and previews; the centre section labels the
+  solid link so the filled area is visible for review.
+- Added twenty exported-STL section checks at five width stations and four
+  depths to detect any remaining gap. The v05 STL fails this new check as
+  expected; all v06 sections pass. Existing clearance and tooth checks pass.
+- All four STLs remain watertight single solids with zero degenerate triangles.
+  Physical fit and print performance remain untested.
+
 ## v05 — corrected tooth size and placement — 2026-10-24
 
 - Owner corrected the tooth dimensions from 2.4 × 2.4 mm to 1.4 × 1.4 mm.

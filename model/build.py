@@ -192,6 +192,12 @@ def build():
     thick = E['side_web_thickness']
     web_c = M['frame_width']/2-thick/2
     webs = xz(web_profile,thick,-web_c)+xz(web_profile,thick,web_c)
+    # Fill the former triangular space behind the hook, across the entire
+    # width. Keep the original rear slope while making the back-to-base link
+    # solid rather than a thin inclined skin and separate upper neck.
+    back_link=xz([[18.0,0.2],
+                  [fin_start_x()+E['frame_end_from_fin_start'],0.2],
+                  [27.6,bottom+0.5],[23.0,bottom+2.1]],M['frame_width'])
     # Build the circular void from the same angular vertices as the hook.
     # This avoids independent circle tessellations creating sliver faces.
     _,_,_,_,half=dim
@@ -204,7 +210,7 @@ def build():
     channel=xz(circle,40)
     # Join all host geometry first, then cut the real opening through every
     # intersecting component. v03 incorrectly left the plate over the opening.
-    lower = ramp + webs
+    lower = ramp + webs + back_link
     neck=box(cx-1.5,fin_start_x()+E['frame_end_from_fin_start'],
              -M['frame_width']/2,M['frame_width']/2,cz+ri-0.2,0.1)
     rail = box(fin_start_x()+E['frame_start_from_fin_start'],
@@ -361,6 +367,7 @@ def main():
         'fin_rear_station_x_mm':fin_start_x(),
         'latch_has_continuous_wall':True,
         'mounting_platform_is_flat':True,
+        'hook_back_link_is_solid':True,
         'nominal_and_on_side_same_volume':True,
         'physical_fit_verified':False,
         'slicer_toolpaths_verified':False,

@@ -66,6 +66,17 @@ def check_export(path, parameters):
             blocked=ts[ts>lip_station+.003]
             assert len(blocked)==0,('blocked hook entrance',y,float(v),blocked)
     result['unobstructed_entry_rays_checked']=3*17
+    # Each rear-link section must have one continuous material interval.
+    # These stations crossed the large air gap in v05; checking a single
+    # connected 3D solid alone would not detect that gap.
+    link_checks=[]
+    for y in [-13.5,-8.0,0.0,8.0,13.5]:
+        for z in [-0.7,-2.7,-4.7,-6.7]:
+            xs=section_crossings(m,y,z)
+            assert len(xs)==2,('gap in solid hook back link',y,z,xs)
+            assert xs[0]<23.0<xs[1],('back link missing at former gap',y,z,xs)
+            link_checks.append({'y_mm':y,'z_mm':z,'solid_x_interval_mm':xs.tolist()})
+    result['solid_hook_back_link_sections']=link_checks
     # Check the radial projection and tangential height at both sides and
     # the centre. The tooth must lie on the diameter opposite the mouth.
     rib_results=[]

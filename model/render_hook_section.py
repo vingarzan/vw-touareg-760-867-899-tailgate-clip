@@ -56,6 +56,9 @@ def render_section(stl_path, parameters, out_path):
     ax.text(dx+.4,(bottom+zface)/2,'20 mm from mounting face',rotation=90,ha='left',va='center',fontsize=11)
     ax.hlines(zface,cx-ro-3.0,dx,colors='#555',linestyles=':',lw=1)
     ax.text(cx-ro-2.8,zface+.35,'Flat mounting face',fontsize=10,color='#555')
+    ax.annotate('Solid link to base',xy=(23.0,-3.6),xytext=(19.0,-1.1),
+                fontsize=11,color='#234a63',
+                arrowprops={'arrowstyle':'->','color':'#234a63'})
     ax.scatter([cx],[cz],s=12,color='#555')
     ax.set_xlim(cx-ro-3.5,dx+2);ax.set_ylim(bottom-1.5,zface+1.5)
     ax.set_aspect('equal');ax.grid(alpha=.15);ax.set_xlabel('X · mm');ax.set_ylabel('Z · mm')

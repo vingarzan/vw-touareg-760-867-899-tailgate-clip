@@ -2,7 +2,7 @@
 
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
-**Status: v05 reconstructed prototype with the corrected open hook, 20 mm hook drop and 1.4 × 1.4 mm internal tooth. No printed fit or retention test has been performed.**
+**Status: v06 reconstructed prototype with a solid hook-to-base back link, open hook, 20 mm hook drop and 1.4 × 1.4 mm internal tooth. No printed fit or retention test has been performed.**
 
 ![Model preview](previews/clip.png)
 
@@ -35,6 +35,8 @@ or printing accuracy claim.
 The checks also measure the 20 mm hook drop and the 1.4 × 1.4 mm projecting tooth
 at both ends and the centre. Fifty-one rays through the exported STL's entry
 path check that the mouth is not blocked by the platform, frame or neck.
+Twenty additional sections across the back link verify one continuous material
+interval at the former gap, including the centre and both sides.
 These are geometry checks, not evidence of printed fit or service life.
 
 The rebuildable source is provided to preserve the design history even though
@@ -47,10 +49,15 @@ python3 -m venv .venv
 ```
 
 [`model/parameters.json`](model/parameters.json) separates measured dimensions
-from estimates. v05 retains the separately measured left and right fins and
+from estimates. v06 retains the separately measured left and right fins and
 places their nearest vertical edges **9 mm beyond the hook-facing edge of the
 peg root along the length of the base**. This is an approximate physical
 measurement implemented as 9.0 mm in the model.
+
+The back of the hook now joins the mounting base through a **solid full-width
+web**, filling the triangular gap left in v05. The original rear slope is kept;
+only the hook cavity and entry remain open. This is a geometry change requested
+by the owner, rather than a reproduction of the OEM material-saving recess.
 
 The opposite 15 mm-wide latch now joins the base through a continuous wall,
 reinforced by three solid gussets on the peg side. Its wall thickness and lean
