@@ -1,0 +1,14 @@
+{
+  "revision": "v23",
+  "variant": "right side",
+  "fins_swapped_across_Y": true,
+  "fin_translation_X_mm": -6,
+  "previous_fin_start_X_mm": 18.1,
+  "right_fin_start_X_mm": 12.1,
+  "fin_root_outside_spacing_mm": 24.5,
+  "watertight": true,
+  "consistent_winding": true,
+  "connected_components": 1,
+  "volume_changed_outside_fin_regions_mm3": 4.399240397762841e-07,
+  "physical_fit_verified": false
+}
