@@ -1,0 +1,47 @@
+{
+  "revision": "v01",
+  "units": "mm",
+  "measured": {
+    "length": 34.4,
+    "frame_width": 27.6,
+    "body_width": 26.3,
+    "guide_outside_width": 26.0,
+    "overall_height": 19.8,
+    "base_wall": 2.55,
+    "hook_wall": 2.5,
+    "hook_cavity": 9.4,
+    "hook_mouth": 8.1,
+    "hook_lip_width": 17.3,
+    "peg_total_height_including_wall": 8.5,
+    "peg_barb_diameter": 8.8,
+    "peg_base_diameter": 7.4,
+    "latch_width": 15.0
+  },
+  "estimated": {
+    "base_length": 21.0,
+    "rear_corner_radius": 7.3,
+    "peg_center_from_rear": 5.4,
+    "peg_inner_diameter": 4.2,
+    "peg_slot_width": 1.0,
+    "peg_slot_root_z": 3.25,
+    "peg_barb_shoulder_z": 6.3,
+    "peg_tip_diameter": 6.2,
+    "guide_thickness": 1.25,
+    "guide_top_z": 7.8,
+    "latch_rib_width": 0.95,
+    "latch_rib_thickness": 0.95,
+    "latch_top_z": 7.2,
+    "latch_bar_thickness": 1.3,
+    "side_web_thickness": 1.5,
+    "coupon_width": 5.0
+  },
+  "interpretation": [
+    "X runs from the rounded peg end toward the hook; Y is width; Z points toward the peg.",
+    "The outside of the flat rear base is Z=0. The peg reaches Z=8.5 including the 2.55 mm wall.",
+    "The hook is reconstructed as an open circular channel; 9.4 mm cavity diameter and 8.1 mm mouth chord.",
+    "Hook centre Z is derived from the measured 19.8 mm overall height, assuming the peg is the tallest feature.",
+    "The three width readings are preserved as different positions: body 26.3, guides 26.0, frame 27.6.",
+    "The opposite clip is interpreted as the raised transverse spring latch, 15 mm wide.",
+    "Small offsets, draft angles, radii, springs and hidden surfaces are photo estimates, not measured OEM geometry."
+  ]
+}
