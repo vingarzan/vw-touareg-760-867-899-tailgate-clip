@@ -45,10 +45,13 @@ def render_section(stl_path, parameters, out_path):
     diameter=np.array([point(root-.3,0),point(ri+.8,0)])
     ax.plot(diameter[:,0],diameter[:,1],color='#888',lw=.7,ls=':')
     lip=np.array([cx,cz])+u*math.sqrt(ri*ri-(mm['hook_mouth']/2)**2)
-    p=lip+v*mm['hook_mouth']/2;q=lip-v*mm['hook_mouth']/2
+    from verify_dimensions import axis_crossings
+    ts=axis_crossings(m,0,lip,v)
+    high=float(ts[ts>0].min());low=float(ts[ts<0].max())
+    p=lip+v*high;q=lip+v*low
     ax.annotate('',xy=p,xytext=q,arrowprops={'arrowstyle':'<->','color':'#a14c1a','lw':1.5})
     label=lip+u*.8
-    ax.text(*label,'8.1 mm open',rotation=-60,ha='left',va='center',fontsize=11,color='#a14c1a',
+    ax.text(*label,f'{high-low:.2f} mm open',rotation=-60,ha='left',va='center',fontsize=11,color='#a14c1a',
             bbox={'facecolor':'white','edgecolor':'none','alpha':.85,'pad':1})
     zface=mm['base_wall'];dx=mm['length']+2.5
     ax.hlines([zface,bottom],dx-.7,dx+.7,color='#555',lw=.9)

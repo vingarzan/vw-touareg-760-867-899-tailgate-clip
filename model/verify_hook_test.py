@@ -49,7 +49,7 @@ def check_hook_test(test_path,clip_path,parameters,dim,design_bounds):
         assert abs(diameter-mm['hook_cavity'])<.003
         ts=axis_crossings(restored,y,center+u*(lip+.0001),v)
         mouth=float(ts[ts>0].min()-ts[ts<0].max())
-        assert abs(mouth-mm['hook_mouth'])<.003
+        assert mm['hook_mouth']-.003<=mouth<=mm['hook_mouth']+.103
         ts=axis_crossings(restored,y,center,u)
         projection=float(ts[ts<0].max()+ri)
         assert abs(projection-mm['hook_internal_rib_projection'])<.003

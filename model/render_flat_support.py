@@ -24,7 +24,7 @@ def render(mesh,oriented,standard,p,q,parameters):
     axes[1].set_xlim(lo[0]-2,hi[0]+2);axes[1].set_ylim(-2,hi[2]+2)
     axes[1].axhline(0,color='#28734d',lw=2.5)
     axes[1].text((lo[0]+hi[0])/2,-1.4,'Flat support face on the print bed',ha='center',fontsize=10,color='#28734d')
-    axes[1].set_title('Supplied print orientation · actual STL silhouette')
+    axes[1].set_title('Example orientation · rotate the part yourself')
     axes[1].set_xlabel('Print X · mm');axes[1].set_ylabel('Print Z · mm')
     for ax in axes:ax.set_aspect('equal');ax.grid(alpha=.15)
     fig.suptitle(parameters['revision']+' · rear-to-hook flat-support variant',fontsize=17)
@@ -36,6 +36,6 @@ def render(mesh,oriented,standard,p,q,parameters):
     # A faint bed plane shows the supplied orientation without obscuring the part.
     xx,yy=np.meshgrid([lo[0]-1,hi[0]+1],[lo[1]-1,hi[1]+1])
     ax.plot_surface(xx,yy,np.zeros_like(xx),color='#8fc4a4',alpha=.18,shade=False)
-    ax.set_title('v13 · flat-support variant on its supplied print face',fontsize=16,pad=15)
+    ax.set_title('v14 · flat-support variant · example orientation',fontsize=16,pad=15)
     fig.text(.5,.025,'Full part geometry · not sliced or physically printed',ha='center',fontsize=11,color='#555')
     fig.tight_layout(rect=(0,.05,1,1));fig.savefig(ROOT/'previews/flat_support_print.png',dpi=170);plt.close(fig)

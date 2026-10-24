@@ -20,13 +20,14 @@ def export_variant(parameters,build,as_mesh,save):
     angle=math.atan2(q[1]-p[1],q[0]-p[0])
     oriented=mesh.copy();oriented.apply_transform(trimesh.transformations.rotation_matrix(angle,[0,1,0]))
     oriented.apply_translation(-oriented.bounds[0])
-    ready=save(oriented,'760867899_clip_on_flat_support.stl')
-    actual=trimesh.load_mesh(ROOT/'stl/760867899_clip_on_flat_support.stl',process=True)
-    contact=np.all(abs(actual.triangles[:,:,2])<.00001,axis=1)
+    # Reference orientation for geometric contact checks and preview only.
+    # No pre-rotated STL is exported.
+    actual=oriented
+    contact=np.all(abs(actual.triangles[:,:,2])<.0001,axis=1)
     contact_area=float(actual.area_faces[contact].sum())
     assert contact_area>300,('flat face has insufficient contact area',contact_area)
     assert abs(actual.bounds[0,2])<.00001
-    assert abs(design['volume_mm3']-ready['volume_mm3'])<.01
+    assert abs(design['volume_mm3']-actual.volume)<.01
     normal=np.array([-math.sin(angle),0,math.cos(angle)])
     signed=(mesh.vertices-np.array([p[0],0,p[1]]))@normal
     assert signed.min()>-.00001,('geometry extends below support face',signed.min())
@@ -49,10 +50,10 @@ def export_variant(parameters,build,as_mesh,save):
     _,coupon,_=build()
     coupon_design=as_mesh(coupon)
     mating=check_hook_test(ROOT/'stl/760867899_hook_fit_test.stl',ROOT/'stl/760867899_clip_flat_support.stl',parameters,dim,coupon_design.bounds)
-    result={'revision':parameters['revision'],'files':[design,ready],
+    result={'revision':parameters['revision'],'files':[design],
             'support_plane_rear_xz_mm':p.tolist(),'support_plane_tangent_xz_mm':q.tolist(),
-            'rotation_about_y_degrees':math.degrees(angle),'bed_contact_area_mm2':contact_area,
-            'entire_model_above_support_plane':True,'standard_material_removed_mm3':removed,
+            'reference_rotation_about_y_degrees':math.degrees(angle),'bed_contact_area_mm2':contact_area,
+            'contact_plane_tolerance_mm':.0001,'entire_model_above_support_plane':True,'standard_material_removed_mm3':removed,
             'upper_features_difference_mm3':difference,
             'added_volume_mm3':variant_solid.volume()-standard_solid.volume(),
             'exported_stl_sections':dimensions,'hook_gauge_mating_checks':mating,

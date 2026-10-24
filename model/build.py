@@ -98,14 +98,29 @@ def hook_profile(flat_support=False):
     cx = M['length'] - ro*math.cos(math.radians(end))
     bottom = M['base_wall'] - M['hook_drop_from_mounting_surface']
     cz = bottom + ro
-    # Add cardinal extrema explicitly so the mesh bounds preserve measured size.
-    cardinals=[t for t in [0.,90.,180.,270.,360.] if start<=t<=end]
+    # Fillets at BOTH corners of the free radial tip. Each fillet is
+    # exactly tangent to the respective bore/outer circle and radial end face.
+    r=E['hook_free_tip_outer_radius'];r_inner=E['hook_free_tip_inner_radius'];theta=math.radians(end)
+    unit=np.array([math.cos(theta),math.sin(theta)])
+    normal=np.array([-math.sin(theta),math.cos(theta)])
+    ao=math.sqrt(ro*ro-2*ro*r);ai=math.sqrt(ri*ri+2*ri*r_inner)
+    assert ao>ai, 'tip fillets consume the entire wall thickness'
+    outer_center=ao*unit-r*normal;inner_center=ai*unit-r_inner*normal
+    outer_end=math.degrees(math.atan2(outer_center[1],outer_center[0]))%360
+    inner_end=math.degrees(math.atan2(inner_center[1],inner_center[0]))%360
+    while outer_end<start:outer_end+=360
+    while inner_end<start:inner_end+=360
     _,tangent=back_link_tangent(cx,cz,ro,flat_support)
     tangent_angle=math.degrees(math.atan2(tangent[1]-cz,tangent[0]-cx))%360
-    angles = np.unique(np.r_[np.linspace(start,end,201),cardinals,tangent_angle])
-    outer = [[cx+ro*math.cos(math.radians(t)), cz+ro*math.sin(math.radians(t))] for t in angles]
-    inner = [[cx+ri*math.cos(math.radians(t)), cz+ri*math.sin(math.radians(t))] for t in angles[::-1]]
-    return outer+inner, (cx, cz, ri, ro, half_opening)
+    cardinals=[t for t in [0.,90.,180.,270.,360.] if start<=t<=outer_end]
+    angles=np.unique(np.r_[np.linspace(start,outer_end,241),cardinals,tangent_angle])
+    outer=[[cx+ro*math.cos(math.radians(t)),cz+ro*math.sin(math.radians(t))] for t in angles]
+    co=np.array([cx,cz])+outer_center;ci=np.array([cx,cz])+inner_center
+    outer_tip=arc(co[0],co[1],r,outer_end,end+90,101)
+    inner_tip=arc(ci[0],ci[1],r_inner,end+90,inner_end+180,101)
+    inner_angles=np.unique(np.r_[np.linspace(start,inner_end,241),[90.,180.,270.]])
+    inner=[[cx+ri*math.cos(math.radians(t)),cz+ri*math.sin(math.radians(t))] for t in inner_angles[::-1]]
+    return outer+outer_tip[1:]+inner_tip+inner[1:], (cx,cz,ri,ro,half_opening)
 
 
 def hook_entry_void(cx,cz,ri):
@@ -405,7 +420,6 @@ def main():
     coupon_in_design=as_mesh(coupon)
     coupon_mesh=place_on_bed(coupon_in_design)
     reports=[validate_and_save(mesh,'760867899_clip.stl'),
-             validate_and_save(place_on_bed(mesh),'760867899_clip_on_side.stl'),
              validate_and_save(coupon_mesh,'760867899_hook_fit_test.stl')]
     # Isolate the measured split peg on a small flat base for a quick trial.
     peg_test = (box(0,14,-7,7,0,M['base_wall']) +
@@ -417,11 +431,12 @@ def main():
                 M['base_wall']+M['right_fin_height_above_surface'],
                 M['base_wall']+M['left_fin_height_above_surface'],E['latch_top_z'])
     total_height=highest-(M['base_wall']-M['hook_drop_from_mounting_surface'])
-    np.testing.assert_allclose(mesh.extents,[M['length'],M['body_width'],total_height],atol=0.002)
-    assert abs(reports[0]['volume_mm3']-reports[1]['volume_mm3']) < 0.01
+    np.testing.assert_allclose(mesh.extents[1:],[M['body_width'],total_height],atol=.002)
+    assert M['length']-.8<float(mesh.extents[0])<=M['length']+.002
     cx,cz,ri,ro,a=dim
     dimensional_checks={
         'overall_length_mm':float(mesh.extents[0]),
+        'sharp_tip_reference_length_mm':M['length'],
         'maximum_frame_width_mm':float(mesh.extents[1]),
         'original_frame_width_reference_mm':M['frame_width'],
         'front_crossbar_is_flush':True,
@@ -447,7 +462,7 @@ def main():
         'latch_has_continuous_wall':True,
         'mounting_platform_is_flat':True,
         'hook_back_link_is_solid':True,
-        'nominal_and_on_side_same_volume':True,
+        'full_part_exports_in_design_coordinates_only':True,
         'physical_fit_verified':False,
         'slicer_toolpaths_verified':False,
     }
@@ -467,6 +482,8 @@ def main():
     from render_peg_section import render_peg_section
     render_peg_section(OUT/'760867899_peg_fit_test.stl',P,PREVIEW/'peg_reinforcement.png')
     preview_hook_test(coupon_mesh)
+    from render_hook_tip import render_tip
+    render_tip(P)
     from flat_support import export_variant
     report['flat_support_variant']=export_variant(P,build,as_mesh,validate_and_save)
     (CHECKS/'geometry_checks.json').write_text(json.dumps(report,indent=2)+'\n')
@@ -484,7 +501,7 @@ def preview_hook_test(mesh):
     lo,hi=mesh.bounds
     ax.set_xlim(lo[0]-1.5,hi[0]+1.5);ax.set_ylim(lo[1]-1.5,hi[1]+1.5)
     ax.set_aspect('equal');ax.set_axis_off();ax.set_title('Top view · opening and tooth',fontsize=12)
-    fig.suptitle(f"{P['revision']} · hook fit test · Ø 9.7 / 8.1 mm mouth / 1.4 mm tooth",fontsize=15,y=.97)
+    fig.suptitle(f"{P['revision']} · hook fit test · Ø 9.7 / rounded mouth / 1.4 mm tooth",fontsize=15,y=.97)
     fig.text(.5,.055,'4 mm print height · flat contact face · rounded grip tab · import at 100%',ha='center',fontsize=11,color='#555')
     plt.subplots_adjust(left=.01,right=.99,top=.88,bottom=.13,wspace=.03)
     fig.savefig(PREVIEW/'hook_fit_test.png',dpi=170);plt.close(fig)

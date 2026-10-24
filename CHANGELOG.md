@@ -1,5 +1,13 @@
 # Design history
 
+## v14 — rounded free hook tip; design-coordinate exports only — 2026-10-24
+
+- Rounded both corners of the free tip, tangent to the bore/outer circle and cap: R0.6 outside, R0.25 inside. Applied to both complete versions and the hook gauge.
+- The 34.4 mm sharp-tip envelope becomes approximately 34.17 mm overall after rounding. The 8.1 mm nominal sharp-lip clearance becomes approximately 8.20 mm locally; bore, tooth and mounting datums are retained.
+- Added exported-STL arc checks at three width stations and a close-up preview.
+- Removed the two pre-rotated full-clip STL exports. Standard and flat-support models are supplied in design coordinates; earlier orientations remain in history.
+- Physical fit and printing remain unverified.
+
 ## v13 — separate flat-support print variant — 2026-10-24
 
 - Added a separate full-width backing wedge from the rear underside of the base to a tangent on the outer hook curve. The standard v12 STL geometry is retained unchanged.

@@ -65,7 +65,10 @@ def check_export(path, parameters):
         ]:
             ts=axis_crossings(m,y,origin,axis)
             got=float(ts[ts>0].min()-ts[ts<0].max())
-            assert abs(got-want)<0.003,(name,y,got,want)
+            if name=='hook_mouth_clearance_mm':
+                assert want-.003<=got<=want+.103,(name,y,got,want)
+            else:
+                assert abs(got-want)<.003,(name,y,got,want)
             result[name]=got
         # Prove the entry remains open beyond the lips: these rays would hit
         # any roof, frame, or other host geometry closing the usable mouth.
@@ -234,7 +237,7 @@ def check_export(path, parameters):
     result['peg_barb_diameter_mm']=2*peg_radius_at(estimated['peg_barb_shoulder_z']+eps)
     assert abs(result['peg_base_diameter_mm']-measured['peg_base_diameter'])<0.003
     assert abs(result['peg_barb_diameter_mm']-measured['peg_barb_diameter'])<0.003
-    lip=m.vertices[(m.vertices[:,0]>measured['length']-.05)]
+    lip=m.vertices[(m.vertices[:,0]>m.bounds[1,0]-.05)]
     result['hook_lip_width_mm']=float(lip[:,1].max()-lip[:,1].min())
     assert abs(result['hook_lip_width_mm']-measured['hook_lip_width'])<.003
     latch=m.vertices[(m.vertices[:,0]>fin_start+11.0)&(m.vertices[:,2]>5)]
@@ -253,6 +256,8 @@ def check_export(path, parameters):
             wall_checks.append(thickness)
     result['latch_wall_minimum_x_thickness_between_ribs_mm']=min(wall_checks)
     result['peg_root_reinforcement']=check_peg_roots(m,measured,estimated)
+    from verify_hook_tip import verify_tip
+    result['rounded_free_tip_arcs']=verify_tip(path,parameters)
     result['tolerance_mm']=0.003
     return result
 
