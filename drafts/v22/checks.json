@@ -1,0 +1,13 @@
+{
+  "revision": "v22",
+  "wall_angle_degrees": 115,
+  "previous_wall_angle_degrees": 70.82099197418928,
+  "root_x_mm": 28.0,
+  "wall_top_x_mm": 26.391238579365254,
+  "lip_unchanged": true,
+  "watertight": true,
+  "consistent_winding": true,
+  "connected_components": 1,
+  "physical_fit_verified": false,
+  "return_under_lip_thickness_mm": 1.2
+}
