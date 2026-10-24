@@ -1,5 +1,7 @@
 # VW Touareg tailgate clip — 760 867 899
 
+**Latest tapered models with restored side rounding: [v20 standard and flat-backed files](drafts/v20/README.md).** The root `stl/` files below are the older v17 baseline; use `drafts/v20/stl/` for the latest parts.
+
 Printable reconstruction from photographs and caliper measurements of the original clip.
 
 **Status: v17 moves the small retaining clip 2 mm farther from the peg and extends the mounting base by 4 mm in the same direction. Peg, fin and hook stations are retained. Both versions remain in design coordinates. Physical fit remains untested.**

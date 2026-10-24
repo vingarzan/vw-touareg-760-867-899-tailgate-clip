@@ -1,0 +1,70 @@
+[
+  {
+    "file": "760867899_clip.stl",
+    "watertight": true,
+    "winding_consistent": true,
+    "positive_volume": true,
+    "central_hook_bore_mm": 9.699977,
+    "actual_side_corner_relief_mm": 0.34948900000000016,
+    "side_sections": [
+      {
+        "y_mm": 0,
+        "upper_z_mm": -12.837398
+      },
+      {
+        "y_mm": 8.15,
+        "upper_z_mm": -12.846057
+      },
+      {
+        "y_mm": 8.3,
+        "upper_z_mm": -12.859919
+      },
+      {
+        "y_mm": 8.4,
+        "upper_z_mm": -12.874396
+      },
+      {
+        "y_mm": 8.49,
+        "upper_z_mm": -13.186887
+      }
+    ],
+    "mounting_plate_and_features_difference_mm3": 0.03116249966743199,
+    "physical_fit_verified": false,
+    "edge_treatment": "local mesh blend within 0.4 mm band; not exact radius fillet"
+  },
+  {
+    "file": "760867899_clip_flat_support.stl",
+    "watertight": true,
+    "winding_consistent": true,
+    "positive_volume": true,
+    "central_hook_bore_mm": 9.699981999999999,
+    "actual_side_corner_relief_mm": 0.34948900000000016,
+    "side_sections": [
+      {
+        "y_mm": 0,
+        "upper_z_mm": -12.837398
+      },
+      {
+        "y_mm": 8.15,
+        "upper_z_mm": -12.846057
+      },
+      {
+        "y_mm": 8.3,
+        "upper_z_mm": -12.859919
+      },
+      {
+        "y_mm": 8.4,
+        "upper_z_mm": -12.874396
+      },
+      {
+        "y_mm": 8.49,
+        "upper_z_mm": -13.186887
+      }
+    ],
+    "mounting_plate_and_features_difference_mm3": 0.03408397764285652,
+    "physical_fit_verified": false,
+    "edge_treatment": "local mesh blend within 0.4 mm band; not exact radius fillet",
+    "flat_face_contact_mm2": 518.6805185346171,
+    "support_plane_deviation_min_mm": -8.095647689998486e-07
+  }
+]
