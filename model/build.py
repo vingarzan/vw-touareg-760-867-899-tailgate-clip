@@ -20,6 +20,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from verify_dimensions import check_export
+from render_hook_section import render_section
 
 P = json.loads((ROOT / 'model' / 'parameters.json').read_text())
 M, E = P['measured'], P['estimated']
@@ -69,19 +70,32 @@ def rounded_base():
 
 def hook_profile():
     ri = M['hook_cavity']/2
-    ro = ri + M['hook_wall']
-    cx = M['length'] - ro
-    highest = max(M['peg_total_height_including_wall'],
-                  M['base_wall'] + M['right_fin_height_above_surface'],
-                  M['base_wall'] + M['left_fin_height_above_surface'], E['latch_top_z'])
-    bottom = highest - M['overall_height']
+    ro = ri + E['hook_shell_wall']
+    direction = E['hook_opening_direction_degrees']
+    half_opening = math.degrees(math.asin(M['hook_mouth']/(2*ri)))
+    start, end = direction+half_opening, direction-half_opening+360
+    # The free outer lip, not a removed rightmost circle quadrant, determines
+    # the part's measured length with this diagonally outward-facing mouth.
+    cx = M['length'] - ro*math.cos(math.radians(end))
+    bottom = M['base_wall'] - M['hook_drop_from_mounting_surface']
     cz = bottom + ro
-    a = math.degrees(math.acos(M['hook_mouth'] / (2*ri)))
     # Add cardinal extrema explicitly so the mesh bounds preserve measured size.
-    angles = np.unique(np.r_[np.linspace(180-a, 360+a, 181), 180., 270., 360.])
+    cardinals=[t for t in [0.,90.,180.,270.,360.] if start<=t<=end]
+    angles = np.unique(np.r_[np.linspace(start,end,201),cardinals])
     outer = [[cx+ro*math.cos(math.radians(t)), cz+ro*math.sin(math.radians(t))] for t in angles]
     inner = [[cx+ri*math.cos(math.radians(t)), cz+ri*math.sin(math.radians(t))] for t in angles[::-1]]
-    return outer+inner, (cx, cz, ri, ro, a)
+    return outer+inner, (cx, cz, ri, ro, half_opening)
+
+
+def hook_entry_void(cx,cz,ri):
+    # U points out of the diagonal mouth; V measures its 8.1 mm clear width.
+    d=math.radians(E['hook_opening_direction_degrees'])
+    u=np.array([math.cos(d),math.sin(d)])
+    v=np.array([-math.sin(d),math.cos(d)])
+    h=M['hook_mouth']/2
+    start=math.sqrt(ri*ri-h*h)-0.0001
+    points=[np.array([cx,cz])+u*a+v*b for a,b in [(start,-h),(40,-h),(40,h),(start,h)]]
+    return xz(points,40)
 
 
 def hook_envelope():
@@ -178,20 +192,33 @@ def build():
     thick = E['side_web_thickness']
     web_c = M['frame_width']/2-thick/2
     webs = xz(web_profile,thick,-web_c)+xz(web_profile,thick,web_c)
-    # Oversize the structural clearance by 0.01 mm so independent circle
-    # tessellations cannot create sliver faces; the hook itself defines fit.
-    channel = mf.Manifold.cylinder(40,ri+0.01,ri+0.01,192).transform([
-        [1,0,0,cx],[0,0,-1,20],[0,1,0,cz]
-    ])
-    # Keep the peg and latch side of the skin continuous; only the lower hook
-    # receives the circular channel cut.
-    lower = (hook + ((ramp + webs) - channel)) ^ envelope
-    # The extended flat platform supports the new frame station. Keep its
-    # foot above Z=0 so it cannot intrude into the measured hook mouth.
+    # Build the circular void from the same angular vertices as the hook.
+    # This avoids independent circle tessellations creating sliver faces.
+    _,_,_,_,half=dim
+    direction=E['hook_opening_direction_degrees']
+    angles=np.unique(np.r_[np.linspace(direction+half,direction-half+360,201),
+                            [90.,180.,270.],np.linspace(direction-half,direction+half,101)])
+    # The host cut is 0.01 mm oversize; the untouched C shell supplies the
+    # exact 9.4 mm mating surface without near-coincident circle subtraction.
+    circle=[[cx+(ri+0.01)*math.cos(math.radians(t)),cz+(ri+0.01)*math.sin(math.radians(t))] for t in angles]
+    channel=xz(circle,40)
+    # Join all host geometry first, then cut the real opening through every
+    # intersecting component. v03 incorrectly left the plate over the opening.
+    lower = ramp + webs
+    neck=box(cx-1.5,fin_start_x()+E['frame_end_from_fin_start'],
+             -M['frame_width']/2,M['frame_width']/2,cz+ri-0.2,0.1)
     rail = box(fin_start_x()+E['frame_start_from_fin_start'],
                fin_start_x()+E['frame_end_from_fin_start'],
                -M['frame_width']/2,M['frame_width']/2,0.02,2.5)
-    body = rounded_base() + lower + rail
+    host=(rounded_base()+lower+rail+neck)-channel-hook_entry_void(cx,cz,ri)
+    body=host+hook
+    # The owner's "notch" is a tooth projecting INTO the bore, 2.4 mm tall
+    # and 2.4 mm deep at the middle of the rear wall. Embed its root 0.3 mm.
+    rear=cx-ri
+    rib=box(rear-0.3,rear+M['hook_internal_rib_projection'],
+            -M['frame_width']/2,M['frame_width']/2,
+            cz-M['hook_internal_rib_height']/2,cz+M['hook_internal_rib_height']/2)
+    body=(body+rib)^envelope
     parts = [body,peg(),guides(),spring_latch()]
     clip = mf.Manifold.batch_boolean(parts,mf.OpType.Add).simplify(0.0001)
     # Take the test directly from the finished hook, including the flat roof
@@ -300,7 +327,11 @@ def main():
     peg_mesh = as_mesh(peg_test)
     peg_mesh.apply_translation(-peg_mesh.bounds[0])
     reports.append(validate_and_save(peg_mesh,'760867899_peg_fit_test.stl'))
-    np.testing.assert_allclose(mesh.extents,[M['length'],M['frame_width'],M['overall_height']],atol=0.002)
+    highest=max(M['peg_total_height_including_wall'],
+                M['base_wall']+M['right_fin_height_above_surface'],
+                M['base_wall']+M['left_fin_height_above_surface'],E['latch_top_z'])
+    total_height=highest-(M['base_wall']-M['hook_drop_from_mounting_surface'])
+    np.testing.assert_allclose(mesh.extents,[M['length'],M['frame_width'],total_height],atol=0.002)
     assert abs(reports[0]['volume_mm3']-reports[1]['volume_mm3']) < 0.01
     cx,cz,ri,ro,a=dim
     dimensional_checks={
@@ -308,7 +339,10 @@ def main():
         'maximum_frame_width_mm':float(mesh.extents[1]),
         'overall_height_mm':float(mesh.extents[2]),
         'hook_cavity_design_diameter_mm':2*ri,
-        'hook_mouth_design_chord_mm':2*ri*math.cos(math.radians(a)),
+        'hook_mouth_design_chord_mm':2*ri*math.sin(math.radians(a)),
+        'hook_drop_from_mounting_surface_mm':M['hook_drop_from_mounting_surface'],
+        'hook_internal_rib_height_mm':M['hook_internal_rib_height'],
+        'hook_internal_rib_projection_mm':M['hook_internal_rib_projection'],
         'peg_base_design_diameter_mm':M['peg_base_diameter'],
         'peg_barb_design_diameter_mm':M['peg_barb_diameter'],
         'peg_top_z_including_wall_mm':M['peg_total_height_including_wall'],
@@ -334,6 +368,7 @@ def main():
                            'No FEA, calibrated 3D scan, printed trial, or vehicle fit test has been performed.']}
     (CHECKS/'geometry_checks.json').write_text(json.dumps(report,indent=2)+'\n')
     preview(mesh)
+    render_section(OUT/'760867899_clip.stl',P,PREVIEW/'hook_section.png')
     print(json.dumps(report,indent=2))
 
 

@@ -1,5 +1,28 @@
 # Design history
 
+## v04 — reopen the hook, add internal rib, correct height datum — 2026-10-24
+
+- Added owner side photo 19 and used it to correct the mouth direction:
+  diagonally outward, estimated at 30° above the base length axis.
+- Reopened the entrance that v03's platform geometry obstructed. Clearances
+  now apply to all supporting plate, frame and neck geometry, while the
+  C-shaped shell defines the mating profile.
+- Preserved an 8.1 mm mouth, within the owner's approximately 8–8.2 mm range.
+- Added the owner's 2.4 mm-high × 2.4 mm-projecting transverse internal rib.
+  The owner explicitly confirmed a raised tooth, not a recessed groove.
+- Corrected the height datum to 20 mm perpendicular from the peg/fin mounting
+  face down to the farthest outside hook edge. The earlier 19.8 mm span is no
+  longer treated as overall height. Total model height is now 27.6 mm.
+- Retained the flat mounting platform, 9 mm longitudinal peg-to-fin gap,
+  asymmetric fins and continuous latch support wall.
+- Updated the hook fit-test slice and added an actual exported-STL centre
+  section preview with the mouth, rib and 20 mm drop dimensioned.
+- Verified the exported cavity and mouth at three width stations, the rib
+  at both sides and centre, and 51 unobstructed entry rays. All four STLs
+  remain watertight single solids with no degenerate triangles.
+- Physical fit, printing and retention remain untested. Hook angle, shell
+  thickness, small radii and unmeasured absolute stations remain estimates.
+
 ## v03 — continuous latch wall and corrected spacing — 2026-10-24
 
 - Replaced the latch's open-strut construction with a full 15 mm-wide wall

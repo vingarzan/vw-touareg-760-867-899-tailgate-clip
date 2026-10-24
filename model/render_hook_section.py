@@ -1,0 +1,60 @@
+"""Render a dimensioned section of the exported STL, not a separate sketch."""
+import math
+import numpy as np
+import manifold3d as mf
+import trimesh
+from matplotlib.path import Path as PlotPath
+from matplotlib.patches import PathPatch
+import matplotlib.pyplot as plt
+
+
+def render_section(stl_path, parameters, out_path):
+    m=trimesh.load_mesh(stl_path,process=True)
+    # Reconstruct the saved mesh and slice through its actual middle plane.
+    solid=mf.Manifold(mf.Mesh(np.asarray(m.vertices,dtype=np.float32),
+                              np.asarray(m.faces,dtype=np.uint32)))
+    assert solid.status()==mf.Error.NoError
+    contours=solid.transform([[1,0,0,0],[0,0,-1,0],[0,1,0,0]]).slice(0).to_polygons()
+    points=[]; codes=[]
+    for contour in contours:
+        a=np.asarray(contour).copy();a[:,1]*=-1
+        points.extend(a.tolist()+[a[0].tolist()])
+        codes.extend([PlotPath.MOVETO]+[PlotPath.LINETO]*(len(a)-1)+[PlotPath.CLOSEPOLY])
+    mm=parameters['measured'];ee=parameters['estimated']
+    ri=mm['hook_cavity']/2;ro=ri+ee['hook_shell_wall']
+    direction=math.radians(ee['hook_opening_direction_degrees'])
+    half=math.asin(mm['hook_mouth']/(2*ri))
+    cx=mm['length']-ro*math.cos(direction-half)
+    bottom=float(m.bounds[0,2]);cz=bottom+ro
+    root=cx-ri;tip=root+mm['hook_internal_rib_projection']
+    fig,ax=plt.subplots(figsize=(8,8),facecolor='white')
+    ax.add_patch(PathPatch(PlotPath(points,codes),facecolor='#b9d1df',edgecolor='#234a63',lw=1.5))
+    # Highlight the actual tooth's exposed edges.
+    h=mm['hook_internal_rib_height']/2
+    ax.plot([root,tip,tip,root],[cz-h,cz-h,cz+h,cz+h],color='#bf5e23',lw=2)
+    ax.annotate('',xy=(root,cz+2.1),xytext=(tip,cz+2.1),
+                arrowprops={'arrowstyle':'<->','color':'#bf5e23'})
+    ax.text((root+tip)/2,cz+2.4,'2.4 mm projection',ha='center',fontsize=10,color='#a14c1a')
+    ax.annotate('',xy=(tip+.65,cz-h),xytext=(tip+.65,cz+h),
+                arrowprops={'arrowstyle':'<->','color':'#bf5e23'})
+    ax.text(tip+1.0,cz,'2.4 mm',va='center',rotation=90,fontsize=10,color='#a14c1a')
+    u=np.array([math.cos(direction),math.sin(direction)])
+    v=np.array([-math.sin(direction),math.cos(direction)])
+    lip=np.array([cx,cz])+u*math.sqrt(ri*ri-(mm['hook_mouth']/2)**2)
+    p=lip+v*mm['hook_mouth']/2;q=lip-v*mm['hook_mouth']/2
+    ax.annotate('',xy=p,xytext=q,arrowprops={'arrowstyle':'<->','color':'#a14c1a','lw':1.5})
+    label=lip+u*.8
+    ax.text(*label,'8.1 mm open',rotation=-60,ha='left',va='center',fontsize=11,color='#a14c1a',
+            bbox={'facecolor':'white','edgecolor':'none','alpha':.85,'pad':1})
+    zface=mm['base_wall'];dx=mm['length']+2.5
+    ax.hlines([zface,bottom],dx-.7,dx+.7,color='#555',lw=.9)
+    ax.annotate('',xy=(dx,bottom),xytext=(dx,zface),arrowprops={'arrowstyle':'<->','color':'#555'})
+    ax.text(dx+.4,(bottom+zface)/2,'20 mm from mounting face',rotation=90,ha='left',va='center',fontsize=11)
+    ax.hlines(zface,cx-ro-3.0,dx,colors='#555',linestyles=':',lw=1)
+    ax.text(cx-ro-2.8,zface+.35,'Flat mounting face',fontsize=10,color='#555')
+    ax.scatter([cx],[cz],s=12,color='#555')
+    ax.set_xlim(cx-ro-3.5,dx+2);ax.set_ylim(bottom-1.5,zface+1.5)
+    ax.set_aspect('equal');ax.grid(alpha=.15);ax.set_xlabel('X · mm');ax.set_ylabel('Z · mm')
+    ax.set_title(f"{parameters['revision']} · actual STL centre section\nOpen hook and continuous internal rib",fontsize=15,pad=16)
+    fig.text(.5,.02,'Geometry preview only · physical fit remains untested',ha='center',fontsize=10,color='#555')
+    fig.tight_layout(rect=(0,.035,1,1));fig.savefig(out_path,dpi=170);plt.close(fig)

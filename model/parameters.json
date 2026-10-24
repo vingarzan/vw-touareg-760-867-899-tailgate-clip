@@ -1,14 +1,12 @@
 {
-  "revision": "v03",
+  "revision": "v04",
   "units": "mm",
   "measured": {
     "length": 34.4,
     "frame_width": 27.6,
     "body_width": 26.3,
     "guide_outside_width": 26.0,
-    "overall_height": 19.8,
     "base_wall": 2.55,
-    "hook_wall": 2.5,
     "hook_cavity": 9.4,
     "hook_mouth": 8.1,
     "hook_lip_width": 17.3,
@@ -23,7 +21,11 @@
     "left_fin_top_length": 6.9,
     "left_fin_height_above_surface": 3.7,
     "fin_thickness": 1.6,
-    "peg_to_fin_edge_gap_along_length": 9.0
+    "peg_to_fin_edge_gap_along_length": 9.0,
+    "earlier_caliper_span": 19.8,
+    "hook_drop_from_mounting_surface": 20.0,
+    "hook_internal_rib_height": 2.4,
+    "hook_internal_rib_projection": 2.4
   },
   "estimated": {
     "rear_corner_radius": 7.3,
@@ -42,13 +44,13 @@
     "frame_start_from_fin_start": 9.9,
     "frame_end_from_fin_start": 12.2,
     "latch_wall_thickness_x": 1.2,
-    "latch_wall_foot_from_fin_start": 7.9
+    "latch_wall_foot_from_fin_start": 7.9,
+    "hook_shell_wall": 2.5,
+    "hook_opening_direction_degrees": 30.0
   },
   "interpretation": [
     "X runs from the rounded peg end toward the hook; Y is width; Z points toward the peg.",
     "The outside of the flat rear base is Z=0. The peg reaches Z=8.5 including the 2.55 mm wall.",
-    "The hook is reconstructed as an open circular channel; 9.4 mm cavity diameter and 8.1 mm mouth chord.",
-    "The right fin is the tallest feature at base_wall + 7.6 mm; hook centre Z is derived from this and the 19.8 mm overall height.",
     "The three width readings are preserved as different positions: body 26.3, guides 26.0, frame 27.6.",
     "The opposite clip is interpreted as the raised transverse spring latch, 15 mm wide.",
     "Left and right are defined looking from the rounded peg end toward the hook, with the peg pointing up: right is negative Y, left positive Y.",
@@ -57,6 +59,11 @@
     "Fin rear X = peg centre X + peg root radius + 9 mm. Peg centre position remains estimated; the relative gap is now measured.",
     "A continuous wall across the 15 mm latch width joins the retaining lip to the base; three solid curved gussets reinforce its peg-facing side. Wall thickness, lean and latch station are photo estimates.",
     "The owner authorized a flat continuous mounting platform beneath the peg and fins instead of reproducing material-saving recesses.",
-    "The mounting plate and front frame are lengthened and moved to support the corrected fins; the under-hook roof changes accordingly. The hook is a circular profile with a flat roof where the platform overlaps; 9.4 mm and 8.1 mm are checked as horizontal spans below the platform."
+    "The owner clarified the hook drop: 20 mm perpendicular from the peg/fin mounting face (Z=base_wall) to the lowest outside hook edge. The earlier 19.8 mm span is kept as reference evidence and is no longer treated as total part height.",
+    "Hook bottom Z = base_wall - 20 mm. With the 7.6 mm fin above the mounting face, total height is 27.6 mm.",
+    "The new side photo shows the mouth facing diagonally outward, rather than upward into the mounting plate. The 30 degree opening direction above +X is a photo estimate.",
+    "The owner confirmed that the 2.4 x 2.4 mm feature is a projecting rib, not a recess. It runs along Y across the inner rear wall; its vertical centre is aligned with the cylinder axis.",
+    "A round cavity and a straight 8.1 mm-wide entry path are subtracted from the entire body after joining plate, frame, neck and hook. The rib is added afterward. This prevents host geometry from closing the mouth.",
+    "The approximately 2.5 mm hook shell wall is estimated; only the mounting base wall was directly measured at 2.5-2.6 mm."
   ]
 }
