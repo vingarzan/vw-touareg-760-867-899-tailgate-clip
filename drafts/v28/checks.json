@@ -1,0 +1,24 @@
+[
+  {
+    "layout": "existing",
+    "watertight": true,
+    "consistent_winding": true,
+    "components": 1,
+    "internal_fillet_radius_mm": 0.8,
+    "added_material_mm3": 0.13199877806847107,
+    "removed_material_mm3": 7.27332981768402e-10,
+    "outside_envelope_unchanged": true,
+    "physical_strength_verified": false
+  },
+  {
+    "layout": "right",
+    "watertight": true,
+    "consistent_winding": true,
+    "components": 1,
+    "internal_fillet_radius_mm": 0.8,
+    "added_material_mm3": 0.13199877806847107,
+    "removed_material_mm3": 7.27332981768402e-10,
+    "outside_envelope_unchanged": true,
+    "physical_strength_verified": false
+  }
+]
